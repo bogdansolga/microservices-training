@@ -19,9 +19,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>d01</module>
-		<module>d02</module>
-		<module>d03</module>
+		<module>orders-service</module>
+		<module>first-service</module>
+		<module>second-service</module>
 	</modules>
 
 	<properties>

@@ -1,4 +1,4 @@
 package net.safedata.microservices.training.marker;
 
-interface Adapter {
+public interface Adapter {
 }

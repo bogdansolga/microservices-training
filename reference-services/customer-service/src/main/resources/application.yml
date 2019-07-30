@@ -1,0 +1,8 @@
+spring:
+  jackson:
+    serialization:
+      indent_output: true
+    default-property-inclusion: non_null
+
+  kafka:
+    bootstrap-servers: localhost:9092

@@ -14,14 +14,13 @@
 	<artifactId>microservices.training</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>microservices.training</name>
+	<name>'Microservices' training hands-on examples</name>
 	<description>The hands-on examples for the 'Microservices' training</description>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>orders-service</module>
-		<module>first-service</module>
-		<module>second-service</module>
+		<module>reference-services</module>
+		<module>new-services</module>
 	</modules>
 
 	<properties>

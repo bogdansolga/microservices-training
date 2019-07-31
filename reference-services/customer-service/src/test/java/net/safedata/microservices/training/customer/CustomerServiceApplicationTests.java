@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.order;
+package net.safedata.microservices.training.customer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,6 +2,7 @@ package net.safedata.microservices.training.customer.adapters;
 
 import net.safedata.microservices.training.customer.channels.OutboundChannels;
 import net.safedata.microservices.training.customer.events.CustomerCreatedEvent;
+import net.safedata.microservices.training.customer.marker.OutboundPort;
 import net.safedata.microservices.training.customer.ports.MessagingOutboundPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -13,7 +14,7 @@ import org.springframework.util.MimeTypeUtils;
 
 @Component
 @EnableBinding(OutboundChannels.class)
-public class MessageProducer implements MessagingOutboundPort {
+public class MessageProducer implements MessagingOutboundPort, OutboundPort {
 
     private final OutboundChannels outboundChannels;
 

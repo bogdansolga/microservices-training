@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/customer")
 public class CustomerController implements InboundAdapter {
 
     private final CustomerService customerService;

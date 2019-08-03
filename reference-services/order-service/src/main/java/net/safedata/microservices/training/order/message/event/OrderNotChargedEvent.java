@@ -13,7 +13,7 @@ import java.util.Objects;
 })
 public class OrderNotChargedEvent extends AbstractDomainEvent {
 
-    private static final String NAME = "OrderCharged";
+    private static final String NAME = "OrderNotCharged";
 
     private final long customerId;
     private final long orderId;

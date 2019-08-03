@@ -2,7 +2,7 @@ package net.safedata.microservices.training.customer.adapters;
 
 import net.safedata.microservices.training.customer.channels.InboundChannels;
 import net.safedata.microservices.training.customer.marker.InboundAdapter;
-import net.safedata.microservices.training.customer.events.OrderCreatedEvent;
+import net.safedata.microservices.training.customer.messages.OrderCreatedEvent;
 import net.safedata.microservices.training.customer.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

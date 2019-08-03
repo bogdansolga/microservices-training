@@ -2,7 +2,7 @@ package net.safedata.microservices.training.order.message;
 
 import java.util.Objects;
 
-public class CreateOrderMessage extends AbstractMessage {
+public class CreateOrderCommand extends AbstractCommand {
 
     private static final String NAME = "CreateOrder";
 
@@ -10,7 +10,7 @@ public class CreateOrderMessage extends AbstractMessage {
     private final long productPrice;
     private final long customerId;
 
-    public CreateOrderMessage(long messageId, String productName, long productPrice, long customerId) {
+    public CreateOrderCommand(long messageId, String productName, long productPrice, long customerId) {
         super(messageId);
         this.productName = productName;
         this.productPrice = productPrice;
@@ -38,7 +38,7 @@ public class CreateOrderMessage extends AbstractMessage {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CreateOrderMessage that = (CreateOrderMessage) o;
+        CreateOrderCommand that = (CreateOrderCommand) o;
         return productPrice == that.productPrice &&
                 customerId == that.customerId &&
                 Objects.equals(productName, that.productName);

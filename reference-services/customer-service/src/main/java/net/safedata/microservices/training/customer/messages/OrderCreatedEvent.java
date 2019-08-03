@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.customer.events;
+package net.safedata.microservices.training.customer.messages;
 
 import java.time.LocalDateTime;
 
@@ -10,8 +10,8 @@ public class OrderCreatedEvent extends AbstractDomainEvent {
     private final long orderId;
     private final LocalDateTime localDateTime;
 
-    public OrderCreatedEvent(long eventId, final long customerId, long orderId) {
-        super(eventId);
+    public OrderCreatedEvent(final long messageId, final long eventId, final long customerId, long orderId) {
+        super(messageId, eventId);
         this.customerId = customerId;
         this.orderId = orderId;
         this.localDateTime = LocalDateTime.now();

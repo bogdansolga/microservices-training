@@ -1,8 +1,8 @@
 package net.safedata.microservices.training.order.adapters;
 
 import net.safedata.microservices.training.order.channels.InboundChannels;
-import net.safedata.microservices.training.order.events.CustomerUpdatedEvent;
-import net.safedata.microservices.training.order.message.CreateOrderMessage;
+import net.safedata.microservices.training.order.message.CustomerUpdatedEvent;
+import net.safedata.microservices.training.order.message.CreateOrderCommand;
 import net.safedata.microservices.training.order.marker.InboundAdapter;
 import net.safedata.microservices.training.order.service.OrderService;
 import org.slf4j.Logger;
@@ -26,11 +26,12 @@ public class MessageConsumer implements InboundAdapter {
     }
 
     @StreamListener(InboundChannels.ORDER_CREATE)
-    public void createOrder(final CreateOrderMessage createOrderMessage) {
+    public void createOrder(final CreateOrderCommand createOrderCommand) {
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
         LOGGER.debug("Received a '{}' command, the ordered item is '{}', the customer ID is {}",
-                createOrderMessage.getName(), createOrderMessage.getProductName(), createOrderMessage.getCustomerId());
+                createOrderCommand.getName(), createOrderCommand.getProductName(), createOrderCommand.getCustomerId());
 
-        orderService.createOrder(createOrderMessage);
+        orderService.createOrder(createOrderCommand);
     }
 
     @StreamListener(InboundChannels.CUSTOMER_UPDATED)

@@ -1,8 +1,8 @@
 package net.safedata.microservices.training.customer.adapters;
 
 import net.safedata.microservices.training.customer.channels.OutboundChannels;
-import net.safedata.microservices.training.customer.events.CustomerCreatedEvent;
-import net.safedata.microservices.training.customer.events.CustomerUpdatedEvent;
+import net.safedata.microservices.training.customer.messages.CustomerCreatedEvent;
+import net.safedata.microservices.training.customer.messages.CustomerUpdatedEvent;
 import net.safedata.microservices.training.customer.marker.OutboundPort;
 import net.safedata.microservices.training.customer.ports.MessagingOutboundPort;
 import org.springframework.beans.factory.annotation.Autowired;

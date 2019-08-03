@@ -1,10 +1,10 @@
 package net.safedata.microservices.training.customer.service;
 
 import net.safedata.microservices.training.customer.dto.CustomerDTO;
-import net.safedata.microservices.training.customer.events.CustomerCreatedEvent;
-import net.safedata.microservices.training.customer.events.CustomerUpdatedEvent;
+import net.safedata.microservices.training.customer.messages.CustomerCreatedEvent;
+import net.safedata.microservices.training.customer.messages.CustomerUpdatedEvent;
 import net.safedata.microservices.training.customer.marker.InboundPort;
-import net.safedata.microservices.training.customer.events.OrderCreatedEvent;
+import net.safedata.microservices.training.customer.messages.OrderCreatedEvent;
 import net.safedata.microservices.training.customer.ports.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class CustomerService implements InboundPort {
 
         // insert magic here
         messagingOutboundPort.publishCustomerCreatedEvent(
-                new CustomerCreatedEvent(getNextEventId(), customerId, customerDTO.getEmail()));
+                new CustomerCreatedEvent(getNextMessageId(), getNextEventId(), customerId, customerDTO.getEmail()));
     }
 
     private long saveCustomerInTheDatabase(final CustomerDTO customerDTO) {
@@ -51,12 +51,17 @@ public class CustomerService implements InboundPort {
         LOGGER.info("Updating the customer with the ID {}...", customerId);
         updateCustomer(customerId);
 
-        messagingOutboundPort.publishCustomerUpdatedEvent(new CustomerUpdatedEvent(customerId));
+        messagingOutboundPort.publishCustomerUpdatedEvent(
+                new CustomerUpdatedEvent(getNextMessageId(), getNextEventId(), customerId));
     }
 
     private void updateCustomer(long customerId) {
         // TODO insert magic here
         sleepALittle();
+    }
+
+    private long getNextMessageId() {
+        return new Random(900000).nextLong();
     }
 
     private long getNextEventId() {

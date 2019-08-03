@@ -1,8 +1,8 @@
 package net.safedata.microservices.training.order.adapters;
 
 import net.safedata.microservices.training.order.channels.OutboundChannels;
-import net.safedata.microservices.training.order.events.OrderCreatedEvent;
 import net.safedata.microservices.training.order.marker.OutboundAdapter;
+import net.safedata.microservices.training.order.message.OrderCreatedEvent;
 import net.safedata.microservices.training.order.ports.MessagingOutboundPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;

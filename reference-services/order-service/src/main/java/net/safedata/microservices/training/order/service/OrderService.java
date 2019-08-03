@@ -1,10 +1,10 @@
 package net.safedata.microservices.training.order.service;
 
 import net.safedata.microservices.training.order.dto.OrderDTO;
-import net.safedata.microservices.training.order.events.CustomerUpdatedEvent;
-import net.safedata.microservices.training.order.message.CreateOrderMessage;
-import net.safedata.microservices.training.order.events.OrderCreatedEvent;
+import net.safedata.microservices.training.order.message.CustomerUpdatedEvent;
+import net.safedata.microservices.training.order.message.CreateOrderCommand;
 import net.safedata.microservices.training.order.marker.InboundPort;
+import net.safedata.microservices.training.order.message.OrderCreatedEvent;
 import net.safedata.microservices.training.order.ports.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,19 +35,19 @@ public class OrderService implements InboundPort {
         final long orderId = createOrder();
 
         messagingOutboundPort.publishEvent(
-                new OrderCreatedEvent(getNextEventId(), orderDTO.getCustomerId(), orderId));
+                new OrderCreatedEvent(getNextEventId(), orderDTO.getCustomerId(), orderDTO.getCustomerId(), orderId));
     }
 
     // creating an order received from a messaging endpoint (upstream system, 3rd party application etc)
     @Transactional
-    public void createOrder(final CreateOrderMessage createOrderMessage) {
+    public void createOrder(final CreateOrderCommand createOrderCommand) {
         LOGGER.info("Creating an order for the product '{}', for the customer with the ID {}...",
-                createOrderMessage.getProductName(), createOrderMessage.getCustomerId());
+                createOrderCommand.getProductName(), createOrderCommand.getCustomerId());
 
         final long orderId = createOrder();
 
         messagingOutboundPort.publishEvent(
-                new OrderCreatedEvent(getNextEventId(), createOrderMessage.getCustomerId(), orderId));
+                new OrderCreatedEvent(getNextMessageId(), getNextEventId(), createOrderCommand.getCustomerId(), orderId));
     }
 
     private long createOrder() {
@@ -55,6 +55,10 @@ public class OrderService implements InboundPort {
         sleepALittle();
 
         return new Random(10000).nextLong();
+    }
+
+    private long getNextMessageId() {
+        return new Random(900000).nextLong();
     }
 
     private long getNextEventId() {

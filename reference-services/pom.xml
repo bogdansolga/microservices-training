@@ -15,7 +15,9 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>billing-service</module>
         <module>customer-service</module>
         <module>order-service</module>
+        <module>shipping-service</module>
     </modules>
 </project>

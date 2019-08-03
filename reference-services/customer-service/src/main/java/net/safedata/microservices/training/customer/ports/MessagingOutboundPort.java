@@ -1,8 +1,8 @@
 package net.safedata.microservices.training.customer.ports;
 
-import net.safedata.microservices.training.customer.messages.CustomerCreatedEvent;
-import net.safedata.microservices.training.customer.messages.CustomerUpdatedEvent;
-import net.safedata.microservices.training.customer.marker.OutboundPort;
+import net.safedata.microservices.training.customer.marker.port.OutboundPort;
+import net.safedata.microservices.training.customer.messages.event.CustomerCreatedEvent;
+import net.safedata.microservices.training.customer.messages.event.CustomerUpdatedEvent;
 import org.springframework.stereotype.Component;
 
 @Component

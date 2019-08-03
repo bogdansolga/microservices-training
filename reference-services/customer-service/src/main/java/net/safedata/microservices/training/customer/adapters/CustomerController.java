@@ -1,7 +1,7 @@
 package net.safedata.microservices.training.customer.adapters;
 
 import net.safedata.microservices.training.customer.dto.CustomerDTO;
-import net.safedata.microservices.training.customer.marker.InboundAdapter;
+import net.safedata.microservices.training.customer.marker.adapter.InboundAdapter;
 import net.safedata.microservices.training.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

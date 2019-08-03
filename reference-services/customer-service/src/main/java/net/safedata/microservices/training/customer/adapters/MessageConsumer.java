@@ -1,8 +1,11 @@
 package net.safedata.microservices.training.customer.adapters;
 
 import net.safedata.microservices.training.customer.channels.InboundChannels;
-import net.safedata.microservices.training.customer.marker.InboundAdapter;
-import net.safedata.microservices.training.customer.messages.OrderCreatedEvent;
+import net.safedata.microservices.training.customer.marker.adapter.InboundAdapter;
+import net.safedata.microservices.training.customer.messages.event.OrderChargedEvent;
+import net.safedata.microservices.training.customer.messages.event.OrderCreatedEvent;
+import net.safedata.microservices.training.customer.messages.event.OrderNotChargedEvent;
+import net.safedata.microservices.training.customer.messages.event.OrderShippedEvent;
 import net.safedata.microservices.training.customer.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,5 +33,29 @@ public class MessageConsumer implements InboundAdapter {
                 orderCreatedEvent.getName(), orderCreatedEvent.getOrderId(), orderCreatedEvent.getCustomerId());
 
         customerService.handleOrderCreated(orderCreatedEvent);
+    }
+
+    @StreamListener(InboundChannels.ORDER_CHARGED)
+    public void orderCharged(final OrderChargedEvent orderChargedEvent) {
+        LOGGER.debug("Received a '{}' event, the ID of the customer is {}",
+                orderChargedEvent.getName(), orderChargedEvent.getCustomerId());
+
+        customerService.handleOrderCharged(orderChargedEvent);
+    }
+
+    @StreamListener(InboundChannels.ORDER_NOT_CHARGED)
+    public void orderNotCharged(final OrderNotChargedEvent orderNotChargedEvent) {
+        LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
+                orderNotChargedEvent.getName(), orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId());
+
+        customerService.handleOrderNotCharged(orderNotChargedEvent);
+    }
+
+    @StreamListener(InboundChannels.ORDER_SHIPPED)
+    public void orderShipped(final OrderShippedEvent orderShippedEvent) {
+        LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
+                orderShippedEvent.getName(), orderShippedEvent.getOrderId(), orderShippedEvent.getCustomerId());
+
+        customerService.handleOrderShipped(orderShippedEvent);
     }
 }

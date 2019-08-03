@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: 'billing-service'
+
+  jackson:
+    serialization:
+      indent_output: true
+    default-property-inclusion: non_null
+
+  kafka:
+    bootstrap-servers: localhost:9092

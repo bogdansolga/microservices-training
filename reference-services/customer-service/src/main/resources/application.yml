@@ -1,4 +1,7 @@
 spring:
+  application:
+    name: 'customer-service'
+
   jackson:
     serialization:
       indent_output: true

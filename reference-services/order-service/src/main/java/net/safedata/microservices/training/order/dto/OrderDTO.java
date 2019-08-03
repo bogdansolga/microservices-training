@@ -28,6 +28,12 @@ public class OrderDTO implements Serializable {
         return orderItems;
     }
 
+    public double getOrderTotal() {
+        return orderItems.stream()
+                         .mapToDouble(OrderItemDTO::getProductPrice)
+                         .sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

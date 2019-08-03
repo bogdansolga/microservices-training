@@ -7,9 +7,9 @@ public class OrderItemDTO implements Serializable {
 
     private final long orderItemId;
     private final String productName;
-    private final long productPrice;
+    private final double productPrice;
 
-    public OrderItemDTO(long orderItemId, String productName, long productPrice) {
+    public OrderItemDTO(long orderItemId, String productName, double productPrice) {
         this.orderItemId = orderItemId;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -23,7 +23,7 @@ public class OrderItemDTO implements Serializable {
         return productName;
     }
 
-    public long getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 

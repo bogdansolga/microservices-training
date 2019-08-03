@@ -15,7 +15,9 @@
     </appender>
 
     <logger name="net.safedata" level="DEBUG"/>
+    <logger name="com.zaxxer" level="WARN"/>
     <logger name="org.apache" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
     <logger name="org.springframework" level="WARN"/>
 
     <root level="INFO">

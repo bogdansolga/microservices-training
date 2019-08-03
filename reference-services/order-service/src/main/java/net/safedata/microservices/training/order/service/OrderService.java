@@ -6,7 +6,7 @@ import net.safedata.microservices.training.order.message.command.ChargeOrderComm
 import net.safedata.microservices.training.order.message.command.ShipOrderCommand;
 import net.safedata.microservices.training.order.message.event.*;
 import net.safedata.microservices.training.order.message.command.CreateOrderCommand;
-import net.safedata.microservices.training.order.model.Order;
+import net.safedata.microservices.training.order.domain.model.Order;
 import net.safedata.microservices.training.order.ports.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

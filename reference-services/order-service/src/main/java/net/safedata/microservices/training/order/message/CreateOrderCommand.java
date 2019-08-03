@@ -1,7 +1,11 @@
 package net.safedata.microservices.training.order.message;
 
+import net.safedata.microservices.training.order.message.subscriber.Service;
+import net.safedata.microservices.training.order.message.subscriber.Subscriber;
+
 import java.util.Objects;
 
+@Subscriber(Service.CUSTOMER_SERVICE)
 public class CreateOrderCommand extends AbstractCommand {
 
     private static final String NAME = "CreateOrder";

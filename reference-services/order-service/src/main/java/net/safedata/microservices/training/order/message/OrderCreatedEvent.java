@@ -1,5 +1,9 @@
 package net.safedata.microservices.training.order.message;
 
+import net.safedata.microservices.training.order.message.subscriber.Service;
+import net.safedata.microservices.training.order.message.subscriber.Subscriber;
+
+@Subscriber(Service.ORDER_SERVICE)
 public class OrderCreatedEvent extends AbstractDomainEvent {
 
     private static final String NAME = "OrderCreated";

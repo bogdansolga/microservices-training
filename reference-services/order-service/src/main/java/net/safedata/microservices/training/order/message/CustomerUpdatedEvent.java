@@ -1,7 +1,11 @@
 package net.safedata.microservices.training.order.message;
 
+import net.safedata.microservices.training.order.message.subscriber.Service;
+import net.safedata.microservices.training.order.message.subscriber.Subscriber;
+
 import java.time.LocalDateTime;
 
+@Subscriber(Service.CUSTOMER_SERVICE)
 public class CustomerUpdatedEvent extends AbstractDomainEvent {
 
     private static final String NAME = "CustomerUpdated";

@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.order.model;
+package net.safedata.microservices.training.order.domain.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

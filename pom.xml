@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>reference-services</module>
+		<module>simplified-services</module>
 		<module>new-services</module>
 	</modules>
 

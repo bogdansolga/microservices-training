@@ -4,8 +4,9 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.MessageChannel;
 
 public interface InboundChannels {
-    String CUSTOMER = "customer_in";
+    // the channel on which 'OrderUpdated' events are received
+    String ORDER_CREATED = "order_created";
 
-    @Input(CUSTOMER)
-    MessageChannel customer();
+    @Input(ORDER_CREATED)
+    MessageChannel orderCreated();
 }

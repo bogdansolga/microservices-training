@@ -4,8 +4,8 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 public interface OutboundChannels {
-    String ORDERS = "orders_out";
+    String ORDER_CREATED = "order_created";
 
-    @Output(ORDERS)
-    MessageChannel orders();
+    @Output(ORDER_CREATED)
+    MessageChannel orderCreated();
 }

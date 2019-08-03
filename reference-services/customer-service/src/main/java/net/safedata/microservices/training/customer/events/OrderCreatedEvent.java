@@ -1,8 +1,10 @@
-package net.safedata.microservices.training.order.events;
+package net.safedata.microservices.training.customer.events;
 
 import java.time.LocalDateTime;
 
 public class OrderCreatedEvent extends AbstractDomainEvent {
+
+    private static final String NAME = "OrderCreated";
 
     private final long customerId;
     private final long orderId;
@@ -17,7 +19,7 @@ public class OrderCreatedEvent extends AbstractDomainEvent {
 
     @Override
     public String getName() {
-        return null;
+        return NAME;
     }
 
     public long getCustomerId() {

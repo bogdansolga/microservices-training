@@ -1,23 +1,36 @@
 package net.safedata.microservices.training.customer.events;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CustomerCreatedEvent implements Serializable {
+public class CustomerCreatedEvent extends AbstractDomainEvent {
 
-    private final long orderId;
-    private final LocalDateTime localDateTime;
+    private static final String NAME = "CustomerCreated";
 
-    public CustomerCreatedEvent(long orderId) {
-        this.orderId = orderId;
-        this.localDateTime = LocalDateTime.now();
+    private final long customerId;
+    private final String customerEmail;
+    private final LocalDateTime creationTimeDate;
+
+    public CustomerCreatedEvent(final long eventId, final long customerId, final String customerEmail) {
+        super(eventId);
+        this.customerId = customerId;
+        this.customerEmail = customerEmail;
+        this.creationTimeDate = LocalDateTime.now();
     }
 
-    public long getOrderId() {
-        return orderId;
+    @Override
+    public String getName() {
+        return NAME;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public LocalDateTime getCreationTimeDate() {
+        return creationTimeDate;
     }
 }

@@ -19,8 +19,9 @@ public class CustomerController implements InboundAdapter {
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody final CustomerDTO customerDTO) {
+    public ResponseEntity<String> createCustomer(@RequestBody final CustomerDTO customerDTO) {
         customerService.createCustomer(customerDTO);
-        return ResponseEntity.ok("OK");
+
+        return ResponseEntity.ok("The customer was successfully created");
     }
 }

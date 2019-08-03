@@ -14,7 +14,7 @@
         </encoder>
     </appender>
 
-    <logger name="net.safedata" level="INFO"/>
+    <logger name="net.safedata" level="DEBUG"/>
     <logger name="org.apache" level="WARN"/>
     <logger name="org.springframework" level="WARN"/>
 

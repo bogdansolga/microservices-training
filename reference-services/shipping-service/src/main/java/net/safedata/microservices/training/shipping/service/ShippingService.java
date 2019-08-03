@@ -2,9 +2,9 @@ package net.safedata.microservices.training.shipping.service;
 
 import net.safedata.microservices.training.shipping.dto.ShipmentDTO;
 import net.safedata.microservices.training.shipping.marker.port.InboundPort;
-import net.safedata.microservices.training.shipping.messages.command.ShipOrderCommand;
-import net.safedata.microservices.training.shipping.messages.event.OrderShippedEvent;
-import net.safedata.microservices.training.shipping.ports.MessagingOutboundPort;
+import net.safedata.microservices.training.shipping.message.command.ShipOrderCommand;
+import net.safedata.microservices.training.shipping.message.event.OrderShippedEvent;
+import net.safedata.microservices.training.shipping.port.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

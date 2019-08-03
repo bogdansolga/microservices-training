@@ -6,7 +6,7 @@ import net.safedata.microservices.training.billing.marker.port.InboundPort;
 import net.safedata.microservices.training.billing.message.command.ChargeOrderCommand;
 import net.safedata.microservices.training.billing.message.event.OrderChargedEvent;
 import net.safedata.microservices.training.billing.message.event.OrderNotChargedEvent;
-import net.safedata.microservices.training.billing.ports.MessagingOutboundPort;
+import net.safedata.microservices.training.billing.port.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

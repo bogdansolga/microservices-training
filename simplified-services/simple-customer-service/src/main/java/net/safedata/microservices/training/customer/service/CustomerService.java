@@ -2,8 +2,8 @@ package net.safedata.microservices.training.customer.service;
 
 import net.safedata.microservices.training.customer.dto.CustomerDTO;
 import net.safedata.microservices.training.customer.marker.port.InboundPort;
-import net.safedata.microservices.training.customer.messages.event.*;
-import net.safedata.microservices.training.customer.ports.MessagingOutboundPort;
+import net.safedata.microservices.training.customer.message.event.*;
+import net.safedata.microservices.training.customer.port.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

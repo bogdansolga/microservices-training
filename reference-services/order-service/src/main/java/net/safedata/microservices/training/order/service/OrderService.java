@@ -7,7 +7,7 @@ import net.safedata.microservices.training.order.message.command.ShipOrderComman
 import net.safedata.microservices.training.order.message.event.*;
 import net.safedata.microservices.training.order.message.command.CreateOrderCommand;
 import net.safedata.microservices.training.order.domain.model.Order;
-import net.safedata.microservices.training.order.ports.MessagingOutboundPort;
+import net.safedata.microservices.training.order.port.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

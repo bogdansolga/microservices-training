@@ -1,7 +1,7 @@
 package net.safedata.microservices.training.order;
 
-import net.safedata.microservices.training.order.adapters.MessageCreator;
-import net.safedata.microservices.training.order.channels.InboundChannels;
+import net.safedata.microservices.training.order.adapter.MessageCreator;
+import net.safedata.microservices.training.order.channel.InboundChannels;
 import net.safedata.microservices.training.order.message.command.CreateOrderCommand;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;

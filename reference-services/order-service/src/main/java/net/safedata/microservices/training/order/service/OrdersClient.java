@@ -1,7 +1,7 @@
 package net.safedata.microservices.training.order.service;
 
-import net.safedata.microservices.training.order.adapters.MessageCreator;
-import net.safedata.microservices.training.order.channels.InboundChannels;
+import net.safedata.microservices.training.order.adapter.MessageCreator;
+import net.safedata.microservices.training.order.channel.InboundChannels;
 import net.safedata.microservices.training.order.message.command.CreateOrderCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

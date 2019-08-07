@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.shipping;
+package net.safedata.microservices.training.product;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ShippingServiceApplicationTests {
+public class ProductServiceApplicationTests {
 
 	@Test
 	public void contextLoads() {

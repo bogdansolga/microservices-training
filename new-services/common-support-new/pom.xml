@@ -6,17 +6,17 @@
 
     <parent>
         <groupId>net.safedata</groupId>
-        <artifactId>microservices.training</artifactId>
+        <artifactId>new-services</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>new-services</artifactId>
+    <artifactId>common-support-new</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>common-support-new</module>
-        <module>customer-service-new</module>
-        <module>order-service-new</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
+    </dependencies>
 </project>

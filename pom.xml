@@ -20,8 +20,8 @@
 
 	<modules>
 		<module>reference-services</module>
-		<module>simplified-services</module>
 		<module>new-services</module>
+		<module>workshop-services</module>
 	</modules>
 
 	<properties>
@@ -50,6 +50,12 @@
 			<dependency>
 				<groupId>net.safedata</groupId>
 				<artifactId>common-support</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.safedata</groupId>
+				<artifactId>common-support-new</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

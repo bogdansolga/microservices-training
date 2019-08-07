@@ -1,7 +1,7 @@
 package net.safedata.microservices.training.customer.inbound.port;
 
-import net.safedata.microservices.training.dto.customer.CustomerDTO;
 import net.safedata.microservices.training.customer.outbound.port.MessagingOutboundPort;
+import net.safedata.microservices.training.dto.customer.CustomerDTO;
 import net.safedata.microservices.training.marker.port.InboundPort;
 import net.safedata.microservices.training.message.event.customer.CustomerCreatedEvent;
 import net.safedata.microservices.training.message.event.customer.CustomerUpdatedEvent;

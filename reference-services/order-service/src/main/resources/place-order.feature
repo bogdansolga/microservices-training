@@ -6,13 +6,13 @@ Feature: Place Order
     Given using a valid card
     Given the restaurant is accepting orders
     When I place an order for a sandwich at SF
-    Then the order should be APPROVED
-    And an OrderAuthorized event should be published
+    Then the order should be 'APPROVED'
+    And an 'OrderAuthorized' event should be published
 
   Scenario: Order rejected due to expired card
     Given a valid consumer
     Given using an expired card
     Given the restaurant is accepting orders
     When I place an order for a sandwich at SF
-    Then the order should be REJECTED
-    And an OrderRejected event should be published
+    Then the order should be 'REJECTED'
+    And an 'OrderRejected' event should be published

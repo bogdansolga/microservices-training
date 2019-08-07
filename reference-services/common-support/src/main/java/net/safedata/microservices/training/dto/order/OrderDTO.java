@@ -1,4 +1,7 @@
-package net.safedata.microservices.training.dto;
+package net.safedata.microservices.training.dto.order;
+
+import net.safedata.microservices.training.dto.AbstractDTO;
+import net.safedata.microservices.training.dto.product.OrderItemDTO;
 
 import java.util.List;
 import java.util.Objects;

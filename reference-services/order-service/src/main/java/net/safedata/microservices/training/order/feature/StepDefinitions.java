@@ -32,4 +32,8 @@ public class StepDefinitions {
     @And("an OrderAuthorized event should be published")
     public void anOrderAuthorizedEventShouldBePublished() {
     }
+
+    @Given("a valid consumer")
+    public void aValidConsumerX() {
+    }
 }

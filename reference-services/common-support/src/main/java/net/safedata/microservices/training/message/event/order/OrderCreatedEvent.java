@@ -9,9 +9,9 @@ import net.safedata.microservices.training.message.AbstractDomainEvent;
         publisher = Service.ORDER_SERVICE,
         subscribers = {
                 Service.CUSTOMER_SERVICE,
-                Service.BILLING_SERVICE
+                Service.ORDER_SERVICE
         },
-        channel = Channel.ORDER_SHIPPED
+        channel = Channel.ORDER_CREATED
 )
 public class OrderCreatedEvent extends AbstractDomainEvent {
 

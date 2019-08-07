@@ -4,10 +4,10 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 public interface OutboundChannels {
-    // the channel on which 'CustomerCreated' events are sent
+    // the net.safedata.microservices.training.product.channel on which 'CustomerCreated' events are sent
     String CUSTOMER_CREATED = "customer_created";
 
-    // the channel on which 'CustomerUpdated' events are sent
+    // the net.safedata.microservices.training.product.channel on which 'CustomerUpdated' events are sent
     String CUSTOMER_UPDATED = "customer_updated";
 
     @Output(CUSTOMER_CREATED)

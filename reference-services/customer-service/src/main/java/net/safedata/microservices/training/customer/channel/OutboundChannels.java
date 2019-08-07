@@ -5,9 +5,9 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 public interface OutboundChannels {
-    @Output(Channels.Inbound.CUSTOMER_CREATED)
+    @Output(Channels.CUSTOMER_CREATED)
     MessageChannel customerCreated();
 
-    @Output(Channels.Inbound.CUSTOMER_UPDATED)
+    @Output(Channels.CUSTOMER_UPDATED)
     MessageChannel customerUpdated();
 }

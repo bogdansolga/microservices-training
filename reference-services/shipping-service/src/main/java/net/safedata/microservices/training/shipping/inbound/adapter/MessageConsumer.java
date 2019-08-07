@@ -1,6 +1,7 @@
 package net.safedata.microservices.training.shipping.inbound.adapter;
 
 import net.safedata.microservices.training.marker.adapter.InboundAdapter;
+import net.safedata.microservices.training.marker.message.Channels;
 import net.safedata.microservices.training.message.command.order.ShipOrderCommand;
 import net.safedata.microservices.training.shipping.channel.InboundChannels;
 import net.safedata.microservices.training.shipping.inbound.port.ShippingService;
@@ -24,7 +25,7 @@ public class MessageConsumer implements InboundAdapter {
         this.shippingService = shippingService;
     }
 
-    @StreamListener(InboundChannels.SHIP_ORDER)
+    @StreamListener(Channels.SHIP_ORDER)
     public void orderCreated(final ShipOrderCommand shipOrderCommand) {
         LOGGER.debug("Received a '{}' event for the order {} of the customer {}...",
                 shipOrderCommand.getName(), shipOrderCommand.getOrderId(), shipOrderCommand.getCustomerId());

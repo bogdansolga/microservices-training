@@ -1,24 +1,16 @@
 package net.safedata.microservices.training.order.channel;
 
+import net.safedata.microservices.training.marker.message.Channels;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 public interface OutboundChannels {
-    // the channel on which 'ShipOrder' commands are sent
-    String SHIP_ORDER = "ship_order";
-
-    // the channel on which 'ChargeOrder' commands are sent
-    String CHARGE_ORDER = "charge_order";
-
-    // the channel on which 'OrderCreated' events are sent
-    String ORDER_CREATED = "order_created";
-
-    @Output(SHIP_ORDER)
+    @Output(Channels.SHIP_ORDER)
     MessageChannel shipOrder();
 
-    @Output(CHARGE_ORDER)
+    @Output(Channels.CHARGE_ORDER)
     MessageChannel chargeOrder();
 
-    @Output(ORDER_CREATED)
+    @Output(Channels.ORDER_CREATED)
     MessageChannel orderCreated();
 }

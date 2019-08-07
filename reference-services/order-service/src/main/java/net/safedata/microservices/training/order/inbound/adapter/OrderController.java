@@ -1,6 +1,6 @@
 package net.safedata.microservices.training.order.inbound.adapter;
 
-import net.safedata.microservices.training.dto.OrderDTO;
+import net.safedata.microservices.training.dto.order.OrderDTO;
 import net.safedata.microservices.training.marker.adapter.InboundAdapter;
 import net.safedata.microservices.training.order.inbound.port.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

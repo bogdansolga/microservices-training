@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.order.inbound.adapter;
+package net.safedata.microservices.training.order.adapter;
 
 import net.safedata.microservices.training.marker.adapter.InboundAdapter;
 import net.safedata.microservices.training.marker.message.Channels;
@@ -29,7 +29,7 @@ public class MessageConsumer implements InboundAdapter {
         this.orderService = orderService;
     }
 
-    @StreamListener(Channels.Inbound.CREATE_ORDER)
+    @StreamListener(Channels.CREATE_ORDER)
     public void createOrder(final CreateOrderCommand createOrderCommand) {
         System.out.println("--------------------------------------------------------------------------------------------------------------");
         LOGGER.debug("Received a '{}' command, the ordered item is '{}', the customer ID is {}",
@@ -38,7 +38,7 @@ public class MessageConsumer implements InboundAdapter {
         orderService.createOrder(createOrderCommand);
     }
 
-    @StreamListener(Channels.Inbound.CUSTOMER_UPDATED)
+    @StreamListener(Channels.CUSTOMER_UPDATED)
     public void customerUpdated(final CustomerUpdatedEvent customerUpdatedEvent) {
         LOGGER.debug("Received a '{}' event, the ID of the updated customer is {}",
                 customerUpdatedEvent.getName(), customerUpdatedEvent.getCustomerId());
@@ -46,7 +46,7 @@ public class MessageConsumer implements InboundAdapter {
         orderService.handleCustomerUpdated(customerUpdatedEvent);
     }
 
-    @StreamListener(Channels.Inbound.ORDER_CHARGED)
+    @StreamListener(Channels.ORDER_CHARGED)
     public void orderCharged(final OrderChargedEvent orderChargedEvent) {
         LOGGER.debug("Received a '{}' event for the order {} of the customer {}",
                 orderChargedEvent.getName(), orderChargedEvent.getOrderId(), orderChargedEvent.getCustomerId());
@@ -54,7 +54,7 @@ public class MessageConsumer implements InboundAdapter {
         orderService.handleOrderCharged(orderChargedEvent);
     }
 
-    @StreamListener(Channels.Inbound.ORDER_NOT_CHARGED)
+    @StreamListener(Channels.ORDER_NOT_CHARGED)
     public void orderNotCharged(final OrderNotChargedEvent orderNotChargedEvent) {
         LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
                 orderNotChargedEvent.getName(), orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId());
@@ -62,7 +62,7 @@ public class MessageConsumer implements InboundAdapter {
         orderService.handleOrderNotCharged(orderNotChargedEvent);
     }
 
-    @StreamListener(Channels.Inbound.ORDER_SHIPPED)
+    @StreamListener(Channels.ORDER_SHIPPED)
     public void orderShipped(final OrderShippedEvent orderShippedEvent) {
         LOGGER.debug("Received a '{}' event for the order {} of the customer {}",
                 orderShippedEvent.getName(), orderShippedEvent.getOrderId(), orderShippedEvent.getCustomerId());

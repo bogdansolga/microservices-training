@@ -5,9 +5,9 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 public interface OutboundChannels {
-    @Output(Channels.Inbound.ORDER_CHARGED)
+    @Output(Channels.ORDER_CHARGED)
     MessageChannel orderCharged();
 
-    @Output(Channels.Inbound.ORDER_NOT_CHARGED)
+    @Output(Channels.ORDER_NOT_CHARGED)
     MessageChannel orderNotCharged();
 }

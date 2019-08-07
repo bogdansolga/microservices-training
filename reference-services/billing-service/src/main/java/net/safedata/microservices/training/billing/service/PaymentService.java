@@ -1,6 +1,6 @@
 package net.safedata.microservices.training.billing.service;
 
-import net.safedata.microservices.training.dto.OrderChargingStatusDTO;
+import net.safedata.microservices.training.dto.order.OrderChargingStatusDTO;
 import org.springframework.stereotype.Service;
 
 @Service

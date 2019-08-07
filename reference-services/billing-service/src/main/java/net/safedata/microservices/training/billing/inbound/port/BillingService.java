@@ -1,8 +1,8 @@
 package net.safedata.microservices.training.billing.inbound.port;
 
 import net.safedata.microservices.training.billing.service.PaymentService;
-import net.safedata.microservices.training.dto.OrderChargingStatusDTO;
-import net.safedata.microservices.training.dto.PaymentDTO;
+import net.safedata.microservices.training.dto.order.OrderChargingStatusDTO;
+import net.safedata.microservices.training.dto.order.PaymentDTO;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;

@@ -10,8 +10,9 @@ import net.safedata.microservices.training.message.event.order.OrderChargedEvent
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
-import net.safedata.microservices.training.order.domain.model.Order;
+import net.safedata.microservices.training.order.model.Order;
 import net.safedata.microservices.training.order.outbound.port.MessagingOutboundPort;
+import net.safedata.microservices.training.order.outbound.port.PersistenceOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,13 @@ public class OrderService implements InboundPort {
     private static final AtomicLong ATOMIC_LONG = new AtomicLong(100);
 
     private final MessagingOutboundPort messagingOutboundPort;
+    private final PersistenceOutboundPort persistenceOutboundPort;
 
     @Autowired
-    public OrderService(final MessagingOutboundPort messagingOutboundPort) {
+    public OrderService(final MessagingOutboundPort messagingOutboundPort,
+                        final PersistenceOutboundPort persistenceOutboundPort) {
         this.messagingOutboundPort = messagingOutboundPort;
+        this.persistenceOutboundPort = persistenceOutboundPort;
     }
 
     // creating an order received from a REST endpoint (UI, testing app etc)

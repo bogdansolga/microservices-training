@@ -18,7 +18,6 @@ public final class Channels {
     // queries
     public static final String FIND_ORDER = "find_order";
 
-
     // deny instantiation
     private Channels() {}
 }

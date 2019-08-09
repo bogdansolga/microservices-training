@@ -14,6 +14,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <description>The modules will be used as the starting point for the training workshop</description>
+
     <modules>
         <module>first-service</module>
         <module>second-service</module>

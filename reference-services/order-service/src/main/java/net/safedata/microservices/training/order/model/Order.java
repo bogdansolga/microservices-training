@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.order.domain.model;
+package net.safedata.microservices.training.order.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +17,10 @@ public class Order implements Serializable {
 
     @Column(name = "total", length = 10)
     private double total;
+
+    @Enumerated
+    @Column(name = "status", length = 20)
+    private OrderStatus status;
 
     @Column(name = "creation_date", length = 10)
     private LocalDateTime creationDate;
@@ -53,6 +57,14 @@ public class Order implements Serializable {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreationDate() {

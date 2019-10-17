@@ -27,3 +27,7 @@ hs_err_pid*
 *.iws
 *.iml
 *.ipr
+
+# build folders
+target/
+**/target

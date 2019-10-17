@@ -25,7 +25,7 @@ public class MessageConsumer implements InboundAdapter {
         this.shippingService = shippingService;
     }
 
-    @StreamListener(Channels.SHIP_ORDER)
+    @StreamListener(Channels.Commands.SHIP_ORDER)
     public void orderCreated(final ShipOrderCommand shipOrderCommand) {
         LOGGER.debug("Received a '{}' event for the order {} of the customer {}...",
                 shipOrderCommand.getName(), shipOrderCommand.getOrderId(), shipOrderCommand.getCustomerId());

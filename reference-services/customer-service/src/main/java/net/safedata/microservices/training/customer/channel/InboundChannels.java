@@ -5,15 +5,15 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.MessageChannel;
 
 public interface InboundChannels {
-    @Input(Channels.ORDER_CREATED)
+    @Input(Channels.Events.ORDER_CREATED)
     MessageChannel orderCreated();
 
-    @Input(Channels.ORDER_CHARGED)
+    @Input(Channels.Events.ORDER_CHARGED)
     MessageChannel orderCharged();
 
-    @Input(Channels.ORDER_NOT_CHARGED)
+    @Input(Channels.Events.ORDER_NOT_CHARGED)
     MessageChannel orderNotCharged();
 
-    @Input(Channels.ORDER_SHIPPED)
+    @Input(Channels.Events.ORDER_SHIPPED)
     MessageChannel orderShipped();
 }

@@ -23,7 +23,7 @@ public class OrdersClient {
         this.inboundChannels = inboundChannels;
     }
 
-    //@Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 5000)
     public void publishOrderCreationMessage() {
         final long nextCustomerId = CUSTOMER_ID_GENERATOR.addAndGet(5);
         final long nextOrderAmount = ORDER_AMOUNT_GENERATOR.addAndGet(125);

@@ -5,6 +5,6 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.MessageChannel;
 
 public interface InboundChannels {
-    @Input(Channels.CHARGE_ORDER)
+    @Input(Channels.Commands.CHARGE_ORDER)
     MessageChannel chargeOrder();
 }

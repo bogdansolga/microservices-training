@@ -5,12 +5,12 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 public interface OutboundChannels {
-    @Output(Channels.SHIP_ORDER)
+    @Output(Channels.Commands.SHIP_ORDER)
     MessageChannel shipOrder();
 
-    @Output(Channels.CHARGE_ORDER)
+    @Output(Channels.Commands.CHARGE_ORDER)
     MessageChannel chargeOrder();
 
-    @Output(Channels.ORDER_CREATED)
+    @Output(Channels.Events.ORDER_CREATED)
     MessageChannel orderCreated();
 }

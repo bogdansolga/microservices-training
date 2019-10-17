@@ -28,7 +28,7 @@ public class MessageConsumer implements InboundAdapter {
         this.customerService = customerService;
     }
 
-    @StreamListener(Channels.ORDER_CREATED)
+    @StreamListener(Channels.Events.ORDER_CREATED)
     public void orderCreated(final OrderCreatedEvent orderCreatedEvent) {
         LOGGER.debug("Received a '{}' event, the orderId is {}, the customer ID is {}",
                 orderCreatedEvent.getName(), orderCreatedEvent.getOrderId(), orderCreatedEvent.getCustomerId());
@@ -36,7 +36,7 @@ public class MessageConsumer implements InboundAdapter {
         customerService.handleOrderCreated(orderCreatedEvent);
     }
 
-    @StreamListener(Channels.ORDER_CHARGED)
+    @StreamListener(Channels.Events.ORDER_CHARGED)
     public void orderCharged(final OrderChargedEvent orderChargedEvent) {
         LOGGER.debug("Received a '{}' event, the ID of the customer is {}",
                 orderChargedEvent.getName(), orderChargedEvent.getCustomerId());
@@ -44,7 +44,7 @@ public class MessageConsumer implements InboundAdapter {
         customerService.handleOrderCharged(orderChargedEvent);
     }
 
-    @StreamListener(Channels.ORDER_NOT_CHARGED)
+    @StreamListener(Channels.Events.ORDER_NOT_CHARGED)
     public void orderNotCharged(final OrderNotChargedEvent orderNotChargedEvent) {
         LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
                 orderNotChargedEvent.getName(), orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId());
@@ -52,7 +52,7 @@ public class MessageConsumer implements InboundAdapter {
         customerService.handleOrderNotCharged(orderNotChargedEvent);
     }
 
-    @StreamListener(Channels.ORDER_SHIPPED)
+    @StreamListener(Channels.Events.ORDER_SHIPPED)
     public void orderShipped(final OrderShippedEvent orderShippedEvent) {
         LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
                 orderShippedEvent.getName(), orderShippedEvent.getOrderId(), orderShippedEvent.getCustomerId());

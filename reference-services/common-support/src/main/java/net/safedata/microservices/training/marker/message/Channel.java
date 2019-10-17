@@ -4,18 +4,18 @@ package net.safedata.microservices.training.marker.message;
 public enum Channel {
 
     // Customer channels
-    CUSTOMER_CREATED(Channels.CUSTOMER_CREATED),
-    CUSTOMER_UPDATED(Channels.CUSTOMER_UPDATED),
+    CUSTOMER_CREATED(Channels.Events.CUSTOMER_CREATED),
+    CUSTOMER_UPDATED(Channels.Events.CUSTOMER_UPDATED),
 
     // Order channels
-    CHARGE_ORDER(Channels.CHARGE_ORDER),
-    CREATE_ORDER(Channels.CREATE_ORDER),
-    FIND_ORDER(Channels.FIND_ORDER),
-    ORDER_CHARGED(Channels.ORDER_CHARGED),
-    ORDER_CREATED(Channels.ORDER_CREATED),
-    ORDER_SHIPPED(Channels.ORDER_SHIPPED),
-    ORDER_NOT_CHARGED(Channels.ORDER_NOT_CHARGED),
-    SHIP_ORDER(Channels.SHIP_ORDER)
+    CHARGE_ORDER(Channels.Commands.CHARGE_ORDER),
+    CREATE_ORDER(Channels.Commands.CREATE_ORDER),
+    FIND_ORDER(Channels.Queries.FIND_ORDER),
+    ORDER_CHARGED(Channels.Events.ORDER_CHARGED),
+    ORDER_CREATED(Channels.Events.ORDER_CREATED),
+    ORDER_SHIPPED(Channels.Events.ORDER_SHIPPED),
+    ORDER_NOT_CHARGED(Channels.Events.ORDER_NOT_CHARGED),
+    SHIP_ORDER(Channels.Commands.SHIP_ORDER)
     ;
 
     private final String channelName;

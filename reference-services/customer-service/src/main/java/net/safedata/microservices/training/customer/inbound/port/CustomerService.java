@@ -54,6 +54,8 @@ public class CustomerService implements InboundPort {
         LOGGER.info("Updating the customer with the ID {}...", customerId);
         updateCustomer(customerId);
 
+        //TODO insert magic here
+
         messagingOutboundPort.publishCustomerUpdatedEvent(
                 new CustomerUpdatedEvent(getNextMessageId(), getNextEventId(), customerId));
     }

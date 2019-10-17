@@ -24,7 +24,7 @@ public class MessageConsumer implements InboundAdapter {
         this.billingService = billingService;
     }
 
-    @StreamListener(Channels.CHARGE_ORDER)
+    @StreamListener(Channels.Commands.CHARGE_ORDER)
     public void chargeOrder(final ChargeOrderCommand chargeOrderCommand) {
         LOGGER.debug("Received a '{}' command for the order with the ID {} of the customer with the ID {}",
                 chargeOrderCommand.getName(), chargeOrderCommand.getOrderId(), chargeOrderCommand.getCustomerId());

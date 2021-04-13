@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: 'hexagonal-architecture-example'
+
+  jackson:
+    serialization:
+      indent_output: true
+    default-property-inclusion: non_null

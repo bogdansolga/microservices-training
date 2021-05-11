@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public final class MessageCreator {
 
-    public static  <T extends AbstractMessage> Message<T> create(final T t) {
+    public static <T extends AbstractMessage> Message<T> create(final T t) {
         return MessageBuilder.withPayload(t)
                              .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
                              .setHeader("correlationId", UUID.randomUUID().toString())

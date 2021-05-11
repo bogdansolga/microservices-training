@@ -22,6 +22,6 @@ public class OrderController implements InboundAdapter {
     public ResponseEntity<String> createOrder(@RequestBody final OrderDTO orderDTO) {
         orderService.createOrder(orderDTO);
 
-        return ResponseEntity.ok("The customer was successfully created");
+        return ResponseEntity.ok("The order was successfully created");
     }
 }

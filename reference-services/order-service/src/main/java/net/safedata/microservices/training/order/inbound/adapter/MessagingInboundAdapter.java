@@ -18,14 +18,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableBinding(InboundChannels.class)
-public class MessageConsumer implements InboundAdapter {
+public class MessagingInboundAdapter implements InboundAdapter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagingInboundAdapter.class);
 
     private final OrderService orderService;
 
     @Autowired
-    public MessageConsumer(final OrderService orderService) {
+    public MessagingInboundAdapter(final OrderService orderService) {
         this.orderService = orderService;
     }
 

@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/order")
-public class OrderController implements InboundAdapter {
+public class RestInboundAdapter implements InboundAdapter {
 
     private final OrderService orderService;
 
     @Autowired
-    public OrderController(final OrderService orderService) {
+    public RestInboundAdapter(final OrderService orderService) {
         this.orderService = orderService;
     }
 

@@ -13,15 +13,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableBinding(OutboundChannels.class)
-public class MessageProducer implements MessagingOutboundPort, OutboundAdapter {
+public class MessagingOutboundAdapter implements MessagingOutboundPort, OutboundAdapter {
 
     private final OutboundChannels outboundChannels;
 
     @Autowired
-    public MessageProducer(final OutboundChannels outboundChannels) {
+    public MessagingOutboundAdapter(final OutboundChannels outboundChannels) {
         this.outboundChannels = outboundChannels;
     }
 
+    @Override
     public void publishOrderCreatedEvent(final OrderCreatedEvent orderCreatedEvent) {
         outboundChannels.orderCreated()
                         .send(MessageCreator.create(orderCreatedEvent));

@@ -10,7 +10,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>order-service</artifactId>
+    <artifactId>workshop-shipping-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>

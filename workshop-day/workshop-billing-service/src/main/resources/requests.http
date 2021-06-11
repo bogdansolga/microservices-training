@@ -1,0 +1,7 @@
+POST http://localhost:8081/billing
+Content-Type: application/json
+
+{
+  "customerId": 5,
+  "amount": 23.5
+}

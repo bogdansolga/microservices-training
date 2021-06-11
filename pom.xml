@@ -22,6 +22,7 @@
 		<module>reference-services</module>
 		<module>new-services</module>
 		<module>workshop-services</module>
+		<module>workshop-day</module>
 	</modules>
 
 	<properties>

@@ -1,6 +1,6 @@
 package com.microservices.workshop.orders.mapper;
 
-import com.microservices.workshop.orders.domain.entity.Order;
+import com.microservices.workshop.orders.domain.entity.write.Order;
 import com.microservices.workshop.orders.dto.OrderDTO;
 import org.mapstruct.Mapper;
 

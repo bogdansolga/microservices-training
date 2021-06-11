@@ -1,4 +1,4 @@
-package com.microservices.workshop.orders.domain.entity;
+package com.microservices.workshop.orders.domain.entity.write;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +15,15 @@ public class Order implements Serializable {
 
     @Column(name = "amount", length = 5)
     private double amount;
+
+    @Column(name = "correlation_id", length = 20)
+    private String correlationId;
+
+    @Column(name = "status", length = 10)
+    private Status status;
+
+    @OneToOne
+    private CreateOrderSaga createOrderSaga;
 
     public long getId() {
         return id;
@@ -38,5 +47,21 @@ public class Order implements Serializable {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getCorrelationId() {
+        return correlationId;
+    }
+
+    public void setCorrelationId(String correlationId) {
+        this.correlationId = correlationId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

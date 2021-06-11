@@ -11,8 +11,9 @@ import java.util.UUID;
 
 public final class MessageCreator {
 
-    public static <T extends AbstractMessage> Message<T> create(final T t) {
-        return MessageBuilder.withPayload(t)
+    @SuppressWarnings("rawtypes")
+    public static <Payload extends AbstractMessage> Message<Payload> create(final Payload payload) {
+        return MessageBuilder.withPayload(payload)
                              .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
                              .setHeader("correlationId", UUID.randomUUID().toString())
                              .setHeader("version", "1.2")

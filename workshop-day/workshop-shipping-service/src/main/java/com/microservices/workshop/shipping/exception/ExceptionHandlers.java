@@ -1,6 +1,6 @@
 package com.microservices.workshop.shipping.exception;
 
-import com.microservices.workshop.billing.dto.MessageDTO;
+import com.microservices.workshop.shipping.dto.MessageDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

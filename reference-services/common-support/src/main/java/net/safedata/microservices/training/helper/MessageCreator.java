@@ -2,7 +2,6 @@ package net.safedata.microservices.training.helper;
 
 import net.safedata.microservices.training.message.AbstractMessage;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.MimeTypeUtils;
@@ -17,8 +16,8 @@ public final class MessageCreator {
                              .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
                              .setHeader("correlationId", UUID.randomUUID().toString())
                              .setHeader("version", "1.2")
-                             .setErrorChannelName("error_channel_" + t.getName()) // just an ex
-                             .setReplyChannelName("reply_channel_" + t.getName())
+                             .setErrorChannelName("error_channel_" + payload.getName()) // just an ex
+                             .setReplyChannelName("reply_channel_" + payload.getName())
                              .build();
     }
 }

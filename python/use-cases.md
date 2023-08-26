@@ -21,4 +21,7 @@ There are two service-to-service communication scenarios implemented:
 * for the _RestaurantService_:
     * the message listening endpoint is exposed on the inbound _MessagingAdapter_
     * the inbound _MessagingAdapter_ invokes the _RestaurantService_ to process the details about a certain order
-  
+
+In order to try the async communication example, please ensure that:
+* a compatible message broker (ex: RabbitMQ, Kafka) is running and it is properly configured
+* the 'order_queue' has been created

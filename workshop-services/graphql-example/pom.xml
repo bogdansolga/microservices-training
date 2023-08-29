@@ -6,20 +6,22 @@
 
     <parent>
         <groupId>net.safedata</groupId>
-        <artifactId>microservices.training</artifactId>
+        <artifactId>workshop-services</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>workshop-services</artifactId>
+    <artifactId>graphql-example</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
-    <description>The modules will be used as the starting point for the training workshop</description>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
 
-    <modules>
-        <module>first-service</module>
-        <module>second-service</module>
-        <module>hexagonal-architecture-example</module>
-        <module>graphql-example</module>
-    </modules>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>

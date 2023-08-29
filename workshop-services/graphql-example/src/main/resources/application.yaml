@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: graphql-simple-demo
+  graphql:
+    graphiql:
+      enabled: true

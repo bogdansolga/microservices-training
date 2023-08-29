@@ -1,0 +1,24 @@
+type Food {
+    id: ID!
+    title: String!
+    category: String!
+    description: String!
+    restaurant: Restaurant!
+}
+
+type Restaurant {
+    id: ID!
+    name: String!
+    thumbnail: String
+    foods: [Food]!
+}
+
+# The Root Query for the application
+type Query {
+    recentFood(count: Int, offset: Int): [Food]!
+}
+
+# The Root Mutation for the application
+type Mutation {
+    createFood(title: String!, description: String!, category: String, restaurantId: String!) : Food!
+}

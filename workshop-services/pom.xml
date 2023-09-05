@@ -21,5 +21,8 @@
         <module>second-service</module>
         <module>hexagonal-architecture-example</module>
         <module>graphql-example</module>
+
+        <module>order-service</module>
+        <module>restaurant-service</module>
     </modules>
 </project>

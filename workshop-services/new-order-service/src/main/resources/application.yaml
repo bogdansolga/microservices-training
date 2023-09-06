@@ -1,0 +1,16 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+
+logging:
+  level:
+    root: info
+    com:
+      zaxxer: warn
+    org:
+      apache: warn
+      hibernate: error
+      springframework: warn
+
+  pattern:
+    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-30.30logger{36}){cyan} %m%n%wex'

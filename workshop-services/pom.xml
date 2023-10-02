@@ -17,12 +17,10 @@
     <description>The modules will be used as the starting point for the training workshop</description>
 
     <modules>
-        <module>first-service</module>
-        <module>second-service</module>
         <module>hexagonal-architecture-example</module>
         <module>graphql-example</module>
 
-        <module>order-service</module>
-        <module>restaurant-service</module>
+        <module>workshop-order-service</module>
+        <module>workshop-restaurant-service</module>
     </modules>
 </project>

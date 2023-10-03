@@ -1,5 +1,6 @@
 package net.safedata.microservices.training.order.inbound.port;
 
+import jakarta.annotation.PostConstruct;
 import net.safedata.microservices.training.dto.order.OrderDTO;
 import net.safedata.microservices.training.marker.port.InboundPort;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
@@ -10,7 +11,9 @@ import net.safedata.microservices.training.message.event.order.OrderChargedEvent
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
-import net.safedata.microservices.training.order.model.Order;
+import net.safedata.microservices.training.order.domain.model.Order;
+import net.safedata.microservices.training.order.domain.model.OrderItem;
+import net.safedata.microservices.training.order.domain.model.OrderStatus;
 import net.safedata.microservices.training.order.outbound.port.MessagingOutboundPort;
 import net.safedata.microservices.training.order.outbound.port.PersistenceOutboundPort;
 import org.slf4j.Logger;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -32,6 +36,25 @@ public class OrderService implements InboundPort {
 
     private final MessagingOutboundPort messagingOutboundPort;
     private final PersistenceOutboundPort persistenceOutboundPort;
+
+    @PostConstruct
+    @Transactional
+    public void init() {
+        Order order = new Order(1, 200);
+        order.setStatus(OrderStatus.PAYED);
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setRestaurantId(82);
+        orderItem.setFoodId(23);
+        orderItem.setPrice(190);
+        orderItem.setName("Great pizza");
+        orderItem.setDescription("A delicious pizza");
+
+        order.setOrderItems(Set.of(orderItem));
+        orderItem.setOrder(order);
+        persistenceOutboundPort.save(order);
+        LOGGER.info("The order was saved");
+    }
 
     @Autowired
     public OrderService(final MessagingOutboundPort messagingOutboundPort,

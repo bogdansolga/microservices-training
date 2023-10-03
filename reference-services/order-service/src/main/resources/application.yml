@@ -12,15 +12,19 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    platform: h2
-    url: jdbc:h2:mem:orders;DB_CLOSE_ON_EXIT=FALSE
+
+    #in memory URL - will be reinitialized on each application start
+    #url: jdbc:h2:mem:orders;DB_CLOSE_ON_EXIT=FALSE
+
+    #on disk URL - initialized on the first application start, reused afterward
+    url: jdbc:h2:~/orders;DB_CLOSE_ON_EXIT=TRUE
+
     username: sa
     password: aVeryComplexPassword
-    initialization-mode: never
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     properties:
       hibernate:
         show_sql: false
@@ -30,3 +34,8 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
+
+  sql:
+    init:
+      platform: h2
+      mode: embedded

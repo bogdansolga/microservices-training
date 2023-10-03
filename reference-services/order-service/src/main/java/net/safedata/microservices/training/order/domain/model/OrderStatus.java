@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.order.model;
+package net.safedata.microservices.training.order.domain.model;
 
 public enum OrderStatus {
     CREATED,

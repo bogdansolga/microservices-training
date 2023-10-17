@@ -1,6 +1,8 @@
 package net.safedata.microservices.training.order.outbound.adapter;
 
+import net.safedata.microservices.training.helper.MessagePublisher;
 import net.safedata.microservices.training.marker.adapter.OutboundAdapter;
+import net.safedata.microservices.training.message.Bindings;
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
 import net.safedata.microservices.training.message.command.order.ShipOrderCommand;
@@ -16,24 +18,24 @@ public class MessagingOutboundAdapter implements MessagingOutboundPort, Outbound
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessagingOutboundAdapter.class);
 
-    private final StreamBridge streamBridge;
+    private final MessagePublisher messagePublisher;
 
     @Autowired
-    public MessagingOutboundAdapter(StreamBridge streamBridge) {
-        this.streamBridge = streamBridge;
+    public MessagingOutboundAdapter(MessagePublisher messagePublisher) {
+        this.messagePublisher = messagePublisher;
     }
 
     @Override
     public void publishOrderCreatedEvent(final OrderCreatedEvent orderCreatedEvent) {
         //TODO find a way to directly use the orderCreatedProducer
-        streamBridge.send("orderCreatedProducer-out-0", orderCreatedEvent);
+        messagePublisher.sendMessage(Bindings.ORDER_CREATED, orderCreatedEvent);
         LOGGER.info("The OrderCreatedEvent '{}' was published", orderCreatedEvent);
     }
 
     @Override
     public void publishChargeOrderCommand(final ChargeOrderCommand chargeOrderCommand) {
         //TODO find a way to directly use the chargeOrderProducer
-        streamBridge.send("chargeOrderProducer-out-0", chargeOrderCommand);
+        messagePublisher.sendMessage(Bindings.CHARGE_ORDER, chargeOrderCommand);
         LOGGER.info("The ChargeOrderCommand '{}' was published", chargeOrderCommand);
     }
 

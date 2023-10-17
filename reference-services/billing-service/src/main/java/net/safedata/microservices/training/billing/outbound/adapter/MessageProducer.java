@@ -1,6 +1,7 @@
 package net.safedata.microservices.training.billing.outbound.adapter;
 
-import net.safedata.microservices.training.billing.outbound.producer.OrderChargedProducer;
+import net.safedata.microservices.training.helper.MessagePublisher;
+import net.safedata.microservices.training.message.Bindings;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
 import net.safedata.microservices.training.billing.outbound.port.MessagingOutboundPort;
@@ -11,16 +12,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageProducer implements MessagingOutboundPort, OutboundAdapter {
 
-    private final OrderChargedProducer orderChargedProducer;
+    private final MessagePublisher messagePublisher;
 
     @Autowired
-    public MessageProducer(final OrderChargedProducer orderChargedProducer) {
-        this.orderChargedProducer = orderChargedProducer;
+    public MessageProducer(final MessagePublisher messagePublisher) {
+        this.messagePublisher = messagePublisher;
     }
 
     @Override
     public void publishOrderChargedEvent(final OrderChargedEvent orderChargedEvent) {
-        orderChargedProducer.apply(orderChargedEvent);
+        messagePublisher.sendMessage(Bindings.ORDER_CHARGED, orderChargedEvent);
     }
 
     @Override

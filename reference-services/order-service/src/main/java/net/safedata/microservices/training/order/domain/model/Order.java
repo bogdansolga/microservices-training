@@ -1,18 +1,14 @@
-package net.safedata.microservices.training.order.model;
+package net.safedata.microservices.training.order.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Order implements Serializable {
+@Table(name = "orders")
+public class Order extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +26,10 @@ public class Order implements Serializable {
 
     @Column(name = "creation_date", length = 10)
     private LocalDateTime creationDate;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("id ASC")
+    private Set<OrderItem> orderItems;
 
     public Order(final long customerId, final double total) {
         this.customerId = customerId;
@@ -79,6 +79,14 @@ public class Order implements Serializable {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override

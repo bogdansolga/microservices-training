@@ -54,4 +54,13 @@ public class ChargeOrderCommand extends AbstractCommand {
         EUR,
         USD
     }
+
+    @Override
+    public String toString() {
+        return "customerId: " + customerId +
+                ", orderId: " + orderId +
+                ", orderTotal: " + orderTotal +
+                ", currency: " + currency +
+                '}';
+    }
 }

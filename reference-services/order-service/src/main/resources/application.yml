@@ -5,6 +5,25 @@ spring:
   application:
     name: 'order-service'
 
+  cloud:
+    function:
+      definition: createOrder;orderCreatedProducer;chargeOrderProducer
+      # orderProducer
+    stream:
+      bindings:
+        orderProducer-out-0:
+          destination: create_order
+        createOrder-in-0:
+          destination: create_order
+        orderCreatedProducer-out-0:
+          destination: order_created
+        chargeOrderProducer-out-0:
+          destination: charge_order
+      kafka:
+        binder:
+          auto-create-topics: true
+          brokers: localhost:9092
+
   jackson:
     serialization:
       indent_output: true
@@ -17,7 +36,7 @@ spring:
     #url: jdbc:h2:mem:orders;DB_CLOSE_ON_EXIT=FALSE
 
     #on disk URL - initialized on the first application start, reused afterward
-    url: jdbc:h2:~/orders;DB_CLOSE_ON_EXIT=TRUE
+    url: jdbc:h2:~/orders;DB_CLOSE_ON_EXIT=FALSE
 
     username: sa
     password: aVeryComplexPassword
@@ -32,10 +51,20 @@ spring:
 
     open-in-view: false
 
-  kafka:
-    bootstrap-servers: localhost:9092
-
   sql:
     init:
       platform: h2
       mode: embedded
+
+# logging settings
+logging:
+  level:
+    root: info
+    com: warn
+    org:
+      apache: warn
+      hibernate: warn
+      springframework: warn
+
+  pattern:
+    console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'

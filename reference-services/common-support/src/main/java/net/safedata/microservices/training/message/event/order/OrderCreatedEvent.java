@@ -38,4 +38,11 @@ public class OrderCreatedEvent extends AbstractDomainEvent {
     public long getOrderId() {
         return orderId;
     }
+
+    @Override
+    public String toString() {
+        return "customerId: " + customerId +
+                ", orderId: " + orderId +
+                '}';
+    }
 }

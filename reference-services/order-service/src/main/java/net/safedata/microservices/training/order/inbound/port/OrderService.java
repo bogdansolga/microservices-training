@@ -53,7 +53,7 @@ public class OrderService implements InboundPort {
         order.setOrderItems(Set.of(orderItem));
         orderItem.setOrder(order);
         persistenceOutboundPort.save(order);
-        LOGGER.info("The order was saved");
+        LOGGER.info("The initial order was saved");
     }
 
     @Autowired

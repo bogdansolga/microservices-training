@@ -37,16 +37,18 @@ public class OrderService implements InboundPort {
     private final MessagingOutboundPort messagingOutboundPort;
     private final PersistenceOutboundPort persistenceOutboundPort;
 
+    private final Random random = new Random(3000);
+
     @PostConstruct
     @Transactional
-    public void init() {
-        Order order = new Order(1, 200);
+    public void saveInitialOrder() {
+        Order order = new Order(1, random.nextInt(200));
         order.setStatus(OrderStatus.PAYED);
 
         OrderItem orderItem = new OrderItem();
-        orderItem.setRestaurantId(82);
-        orderItem.setFoodId(23);
-        orderItem.setPrice(190);
+        orderItem.setRestaurantId(random.nextInt(100));
+        orderItem.setFoodId(random.nextLong(150));
+        orderItem.setPrice(random.nextLong(200));
         orderItem.setName("Great pizza");
         orderItem.setDescription("A delicious pizza");
 

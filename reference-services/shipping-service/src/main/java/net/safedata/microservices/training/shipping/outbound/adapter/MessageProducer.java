@@ -2,7 +2,7 @@ package net.safedata.microservices.training.shipping.outbound.adapter;
 
 import net.safedata.microservices.training.helper.MessagePublisher;
 import net.safedata.microservices.training.marker.port.OutboundPort;
-import net.safedata.microservices.training.message.Bindings;
+import net.safedata.microservices.training.message.OutputBindings;
 import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import net.safedata.microservices.training.shipping.outbound.port.MessagingOutboundPort;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,6 @@ public class MessageProducer implements MessagingOutboundPort, OutboundPort {
 
     @Override
     public void publishOrderShippedEvent(final OrderShippedEvent orderShippedEvent) {
-        messagePublisher.sendMessage(Bindings.ORDER_SHIPPED, orderShippedEvent);
+        messagePublisher.sendMessage(OutputBindings.ORDER_SHIPPED, orderShippedEvent);
     }
 }

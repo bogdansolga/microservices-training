@@ -1,7 +1,7 @@
 package net.safedata.microservices.training.helper;
 
 import net.safedata.microservices.training.message.AbstractMessage;
-import net.safedata.microservices.training.message.Bindings;
+import net.safedata.microservices.training.message.OutputBindings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.scheduling.annotation.Async;
@@ -18,7 +18,7 @@ public class MessagePublisher {
     }
 
     @Async
-    public <Message extends AbstractMessage<?>> void sendMessage(Bindings binding, Message message) {
+    public <Message extends AbstractMessage<?>> void sendMessage(OutputBindings binding, Message message) {
         streamBridge.send(binding.getBindingName(), message);
     }
 }

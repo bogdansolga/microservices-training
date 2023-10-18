@@ -2,7 +2,7 @@ package net.safedata.microservices.training.order.outbound.adapter;
 
 import net.safedata.microservices.training.helper.MessagePublisher;
 import net.safedata.microservices.training.marker.adapter.OutboundAdapter;
-import net.safedata.microservices.training.message.Bindings;
+import net.safedata.microservices.training.message.OutputBindings;
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
 import net.safedata.microservices.training.message.command.order.ShipOrderCommand;
@@ -10,7 +10,6 @@ import net.safedata.microservices.training.order.outbound.port.MessagingOutbound
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,14 +27,14 @@ public class MessagingOutboundAdapter implements MessagingOutboundPort, Outbound
     @Override
     public void publishOrderCreatedEvent(final OrderCreatedEvent orderCreatedEvent) {
         //TODO find a way to directly use the orderCreatedProducer
-        messagePublisher.sendMessage(Bindings.ORDER_CREATED, orderCreatedEvent);
+        messagePublisher.sendMessage(OutputBindings.ORDER_CREATED, orderCreatedEvent);
         LOGGER.info("The OrderCreatedEvent '{}' was published", orderCreatedEvent);
     }
 
     @Override
     public void publishChargeOrderCommand(final ChargeOrderCommand chargeOrderCommand) {
         //TODO find a way to directly use the chargeOrderProducer
-        messagePublisher.sendMessage(Bindings.CHARGE_ORDER, chargeOrderCommand);
+        messagePublisher.sendMessage(OutputBindings.CHARGE_ORDER, chargeOrderCommand);
         LOGGER.info("The ChargeOrderCommand '{}' was published", chargeOrderCommand);
     }
 

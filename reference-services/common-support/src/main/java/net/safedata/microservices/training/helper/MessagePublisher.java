@@ -18,7 +18,7 @@ public class MessagePublisher {
     }
 
     @Async
-    public <T extends AbstractMessage<?>> void sendMessage(Bindings binding, T message) {
+    public <Message extends AbstractMessage<?>> void sendMessage(Bindings binding, Message message) {
         streamBridge.send(binding.getBindingName(), message);
     }
 }

@@ -12,11 +12,9 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    platform: h2
     url: jdbc:h2:mem:orders;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: aVeryComplexPassword
-    initialization-mode: never
 
   jpa:
     hibernate:
@@ -28,5 +26,21 @@ spring:
 
     open-in-view: false
 
-  kafka:
-    bootstrap-servers: localhost:9092
+  sql:
+    init:
+      platform: h2
+      mode: embedded
+
+# logging settings
+logging:
+  level:
+    root: info
+    com: warn
+    org:
+      apache: warn
+      hibernate: warn
+      springframework: warn
+
+  pattern:
+    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'

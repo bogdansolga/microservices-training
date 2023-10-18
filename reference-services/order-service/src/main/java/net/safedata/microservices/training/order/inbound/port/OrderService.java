@@ -1,6 +1,5 @@
 package net.safedata.microservices.training.order.inbound.port;
 
-import jakarta.annotation.PostConstruct;
 import net.safedata.microservices.training.dto.order.OrderDTO;
 import net.safedata.microservices.training.marker.port.InboundPort;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
@@ -19,7 +18,10 @@ import net.safedata.microservices.training.order.outbound.port.PersistenceOutbou
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
@@ -39,8 +41,8 @@ public class OrderService implements InboundPort {
 
     private final Random random = new Random(3000);
 
-    @PostConstruct
-    @Transactional
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void saveInitialOrder() {
         Order order = new Order(1, random.nextInt(200));
         order.setStatus(OrderStatus.PAYED);

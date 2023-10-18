@@ -9,7 +9,10 @@ import net.safedata.microservices.training.message.event.order.OrderShippedEvent
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
 
 @Component
 public class MessageConsumer implements InboundAdapter {
@@ -23,31 +26,43 @@ public class MessageConsumer implements InboundAdapter {
         this.customerService = customerService;
     }
 
-    public void orderCreated(final OrderCreatedEvent orderCreatedEvent) {
-        LOGGER.debug("Received a '{}' event, the orderId is {}, the customer ID is {}",
-                orderCreatedEvent.getName(), orderCreatedEvent.getOrderId(), orderCreatedEvent.getCustomerId());
+    @Bean
+    public Consumer<OrderCreatedEvent> orderCreated() {
+        return orderCreatedEvent -> {
+            LOGGER.debug("Received a '{}' event, the orderId is {}, the customer ID is {}",
+                    orderCreatedEvent.getName(), orderCreatedEvent.getOrderId(), orderCreatedEvent.getCustomerId());
 
-        customerService.handleOrderCreated(orderCreatedEvent);
+            customerService.handleOrderCreated(orderCreatedEvent);
+        };
     }
 
-    public void orderCharged(final OrderChargedEvent orderChargedEvent) {
-        LOGGER.debug("Received a '{}' event, the ID of the customer is {}",
-                orderChargedEvent.getName(), orderChargedEvent.getCustomerId());
+    @Bean
+    public Consumer<OrderChargedEvent> orderCharged() {
+        return orderChargedEvent -> {
+            LOGGER.debug("Received a '{}' event, the ID of the customer is {}",
+                    orderChargedEvent.getName(), orderChargedEvent.getCustomerId());
 
-        customerService.handleOrderCharged(orderChargedEvent);
+            customerService.handleOrderCharged(orderChargedEvent);
+        };
     }
 
-    public void orderNotCharged(final OrderNotChargedEvent orderNotChargedEvent) {
-        LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
-                orderNotChargedEvent.getName(), orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId());
+    @Bean
+    public Consumer<OrderNotChargedEvent> orderNotCharged() {
+        return orderNotChargedEvent -> {
+            LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
+                    orderNotChargedEvent.getName(), orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId());
 
-        customerService.handleOrderNotCharged(orderNotChargedEvent);
+            customerService.handleOrderNotCharged(orderNotChargedEvent);
+        };
     }
 
-    public void orderShipped(final OrderShippedEvent orderShippedEvent) {
-        LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
-                orderShippedEvent.getName(), orderShippedEvent.getOrderId(), orderShippedEvent.getCustomerId());
+    @Bean
+    public Consumer<OrderShippedEvent> orderShipped() {
+        return orderShippedEvent -> {
+            LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
+                    orderShippedEvent.getName(), orderShippedEvent.getOrderId(), orderShippedEvent.getCustomerId());
 
-        customerService.handleOrderShipped(orderShippedEvent);
+            customerService.handleOrderShipped(orderShippedEvent);
+        };
     }
 }

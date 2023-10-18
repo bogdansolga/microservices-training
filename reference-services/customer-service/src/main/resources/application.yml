@@ -5,10 +5,43 @@ spring:
   application:
     name: 'customer-service'
 
+  cloud:
+    function:
+      definition: orderCreated;orderCharged;orderNotCharged;orderShipped;customerCreatedProducer;customerUpdatedProducer
+    stream:
+      bindings:
+        orderCreated-in-0:
+          destination: order_created
+        orderCharged-in-0:
+          destination: order_charged
+        orderNotCharged-in-0:
+          destination: order_not_charged
+        orderShipped-in-0:
+          destination: order_shipped
+        customerCreatedProducer-out-0:
+          destination: customer_created
+        customerUpdatedProducer-out-0:
+          destination: customer_updated
+      kafka:
+        binder:
+          auto-create-topics: true
+          brokers: localhost:9092
+
   jackson:
     serialization:
       indent_output: true
     default-property-inclusion: non_null
 
-  kafka:
-    bootstrap-servers: localhost:9092
+# logging settings
+logging:
+  level:
+    root: info
+    com: warn
+    org:
+      apache: warn
+      hibernate: warn
+      springframework: warn
+
+  pattern:
+    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'

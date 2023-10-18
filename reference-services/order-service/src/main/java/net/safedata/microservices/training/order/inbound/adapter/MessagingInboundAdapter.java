@@ -38,6 +38,7 @@ public class MessagingInboundAdapter implements InboundAdapter {
         };
     }
 
+    @Bean
     public Consumer<CustomerUpdatedEvent> customerUpdated() {
         return customerUpdatedEvent -> {
             LOGGER.debug("Received a '{}' event, the ID of the updated customer is {}",
@@ -47,6 +48,7 @@ public class MessagingInboundAdapter implements InboundAdapter {
         };
     }
 
+    @Bean
     public Consumer<OrderChargedEvent> orderCharged() {
         return orderChargedEvent -> {
             LOGGER.debug("Received a '{}' event for the order {} of the customer {}",
@@ -56,6 +58,7 @@ public class MessagingInboundAdapter implements InboundAdapter {
         };
     }
 
+    @Bean
     public Consumer<OrderNotChargedEvent> orderNotCharged() {
         return orderNotChargedEvent -> {
             LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
@@ -65,6 +68,7 @@ public class MessagingInboundAdapter implements InboundAdapter {
         };
     }
 
+    @Bean
     public Consumer<OrderShippedEvent> orderShipped() {
         return orderShippedEvent -> {
             LOGGER.debug("Received a '{}' event for the order {} of the customer {}",

@@ -1,0 +1,52 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: 'workshop-restaurant-service'
+
+  jackson:
+    serialization:
+      indent_output: true
+    default-property-inclusion: non_null
+
+  datasource:
+    driver-class-name: org.h2.Driver
+
+    #in memory URL - will be reinitialized on each application start
+    #url: jdbc:h2:mem:workshop-restaurant;DB_CLOSE_ON_EXIT=FALSE
+
+    #on disk URL - initialized on the first application start, reused afterward
+    url: jdbc:h2:~/workshop-restaurant;DB_CLOSE_ON_EXIT=FALSE
+
+    username: sa
+    password: aVeryComplexPassword
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+
+    open-in-view: false
+
+  sql:
+    init:
+      platform: h2
+      mode: embedded
+
+# logging settings
+logging:
+  level:
+    root: info
+    com: warn
+    org:
+      apache: warn
+      hibernate: warn
+      springframework: warn
+
+  pattern:
+    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'

@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OrderService {
+public class WorkshopOrderService {
 
     public static void main(String[] args) {
-        SpringApplication.run(OrderService.class, args);
+        SpringApplication.run(WorkshopOrderService.class, args);
     }
 }

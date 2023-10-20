@@ -12,6 +12,8 @@ public final class Channels {
     // events
     public static class Events {
         public static final String CUSTOMER_CREATED = "customer_created";
+
+        public static final String ORDER_UPDATED = "order_updated";
         public static final String CUSTOMER_UPDATED = "customer_updated";
         public static final String ORDER_CHARGED = "order_charged";
         public static final String ORDER_CREATED = "order_created";

@@ -22,5 +22,6 @@
 
         <module>workshop-order-service</module>
         <module>workshop-restaurant-service</module>
+        <module>workshop-billing-service</module>
     </modules>
 </project>

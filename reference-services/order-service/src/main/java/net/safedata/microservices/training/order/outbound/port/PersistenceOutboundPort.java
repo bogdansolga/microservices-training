@@ -4,5 +4,5 @@ import net.safedata.microservices.training.marker.port.OutboundPort;
 import net.safedata.microservices.training.order.domain.model.Order;
 
 public interface PersistenceOutboundPort extends OutboundPort {
-    void save(Order order);
+    long save(Order order);
 }

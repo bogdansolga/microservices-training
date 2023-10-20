@@ -151,10 +151,8 @@ public class OrderService implements InboundPort {
     }
 
     private long saveOrder(final Order order) {
-        // TODO insert magic here
         sleepALittle();
-
-        return ATOMIC_LONG.incrementAndGet();
+        return persistenceOutboundPort.save(order);
     }
 
     private long getNextMessageId() {

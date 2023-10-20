@@ -25,7 +25,8 @@ public class PersistenceOutboundAdapter implements PersistenceOutboundPort {
             propagation = Propagation.REQUIRED,
             isolation = Isolation.READ_COMMITTED
     )
-    public void save(Order order) {
-        orderRepository.save(order);
+    public long save(Order order) {
+        return orderRepository.save(order)
+                              .getId();
     }
 }

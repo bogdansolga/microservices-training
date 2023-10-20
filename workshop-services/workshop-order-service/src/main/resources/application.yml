@@ -50,3 +50,17 @@ logging:
   pattern:
     #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
     console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+
+    cloud:
+      function:
+        definition: updateOrder; orderUpdated
+      stream:
+        bindings:
+          updateOrder-out-0:
+            destination: update_order
+          orderUpdated-out-0:
+            destination: order_updated
+        kafka:
+          binder:
+            auto-create-topics: true
+            brokers: localhost:9092

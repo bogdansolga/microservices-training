@@ -1,7 +1,6 @@
-package net.safedata.microservices.training.order.inbound.port;
+package net.safedata.microservices.training.order.service;
 
 import net.safedata.microservices.training.dto.order.OrderDTO;
-import net.safedata.microservices.training.marker.port.InboundPort;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
 import net.safedata.microservices.training.message.command.order.ShipOrderCommand;
 import net.safedata.microservices.training.message.command.order.CreateOrderCommand;
@@ -13,6 +12,8 @@ import net.safedata.microservices.training.message.event.order.OrderShippedEvent
 import net.safedata.microservices.training.order.domain.model.Order;
 import net.safedata.microservices.training.order.domain.model.OrderItem;
 import net.safedata.microservices.training.order.domain.model.OrderStatus;
+import net.safedata.microservices.training.order.inbound.port.MessagingInboundPort;
+import net.safedata.microservices.training.order.inbound.port.RestInboundPort;
 import net.safedata.microservices.training.order.outbound.port.MessagingOutboundPort;
 import net.safedata.microservices.training.order.outbound.port.PersistenceOutboundPort;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class OrderService implements InboundPort {
+public class OrderService implements RestInboundPort, MessagingInboundPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
@@ -40,6 +42,17 @@ public class OrderService implements InboundPort {
     private final PersistenceOutboundPort persistenceOutboundPort;
 
     private final Random random = new Random(3000);
+
+    private final ThreadPoolTaskExecutor customThreadPool;
+
+    @Autowired
+    public OrderService(final MessagingOutboundPort messagingOutboundPort,
+                        final PersistenceOutboundPort persistenceOutboundPort,
+                        final ThreadPoolTaskExecutor customThreadPool) {
+        this.messagingOutboundPort = messagingOutboundPort;
+        this.persistenceOutboundPort = persistenceOutboundPort;
+        this.customThreadPool = customThreadPool;
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -58,13 +71,6 @@ public class OrderService implements InboundPort {
         orderItem.setOrder(order);
         persistenceOutboundPort.save(order);
         LOGGER.info("The initial order was saved");
-    }
-
-    @Autowired
-    public OrderService(final MessagingOutboundPort messagingOutboundPort,
-                        final PersistenceOutboundPort persistenceOutboundPort) {
-        this.messagingOutboundPort = messagingOutboundPort;
-        this.persistenceOutboundPort = persistenceOutboundPort;
     }
 
     // creating an order received from a REST endpoint (UI, testing app etc)
@@ -91,8 +97,12 @@ public class OrderService implements InboundPort {
         final long orderId = saveOrder(convertCommandIntoOrder(createOrderCommand));
         final double orderTotal = createOrderCommand.getOrderTotal();
 
-        CompletableFuture.runAsync(() -> publishChargeOrder(customerId, orderId, orderTotal))
-                         .thenRunAsync(() -> publishOrderCreatedEvent(customerId, orderId))
+        // will be published synchronously on the default Spring Boot / Tomcat thread pool
+        publishChargeOrder(customerId, orderId, orderTotal);
+        publishOrderCreatedEvent(customerId, orderId);
+
+        CompletableFuture.runAsync(() -> publishChargeOrder(customerId, orderId, orderTotal), customThreadPool)
+                         .thenRunAsync(() -> publishOrderCreatedEvent(customerId, orderId), customThreadPool)
                          .thenRunAsync(() -> LOGGER.info("The command and event were successfully published"));
     }
 

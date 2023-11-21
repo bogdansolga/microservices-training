@@ -29,19 +29,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class OrderService implements RestInboundPort, MessagingInboundPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
-    private static final AtomicLong ATOMIC_LONG = new AtomicLong(100);
+    private static final Random RANDOM = new Random(3000);
 
     private final MessagingOutboundPort messagingOutboundPort;
     private final PersistenceOutboundPort persistenceOutboundPort;
-
-    private final Random random = new Random(3000);
 
     private final ThreadPoolTaskExecutor customThreadPool;
 
@@ -57,13 +54,13 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void saveInitialOrder() {
-        Order order = new Order(1, random.nextInt(200));
+        Order order = new Order(1, RANDOM.nextInt(200));
         order.setStatus(OrderStatus.PAYED);
 
         OrderItem orderItem = new OrderItem();
-        orderItem.setRestaurantId(random.nextInt(100));
-        orderItem.setFoodId(random.nextLong(150));
-        orderItem.setPrice(random.nextLong(200));
+        orderItem.setRestaurantId(RANDOM.nextInt(100));
+        orderItem.setFoodId(RANDOM.nextLong(150));
+        orderItem.setPrice(RANDOM.nextLong(200));
         orderItem.setName("Great pizza");
         orderItem.setDescription("A delicious pizza");
 

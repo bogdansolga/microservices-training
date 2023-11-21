@@ -7,7 +7,6 @@ import net.safedata.microservices.training.message.event.order.OrderChargedEvent
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import net.safedata.microservices.training.order.inbound.port.MessagingInboundPort;
-import net.safedata.microservices.training.order.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

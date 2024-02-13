@@ -1,6 +1,8 @@
 package net.safedata.microservices.training.customer.config;
 
 import net.safedata.microservices.training.helper.MessageCreator;
+import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
+import net.safedata.microservices.training.message.command.order.ProcessOrderCommand;
 import net.safedata.microservices.training.message.event.customer.CustomerCreatedEvent;
 import net.safedata.microservices.training.message.event.customer.CustomerUpdatedEvent;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,11 @@ public class PublishersConfig {
 
     @Bean
     public Function<CustomerUpdatedEvent, Message<CustomerUpdatedEvent>> customerUpdatedProducer() {
+        return MessageCreator::create;
+    }
+
+    @Bean
+    public Function<ProcessOrderCommand, Message<ProcessOrderCommand>> processOrderProducer() {
         return MessageCreator::create;
     }
 }

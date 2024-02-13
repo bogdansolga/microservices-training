@@ -3,6 +3,7 @@ package net.safedata.microservices.training.customer.inbound.port;
 import net.safedata.microservices.training.customer.outbound.port.MessagingOutboundPort;
 import net.safedata.microservices.training.dto.customer.CustomerDTO;
 import net.safedata.microservices.training.marker.port.InboundPort;
+import net.safedata.microservices.training.message.command.order.ProcessOrderCommand;
 import net.safedata.microservices.training.message.event.customer.CustomerCreatedEvent;
 import net.safedata.microservices.training.message.event.customer.CustomerUpdatedEvent;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
@@ -66,6 +67,9 @@ public class CustomerService implements InboundPort {
                 orderChargedEvent.getOrderId(), orderChargedEvent.getCustomerId());
 
         // TODO insert magic here
+
+        messagingOutboundPort.publishProcessOrderCommand(
+                new ProcessOrderCommand(getNextMessageId(), getNextEventId(), "something", 220));
     }
 
     @Transactional

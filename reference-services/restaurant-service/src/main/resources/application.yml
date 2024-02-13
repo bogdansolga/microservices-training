@@ -1,29 +1,19 @@
 server:
-  port: 8084
+  port: 8085
 
 spring:
   application:
-    name: 'customer-service'
+    name: 'restaurant-service'
 
   cloud:
     function:
-      definition: orderCreated;orderCharged;orderNotCharged;orderShipped;customerCreatedProducer;customerUpdatedProducer;processOrderProducer
+      definition: processOrder;orderProcessed
     stream:
       bindings:
-        orderCreated-in-0:
-          destination: order_created
-        orderCharged-in-0:
-          destination: order_charged
-        orderNotCharged-in-0:
-          destination: order_not_charged
-        orderShipped-in-0:
-          destination: order_shipped
-        customerCreatedProducer-out-0:
-          destination: customer_created
-        customerUpdatedProducer-out-0:
-          destination: customer_updated
-        processOrderProducer-out-0:
+        processOrder-in-0: # handling a command - ProcessOrderCommand
           destination: process_order
+        orderProcessed-out-0: # publishing an event - OrderProcessedEvent
+          destination: order_processed
       kafka:
         binder:
           auto-create-topics: true

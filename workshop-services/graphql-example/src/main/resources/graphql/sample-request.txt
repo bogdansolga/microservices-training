@@ -1,0 +1,16 @@
+{
+  recentFood (count:5, offset: 2) {
+    id,
+    title,
+    description
+  }
+}
+
+----------------
+
+{
+  allFoods{
+    id,
+    description
+  }
+}

@@ -31,6 +31,11 @@ public class FoodController {
         return foodRepository.getRecentFood(count, offset);
     }
 
+    @QueryMapping
+    public List<Food> allFoods() {
+        return foodRepository.getAll();
+    }
+
     @SchemaMapping
     public Restaurant getRestaurant(Food food) {
         return restaurantRepository.getRestaurantById(food.getRestaurant().getId());

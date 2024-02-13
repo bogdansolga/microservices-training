@@ -23,4 +23,8 @@ public class FoodRepository {
     public void addFood(Food food) {
         foods.add(food);
     }
+
+    public List<Food> getAll() {
+        return foods;
+    }
 }

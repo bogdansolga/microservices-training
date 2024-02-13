@@ -16,6 +16,7 @@ type Restaurant {
 # The Root Query for the application
 type Query {
     recentFood(count: Int, offset: Int): [Food]!
+    allFoods: [Food]!
 }
 
 # The Root Mutation for the application

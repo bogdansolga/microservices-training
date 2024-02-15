@@ -16,9 +16,12 @@ public enum Channel {
 
     ORDER_PROCESSED(Channels.Events.ORDER_PROCESSED),
     ORDER_SHIPPED(Channels.Events.ORDER_SHIPPED),
+
+    ORDER_DELIVERED(Channels.Events.ORDER_DELIVERED),
     ORDER_NOT_CHARGED(Channels.Events.ORDER_NOT_CHARGED),
     SHIP_ORDER(Channels.Commands.SHIP_ORDER),
-    PROCESS_ORDER(Channels.Commands.PROCESS_ORDER);
+    PROCESS_ORDER(Channels.Commands.PROCESS_ORDER),
+    DELIVER_ORDER(Channels.Commands.DELIVER_ORDER);
 
     private final String channelName;
 

@@ -1,7 +1,7 @@
-package net.safedata.microservices.training.restaurant.config;
+package net.safedata.microservices.training.delivery.config;
 
 import net.safedata.microservices.training.helper.MessageCreator;
-import net.safedata.microservices.training.message.command.order.DeliverOrderCommand;
+import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
 import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
@@ -13,12 +13,7 @@ import java.util.function.Function;
 public class PublishersConfig {
 
     @Bean
-    public Function<OrderProcessedEvent, Message<OrderProcessedEvent>> orderProcessed() {
-        return MessageCreator::create;
-    }
-
-    @Bean
-    public Function<DeliverOrderCommand, Message<DeliverOrderCommand>> deliverOrder() {
+    public Function<OrderDeliveredEvent, Message<OrderDeliveredEvent>> orderDelivered() {
         return MessageCreator::create;
     }
 }

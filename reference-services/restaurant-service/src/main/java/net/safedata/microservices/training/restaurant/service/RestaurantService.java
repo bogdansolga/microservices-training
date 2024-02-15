@@ -1,5 +1,6 @@
 package net.safedata.microservices.training.restaurant.service;
 
+import net.safedata.microservices.training.message.command.order.DeliverOrderCommand;
 import net.safedata.microservices.training.message.command.order.ProcessOrderCommand;
 import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
 import net.safedata.microservices.training.restaurant.inbound.port.InboundMessagingPort;
@@ -27,8 +28,17 @@ public class RestaurantService implements InboundMessagingPort {
 
         //TODO insert processing magic here
 
+        DeliverOrderCommand deliverOrderCommand = createDeliverOrderCommand(processOrderCommand);
+        outboundMessagingPort.publishDeliverOrderCommand(deliverOrderCommand);
+
         outboundMessagingPort.publishOrderProcessedEvent(
                 new OrderProcessedEvent(processOrderCommand.getMessageId(), processOrderCommand.getCustomerId(),
                         processOrderCommand.getCustomerId(), -123L));
+    }
+
+    private DeliverOrderCommand createDeliverOrderCommand(ProcessOrderCommand processOrderCommand) {
+        return new DeliverOrderCommand(processOrderCommand.getCustomerId(),
+                processOrderCommand.getMessageId(), processOrderCommand.getProductName(),
+                processOrderCommand.getOrderTotal());
     }
 }

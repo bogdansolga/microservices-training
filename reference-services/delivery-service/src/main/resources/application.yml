@@ -1,21 +1,19 @@
 server:
-  port: 8085
+  port: 8086
 
 spring:
   application:
-    name: 'restaurant-service'
+    name: 'delivery-service'
 
   cloud:
     function:
-      definition: processOrder;deliverOrder;orderProcessed
+      definition: deliverOrder;orderDelivered
     stream:
       bindings:
-        processOrder-in-0: # handling a command - ProcessOrderCommand
-          destination: process_order
-        deliverOrder-out-0: # publishing a DeliverOrderCommand
+        deliverOrder-in-0: # handling a DeliverOrderCommand
           destination: deliver_order
-        orderProcessed-out-0: # publishing an event - OrderProcessedEvent
-          destination: order_processed
+        orderDelivered-out-0: # publishing an OrderDeliveredEvent event
+          destination: order_delivered
       kafka:
         binder:
           auto-create-topics: true

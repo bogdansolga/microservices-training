@@ -8,6 +8,7 @@ public final class Channels {
         public static final String CREATE_ORDER = "create_order";
         public static final String SHIP_ORDER = "ship_order";
         public static final String PROCESS_ORDER = "process_order";
+        public static final String DELIVER_ORDER = "deliver_order";
     }
 
     // events
@@ -21,6 +22,7 @@ public final class Channels {
         public static final String ORDER_NOT_CHARGED = "order_not_charged";
         public static final String ORDER_SHIPPED = "order_shipped";
         public static final String ORDER_PROCESSED = "order_processed";
+        public static final String ORDER_DELIVERED = "order_delivered";
     }
 
     // queries

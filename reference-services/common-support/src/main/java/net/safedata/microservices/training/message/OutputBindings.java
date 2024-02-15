@@ -12,7 +12,9 @@ public enum OutputBindings {
     CUSTOMER_UPDATED("customerUpdatedProducer-out-0", Channels.Events.CUSTOMER_UPDATED),
     ORDER_SHIPPED("orderShippedProducer-out-0", Channels.Events.ORDER_SHIPPED),
     ORDER_UPDATED("orderUpdatedProducer-out-0", Channels.Events.ORDER_UPDATED),
-    ORDER_PROCESSED("orderProcessedProducer-out-0", Channels.Events.ORDER_PROCESSED);
+    ORDER_PROCESSED("orderProcessedProducer-out-0", Channels.Events.ORDER_PROCESSED),
+    DELIVER_ORDER("deliverOrder-out-0", Channels.Commands.DELIVER_ORDER),
+    ORDER_DELIVERED("orderDelivered-out-0", Channels.Events.ORDER_DELIVERED);
 
     private final String bindingName;
     private final String channelName;

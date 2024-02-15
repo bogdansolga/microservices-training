@@ -27,5 +27,6 @@
         <module>shipping-service</module>
 
         <module>restaurant-service</module>
+        <module>delivery-service</module>
     </modules>
 </project>

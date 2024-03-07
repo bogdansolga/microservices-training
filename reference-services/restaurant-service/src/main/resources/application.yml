@@ -21,6 +21,16 @@ spring:
           auto-create-topics: true
           brokers: localhost:9092
 
+  datasource:
+    command:
+      url: jdbc:h2:mem:command
+      username: sa
+      password: something
+    query:
+      url: jdbc:h2:mem:query
+      username: sa
+      password: something_else
+
   jackson:
     serialization:
       indent_output: true

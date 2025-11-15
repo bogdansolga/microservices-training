@@ -58,4 +58,14 @@ public class DeliverOrderCommand extends AbstractCommand {
     public int hashCode() {
         return Objects.hash(productName, orderTotal, customerId);
     }
+
+    @Override
+    public String toString() {
+        return "DeliverOrderCommand{" +
+                "messageId=" + getMessageId() +
+                ", customerId=" + customerId +
+                ", productName='" + productName + '\'' +
+                ", orderTotal=" + orderTotal +
+                '}';
+    }
 }

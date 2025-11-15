@@ -6,6 +6,34 @@ Manages delivery assignments, tracking, and logistics for food orders.
 ## Architecture
 **Pattern:** Hexagonal Architecture (Ports & Adapters)
 
+```mermaid
+graph TB
+    subgraph "Inbound Adapters (Driving)"
+        REST[REST Controller<br/>:8085/delivery]
+        KAFKA_IN[Kafka Consumer<br/>Delivery Commands]
+    end
+
+    subgraph "Business Logic"
+        DELIVERY[Delivery Service<br/>Assignment & Tracking]
+    end
+
+    subgraph "Outbound Adapters (Driven)"
+        DB[(Database<br/>Delivery Data)]
+        KAFKA_OUT[Kafka Producer<br/>Delivery Events]
+    end
+
+    REST --> DELIVERY
+    KAFKA_IN --> DELIVERY
+    DELIVERY --> DB
+    DELIVERY --> KAFKA_OUT
+
+    style DELIVERY fill:#e1f5ff
+    style REST fill:#ffe1e1
+    style KAFKA_IN fill:#ffe1e1
+    style DB fill:#e1ffe1
+    style KAFKA_OUT fill:#e1ffe1
+```
+
 ### Inbound (Driving)
 - **REST API** - HTTP endpoints on port 8085
 - **Kafka Consumer** - Order and delivery events

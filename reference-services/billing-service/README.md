@@ -6,6 +6,34 @@ Handles payment processing and billing operations for orders. Simpler than order
 ## Architecture
 **Pattern:** Hexagonal Architecture (Ports & Adapters)
 
+```mermaid
+graph TB
+    subgraph "Inbound Adapters (Driving)"
+        REST[BillingController<br/>:8082/billing]
+        KAFKA_IN[MessageConsumer<br/>OrderCreatedEvent]
+    end
+
+    subgraph "Business Logic"
+        BILLING[BillingService<br/>Core Billing Logic]
+        PAYMENT[PaymentService<br/>Payment Processing]
+    end
+
+    subgraph "Outbound Adapters (Driven)"
+        KAFKA_OUT[MessageProducer<br/>Payment Events]
+    end
+
+    REST --> BILLING
+    KAFKA_IN --> BILLING
+    BILLING --> PAYMENT
+    BILLING --> KAFKA_OUT
+
+    style BILLING fill:#e1f5ff
+    style PAYMENT fill:#e1f5ff
+    style REST fill:#ffe1e1
+    style KAFKA_IN fill:#ffe1e1
+    style KAFKA_OUT fill:#e1ffe1
+```
+
 ### Inbound (Driving)
 - **REST API** (`BillingController`) - HTTP endpoints on port 8082
 - **Kafka Consumer** (`MessageConsumer`) - Processes OrderCreatedEvent

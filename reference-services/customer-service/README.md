@@ -6,6 +6,34 @@ Manages customer profiles and information. Demonstrates saga orchestration patte
 ## Architecture
 **Pattern:** Hexagonal Architecture (Ports & Adapters)
 
+```mermaid
+graph TB
+    subgraph "Inbound Adapters (Driving)"
+        REST[REST Controller<br/>:8083/customer]
+        KAFKA_IN[Kafka Consumer<br/>Order Events]
+    end
+
+    subgraph "Business Logic"
+        CUSTOMER[CustomerService<br/>Orchestration & Management]
+    end
+
+    subgraph "Outbound Adapters (Driven)"
+        DB[(Database<br/>Customer Data)]
+        KAFKA_OUT[Kafka Producer<br/>Customer & Process Events]
+    end
+
+    REST --> CUSTOMER
+    KAFKA_IN --> CUSTOMER
+    CUSTOMER --> DB
+    CUSTOMER --> KAFKA_OUT
+
+    style CUSTOMER fill:#e1f5ff
+    style REST fill:#ffe1e1
+    style KAFKA_IN fill:#ffe1e1
+    style DB fill:#e1ffe1
+    style KAFKA_OUT fill:#e1ffe1
+```
+
 ### Inbound (Driving)
 - **REST API** - HTTP endpoints on port 8083
 - **Kafka Consumer** - Event-driven operations

@@ -63,8 +63,10 @@ Learn more: [Spring Cloud Stream Documentation](https://docs.spring.io/spring-cl
 ## Training Materials
 
 ### Documentation
+- **[Architecture Overview](docs/Architecture-Overview.md)** - Visual diagrams: system context, hexagonal pattern, message flows, deployment architecture
 - **[Microservices Interactions](docs/Microservices%20interactions.md)** - Complete event flows, service responsibilities, and message types across the microservices architecture
 - **[Kafka Setup](docs/Kafka%20setup.md)** - Installation guide and topic creation commands for running Kafka locally
+- **[Terminology Guide](docs/Terminology-Guide.md)** - Architecture terms and naming conventions explained
 
 ### Hands-On Exercises (4-Day Training)
 - **[Day 1: Service Decomposition & Hexagonal Architecture](docs/Day-1-Hands-On-Exercises-Participant.md)** - Analyze a monolith, identify Bounded Contexts, implement a Hexagonal Architecture

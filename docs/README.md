@@ -87,7 +87,8 @@ Study these during training (each has detailed README):
 
 | Document | What It Covers |
 |----------|----------------|
-| [Microservices Interactions](Microservices%20interactions.md) | System architecture, message flows |
+| [Architecture Overview](Architecture-Overview.md) | **Visual diagrams**: System context, hexagonal pattern, message flows, deployment view |
+| [Microservices Interactions](Microservices%20interactions.md) | System architecture, message flows, event details |
 | [Kafka Setup](Kafka%20setup.md) | Environment configuration |
 | [Terminology Guide](Terminology-Guide.md) | Common terms and their meanings |
 

@@ -20,6 +20,7 @@
 
 	<modules>
         <module>architectural-examples</module>
+        <module>monolithic-application</module>
 		<module>reference-services</module>
 		<module>workshop-services</module>
 	</modules>

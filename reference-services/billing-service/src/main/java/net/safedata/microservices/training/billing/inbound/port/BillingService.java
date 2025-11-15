@@ -17,11 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class BillingService implements InboundPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BillingService.class);
+
+    // Sequential ID generators for realistic ID generation
+    private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(3000);
+    private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(7000);
 
     private final MessagingOutboundPort messagingOutboundPort;
     private final PaymentService paymentService;
@@ -74,12 +79,12 @@ public class BillingService implements InboundPort {
     }
 
     private long getNextMessageId() {
-        return new Random(900000).nextLong();
+        return MESSAGE_ID_COUNTER.incrementAndGet();
     }
 
     private long getNextEventId() {
         // returned from the saved database event, before sending it (using transactional messaging)
-        return new Random(900000).nextLong();
+        return EVENT_ID_COUNTER.incrementAndGet();
     }
 
     // simulate a long running operation

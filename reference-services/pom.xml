@@ -17,14 +17,12 @@
     <description>The modules are used as reference services</description>
 
     <modules>
-        <!-- keeps the common parent classes and annotations; used by all the other modules -->
+        <!-- keeps the common parent classes and annotations; used by all the services -->
         <module>common-support</module>
 
         <module>billing-service</module>
         <module>customer-service</module>
         <module>order-service</module>
-        <module>shipping-service</module>
-
         <module>restaurant-service</module>
         <module>delivery-service</module>
     </modules>

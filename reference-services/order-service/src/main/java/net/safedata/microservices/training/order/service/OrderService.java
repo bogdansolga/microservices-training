@@ -2,7 +2,6 @@ package net.safedata.microservices.training.order.service;
 
 import net.safedata.microservices.training.dto.order.OrderDTO;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
-import net.safedata.microservices.training.message.command.order.ShipOrderCommand;
 import net.safedata.microservices.training.message.command.order.CreateOrderCommand;
 import net.safedata.microservices.training.message.event.customer.CustomerCreatedEvent;
 import net.safedata.microservices.training.message.event.customer.CustomerUpdatedEvent;
@@ -11,7 +10,6 @@ import net.safedata.microservices.training.message.event.order.OrderCreatedEvent
 import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
-import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import net.safedata.microservices.training.order.domain.model.Order;
 import net.safedata.microservices.training.order.domain.model.OrderItem;
 import net.safedata.microservices.training.order.domain.model.OrderStatus;
@@ -33,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class OrderService implements RestInboundPort, MessagingInboundPort {
@@ -40,6 +39,10 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
     private static final Random RANDOM = new Random(3000);
+
+    // Sequential ID generators for realistic ID generation
+    private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(1000);
+    private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(5000);
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -131,10 +134,10 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         if (order != null) {
             order.setStatus(OrderStatus.PAYED);
             persistenceOutboundPort.save(order);
-            LOGGER.info("Order {} status updated to PAYED", orderId);
+            LOGGER.info("Order {} status updated to PAYED - order will be processed by restaurant", orderId);
         }
 
-        messagingOutboundPort.publishShipOrderCommand(new ShipOrderCommand(getNextMessageId(), customerId, orderId));
+        // Note: CustomerService will handle initiating restaurant processing via ProcessOrderCommand
     }
 
     @Transactional
@@ -149,19 +152,6 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         order.setStatus(OrderStatus.PAYMENT_FAILED);
         persistenceOutboundPort.save(order);
         LOGGER.warn("Order {} status updated to PAYMENT_FAILED", orderId);
-    }
-
-    @Transactional
-    public void handleOrderShipped(final OrderShippedEvent orderShippedEvent) {
-        final long customerId = orderShippedEvent.getCustomerId();
-        final long orderId = orderShippedEvent.getOrderId();
-        LOGGER.info("The order with the ID {} of the customer {} was successfully shipped!", orderId, customerId);
-
-        // Update order status to SHIPPED
-        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
-        order.setStatus(OrderStatus.SHIPPED);
-        persistenceOutboundPort.save(order);
-        LOGGER.info("Order {} status updated to SHIPPED", orderId);
     }
 
     @Transactional
@@ -197,8 +187,7 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         LOGGER.info("New customer created with ID {} and email '{}' - order service is now aware of this customer",
                 customerId, customerEmail);
 
-        // For teaching purposes: demonstrate event-driven awareness
-        // In a real system, you might cache customer data or perform validation
+        // demonstrates event-driven awareness; in a real system, we may cache the customer data or perform validations
         LOGGER.debug("Order service can now accept orders for customer {}", customerId);
     }
 
@@ -230,12 +219,12 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
     }
 
     private long getNextMessageId() {
-        return new Random(90000).nextLong();
+        return MESSAGE_ID_COUNTER.incrementAndGet();
     }
 
     private long getNextEventId() {
         // returned from the saved database event, before sending it (using transactional messaging)
-        return new Random(900000).nextLong();
+        return EVENT_ID_COUNTER.incrementAndGet();
     }
 
     // simulate a long running operation

@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8083
 
 spring:
   application:
@@ -7,7 +7,7 @@ spring:
 
   cloud:
     function:
-      definition: orderCreated;orderCharged;orderNotCharged;orderShipped;orderProcessed;orderDelivered;customerCreatedProducer;customerUpdatedProducer;processOrderProducer
+      definition: orderCreated;orderCharged;orderNotCharged;orderProcessed;orderDelivered;customerCreatedProducer;customerUpdatedProducer;processOrderProducer
     stream:
       bindings:
         orderCreated-in-0:
@@ -16,8 +16,6 @@ spring:
           destination: order_charged
         orderNotCharged-in-0:
           destination: order_not_charged
-        orderShipped-in-0:
-          destination: order_shipped
         orderProcessed-in-0:
           destination: order_processed
         orderDelivered-in-0:

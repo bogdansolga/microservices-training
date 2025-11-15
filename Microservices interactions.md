@@ -27,20 +27,23 @@
    └─→ Publishes: OrderChargedEvent → order_charged
 
 3. ORDER SERVICE + CUSTOMER SERVICE ← OrderChargedEvent
-   └─→ Order Service publishes: ShipOrderCommand → ship_order
+   ├─→ Order Service: Updates status to PAYED
+   └─→ Customer Service: Publishes ProcessOrderCommand → process_order
 
-4. SHIPPING SERVICE (8083) ← ShipOrderCommand
-   └─→ Publishes: OrderShippedEvent → order_shipped
-
-5. CUSTOMER SERVICE (8084) ← OrderCreatedEvent
-   └─→ Publishes: ProcessOrderCommand → process_order
-
-6. RESTAURANT SERVICE (8085) ← ProcessOrderCommand
+4. RESTAURANT SERVICE (8085) ← ProcessOrderCommand
    ├─→ Publishes: OrderProcessedEvent → order_processed
    └─→ Publishes: DeliverOrderCommand → deliver_order
 
-7. DELIVERY SERVICE (8086) ← DeliverOrderCommand
+5. ORDER SERVICE + CUSTOMER SERVICE ← OrderProcessedEvent
+   ├─→ Order Service: Updates status to PROCESSED
+   └─→ Customer Service: Tracks preparation progress
+
+6. DELIVERY SERVICE (8086) ← DeliverOrderCommand
    └─→ Publishes: OrderDeliveredEvent → order_delivered
+
+7. ORDER SERVICE + CUSTOMER SERVICE ← OrderDeliveredEvent
+   ├─→ Order Service: Updates status to DELIVERED (final!)
+   └─→ Customer Service: Sends delivery confirmation
 ```
 
 ---
@@ -49,12 +52,11 @@
 
 | Service | Port | Publishes | Consumes | Role |
 |---------|------|-----------|----------|------|
-| **Order** | 8081 | OrderCreatedEvent, ChargeOrderCommand, ShipOrderCommand | CreateOrderCommand, CustomerCreatedEvent, CustomerUpdatedEvent, OrderChargedEvent, OrderNotChargedEvent, OrderShippedEvent, OrderProcessedEvent, OrderDeliveredEvent | **Orchestrator & Lifecycle Tracker** |
+| **Order** | 8081 | OrderCreatedEvent, ChargeOrderCommand | CreateOrderCommand, CustomerCreatedEvent, CustomerUpdatedEvent, OrderChargedEvent, OrderNotChargedEvent, OrderProcessedEvent, OrderDeliveredEvent | **Orchestrator & Lifecycle Tracker** |
 | **Billing** | 8082 | OrderChargedEvent, OrderNotChargedEvent | ChargeOrderCommand | Payment processor |
-| **Shipping** | 8083 | OrderShippedEvent | ShipOrderCommand | Logistics handler |
-| **Customer** | 8084 | CustomerCreatedEvent, CustomerUpdatedEvent, ProcessOrderCommand | OrderCreatedEvent, OrderChargedEvent, OrderNotChargedEvent, OrderShippedEvent, OrderProcessedEvent, OrderDeliveredEvent | Customer aggregator + Order tracker |
-| **Restaurant** | 8085 | OrderProcessedEvent, DeliverOrderCommand | ProcessOrderCommand | Food preparation + Delivery initiator |
-| **Delivery** | 8086 | OrderDeliveredEvent | DeliverOrderCommand | Final delivery |
+| **Customer** | 8083 | CustomerCreatedEvent, CustomerUpdatedEvent, ProcessOrderCommand | OrderCreatedEvent, OrderChargedEvent, OrderNotChargedEvent, OrderProcessedEvent, OrderDeliveredEvent | Customer aggregator + Restaurant orchestrator |
+| **Restaurant** | 8084 | OrderProcessedEvent, DeliverOrderCommand | ProcessOrderCommand | Food preparation + Delivery initiator |
+| **Delivery** | 8085 | OrderDeliveredEvent | DeliverOrderCommand | Delivery execution |
 
 ---
 
@@ -107,7 +109,6 @@ The Order Service maintains complete lifecycle tracking through these statuses:
 | `IN_PROCESSING` | Business logic | Order is being processed |
 | `PAYED` | OrderChargedEvent | Payment successfully processed |
 | `PAYMENT_FAILED` | OrderNotChargedEvent | Payment processing failed |
-| `SHIPPED` | OrderShippedEvent | Order shipped to customer |
 | `PROCESSED` | OrderProcessedEvent | Restaurant completed food preparation |
 | `DELIVERED` | OrderDeliveredEvent | Final delivery completed |
 
@@ -121,8 +122,6 @@ The Order Service maintains complete lifecycle tracking through these statuses:
 | ChargeOrderCommand | Order → Billing | charge_order |
 | OrderChargedEvent | Billing → Order, Customer | order_charged |
 | OrderNotChargedEvent | Billing → Order | order_not_charged |
-| ShipOrderCommand | Order → Shipping | ship_order |
-| OrderShippedEvent | Shipping → Order, Customer | order_shipped |
 | ProcessOrderCommand | Customer → Restaurant | process_order |
 | OrderProcessedEvent | Restaurant → Order, Customer | order_processed |
 | DeliverOrderCommand | Restaurant → Delivery | deliver_order |

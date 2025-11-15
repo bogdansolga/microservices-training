@@ -7,7 +7,6 @@ import net.safedata.microservices.training.message.event.order.OrderCreatedEvent
 import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
-import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,16 +54,6 @@ public class MessageConsumer implements InboundAdapter {
                     orderNotChargedEvent.getName(), orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId());
 
             customerService.handleOrderNotCharged(orderNotChargedEvent);
-        };
-    }
-
-    @Bean
-    public Consumer<OrderShippedEvent> orderShipped() {
-        return orderShippedEvent -> {
-            LOGGER.debug("Received a '{}' event for the order {} of the customer {}",
-                    orderShippedEvent.getName(), orderShippedEvent.getOrderId(), orderShippedEvent.getCustomerId());
-
-            customerService.handleOrderShipped(orderShippedEvent);
         };
     }
 

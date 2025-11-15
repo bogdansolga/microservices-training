@@ -11,7 +11,6 @@ import net.safedata.microservices.training.message.event.order.OrderCreatedEvent
 import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
-import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class CustomerService implements InboundPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
+
+    // Sequential ID generators for realistic ID generation
+    private static final AtomicLong CUSTOMER_ID_COUNTER = new AtomicLong(100);
+    private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(2000);
+    private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(6000);
 
     private final MessagingOutboundPort messagingOutboundPort;
 
@@ -47,7 +52,7 @@ public class CustomerService implements InboundPort {
         // TODO insert magic here
         sleepALittle();
 
-        return new Random(10000).nextLong();
+        return CUSTOMER_ID_COUNTER.incrementAndGet();
     }
 
     @Transactional
@@ -83,22 +88,12 @@ public class CustomerService implements InboundPort {
     }
 
     @Transactional
-    public void handleOrderShipped(final OrderShippedEvent orderShippedEvent) {
-        final long customerId = orderShippedEvent.getCustomerId();
-        final long orderId = orderShippedEvent.getOrderId();
-        LOGGER.info("The order with the ID {} of the customer {} was successfully shipped!", orderId, customerId);
-
-        // For teaching: Update customer's order history or send notification
-        LOGGER.debug("Customer {} notified that order {} is on the way", customerId, orderId);
-    }
-
-    @Transactional
     public void handleOrderProcessed(final OrderProcessedEvent orderProcessedEvent) {
         final long customerId = orderProcessedEvent.getCustomerId();
         final long orderId = orderProcessedEvent.getOrderId();
         LOGGER.info("The order {} for customer {} has been processed by the restaurant", orderId, customerId);
 
-        // For teaching: Track order progress in customer's order history
+        // track order progress in customer's order history
         LOGGER.debug("Customer {} can see that order {} is being prepared", customerId, orderId);
     }
 
@@ -108,7 +103,7 @@ public class CustomerService implements InboundPort {
         final long orderId = orderDeliveredEvent.getOrderId();
         LOGGER.info("Order {} for customer {} has been successfully delivered!", orderId, customerId);
 
-        // For teaching: Update customer order history, send delivery confirmation
+        // update customer order history, send delivery confirmation
         LOGGER.debug("Customer {} notified of successful delivery for order {}", customerId, orderId);
     }
 
@@ -118,12 +113,12 @@ public class CustomerService implements InboundPort {
     }
 
     private long getNextMessageId() {
-        return new Random(900000).nextLong();
+        return MESSAGE_ID_COUNTER.incrementAndGet();
     }
 
     private long getNextEventId() {
         // returned from the saved database event, before sending it (using transactional messaging)
-        return new Random(900000).nextLong();
+        return EVENT_ID_COUNTER.incrementAndGet();
     }
 
     // simulate a long running operation

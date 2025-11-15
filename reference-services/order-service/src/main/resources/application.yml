@@ -7,7 +7,7 @@ spring:
 
   cloud:
     function:
-      definition: createOrder;customerUpdated;customerCreated;orderCharged;orderNotCharged;orderShipped;orderProcessed;orderDelivered;orderCreatedProducer;chargeOrderProducer
+      definition: createOrder;customerUpdated;customerCreated;orderCharged;orderNotCharged;orderProcessed;orderDelivered;orderCreatedProducer;chargeOrderProducer
     stream:
       bindings:
         createOrder-in-0:
@@ -20,8 +20,6 @@ spring:
           destination: order_charged
         orderNotCharged-in-0:
           destination: order_not_charged
-        orderShipped-in-0:
-          destination: order_shipped
         orderProcessed-in-0:
           destination: order_processed
         orderDelivered-in-0:

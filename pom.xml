@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.0</version>
+		<version>3.5.7</version>
 		<relativePath/>
 	</parent>
 
@@ -19,6 +19,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+        <module>architectural-examples</module>
 		<module>reference-services</module>
 		<module>workshop-services</module>
 	</modules>
@@ -31,7 +32,8 @@
 
 		<java.version>17</java.version>
 
-		<spring-cloud.version>2022.0.4</spring-cloud.version>
+		<spring-cloud.version>2024.0.0</spring-cloud.version>
+        <spring-cloud-stream.version>4.3.0</spring-cloud-stream.version>
 	</properties>
 
 	<dependencyManagement>
@@ -55,12 +57,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>net.safedata</groupId>
-				<artifactId>common-support-new</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 			</dependency>
@@ -72,6 +68,12 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-stream</artifactId>
+                <version>${spring-cloud-stream.version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 

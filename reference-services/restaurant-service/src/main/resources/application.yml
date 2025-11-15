@@ -22,6 +22,7 @@ spring:
           brokers: localhost:9092
 
   datasource:
+    driver-class-name: org.h2.Driver
     command:
       url: jdbc:h2:mem:command
       username: sa

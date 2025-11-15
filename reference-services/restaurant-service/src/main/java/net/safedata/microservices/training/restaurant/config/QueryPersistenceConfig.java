@@ -7,15 +7,18 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
         basePackages = "net.safedata.microservices.training.restaurant.domain.repository.query",
-        transactionManagerRef = "queryEntityManager"
+        entityManagerFactoryRef = "queryEntityManager",
+        transactionManagerRef = "queryTransactionManager"
 )
 @EntityScan(basePackages = "net.safedata.microservices.training.restaurant.domain.model.query")
 public class QueryPersistenceConfig {
@@ -43,17 +46,16 @@ public class QueryPersistenceConfig {
         hikariConfig.setMinimumIdle(AVAILABLE_PROCESSORS / 2);
         hikariConfig.setConnectionTimeout(30000);
         hikariConfig.setIdleTimeout(60000);
-        hikariConfig.setMaxLifetime(120000);
         hikariConfig.setJdbcUrl(url);
         hikariConfig.setUsername(userName);
         hikariConfig.setPassword(password);
         hikariConfig.setDriverClassName(driverClassName);
 
-        return getHikariDataSource(hikariConfig);
+        return getQueryDataSource(hikariConfig);
     }
 
     @Bean(destroyMethod = "close")
-    public HikariDataSource getHikariDataSource(HikariConfig hikariConfig) {
+    public HikariDataSource getQueryDataSource(HikariConfig hikariConfig) {
         return new HikariDataSource(hikariConfig);
     }
 
@@ -66,5 +68,12 @@ public class QueryPersistenceConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         return em;
+    }
+
+    @Bean
+    public PlatformTransactionManager queryTransactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(queryEntityManager().getObject());
+        return transactionManager;
     }
 }

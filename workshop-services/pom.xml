@@ -17,9 +17,6 @@
     <description>The modules will be used as the starting point for the training workshop</description>
 
     <modules>
-        <module>hexagonal-architecture-example</module>
-        <module>graphql-example</module>
-
         <module>workshop-order-service</module>
         <module>workshop-restaurant-service</module>
         <module>workshop-billing-service</module>

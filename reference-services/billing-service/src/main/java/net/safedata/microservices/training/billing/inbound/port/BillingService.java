@@ -43,7 +43,7 @@ public class BillingService implements InboundPort {
         final long orderId = chargeOrderCommand.getOrderId();
         final double orderTotal = chargeOrderCommand.getOrderTotal();
 
-        LOGGER.info("Charging the customer with the ID {}, for the order with Id {}, for {} {}...", customerId, orderId,
+        LOGGER.info("Charging the customer with the ID {}, for the order with the ID {}, for {} {}...", customerId, orderId,
                 orderTotal, chargeOrderCommand.getCurrency());
 
         final int usedPaymentMethod = getPaymentMethod();

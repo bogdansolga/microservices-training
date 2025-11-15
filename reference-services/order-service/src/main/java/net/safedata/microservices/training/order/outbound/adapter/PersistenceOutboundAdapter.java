@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class PersistenceOutboundAdapter implements PersistenceOutboundPort {
 
@@ -32,8 +34,7 @@ public class PersistenceOutboundAdapter implements PersistenceOutboundPort {
 
     @Override
     @Transactional(readOnly = true)
-    public Order findByIdOrThrow(long orderId) {
-        return orderRepository.findById(orderId)
-                              .orElseThrow(() -> new IllegalArgumentException("The order with ID " + orderId + " doesn't exist"));
+    public Optional<Order> findById(long orderId) {
+        return orderRepository.findById(orderId);
     }
 }

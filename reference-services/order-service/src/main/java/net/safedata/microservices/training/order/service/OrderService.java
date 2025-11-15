@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -130,12 +131,17 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         LOGGER.info("The order with the ID {} of the customer {} was successfully charged, updating it", orderId, customerId);
 
         // Update order status to PAYED
-        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
-        if (order != null) {
-            order.setStatus(OrderStatus.PAYED);
-            persistenceOutboundPort.save(order);
-            LOGGER.info("Order {} status updated to PAYED - order will be processed by restaurant", orderId);
+        Optional<Order> orderOpt = persistenceOutboundPort.findById(orderId);
+        if (orderOpt.isEmpty()) {
+            LOGGER.warn("Received OrderChargedEvent for non-existent order ID {}. " +
+                    "Skipping gracefully (possibly deleted, out-of-order, or stale message)", orderId);
+            return;
         }
+
+        Order order = orderOpt.get();
+        order.setStatus(OrderStatus.PAYED);
+        persistenceOutboundPort.save(order);
+        LOGGER.info("Order {} status updated to PAYED - order will be processed by restaurant", orderId);
 
         // Note: CustomerService will handle initiating restaurant processing via ProcessOrderCommand
     }
@@ -148,7 +154,14 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
                 orderId, customerId, orderNotChargedEvent.getReason());
 
         // Update order status to PAYMENT_FAILED
-        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        Optional<Order> orderOpt = persistenceOutboundPort.findById(orderId);
+        if (orderOpt.isEmpty()) {
+            LOGGER.warn("Received OrderNotChargedEvent for non-existent order ID {}. " +
+                    "Skipping gracefully (possibly deleted, out-of-order, or stale message)", orderId);
+            return;
+        }
+
+        Order order = orderOpt.get();
         order.setStatus(OrderStatus.PAYMENT_FAILED);
         persistenceOutboundPort.save(order);
         LOGGER.warn("Order {} status updated to PAYMENT_FAILED", orderId);
@@ -161,7 +174,14 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         LOGGER.info("The order with the ID {} of the customer {} was processed by the restaurant", orderId, customerId);
 
         // Update order status to PROCESSED
-        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        Optional<Order> orderOpt = persistenceOutboundPort.findById(orderId);
+        if (orderOpt.isEmpty()) {
+            LOGGER.warn("Received OrderProcessedEvent for non-existent order ID {}. " +
+                    "Skipping gracefully (possibly deleted, out-of-order, or stale message)", orderId);
+            return;
+        }
+
+        Order order = orderOpt.get();
         order.setStatus(OrderStatus.PROCESSED);
         persistenceOutboundPort.save(order);
         LOGGER.info("Order {} status updated to PROCESSED", orderId);
@@ -174,7 +194,14 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         LOGGER.info("The order with the ID {} of the customer {} was successfully delivered!", orderId, customerId);
 
         // Update order status to DELIVERED
-        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        Optional<Order> orderOpt = persistenceOutboundPort.findById(orderId);
+        if (orderOpt.isEmpty()) {
+            LOGGER.warn("Received OrderDeliveredEvent for non-existent order ID {}. " +
+                    "Skipping gracefully (possibly deleted, out-of-order, or stale message)", orderId);
+            return;
+        }
+
+        Order order = orderOpt.get();
         order.setStatus(OrderStatus.DELIVERED);
         persistenceOutboundPort.save(order);
         LOGGER.info("Order {} status updated to DELIVERED - order lifecycle complete!", orderId);

@@ -5,4 +5,6 @@ import net.safedata.microservices.training.order.domain.model.Order;
 
 public interface PersistenceOutboundPort extends OutboundPort {
     long save(Order order);
+
+    Order findByIdOrThrow(long orderId);
 }

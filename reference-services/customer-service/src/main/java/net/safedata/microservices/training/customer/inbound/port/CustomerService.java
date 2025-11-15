@@ -8,7 +8,9 @@ import net.safedata.microservices.training.message.event.customer.CustomerCreate
 import net.safedata.microservices.training.message.event.customer.CustomerUpdatedEvent;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
+import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
+import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
 import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +88,28 @@ public class CustomerService implements InboundPort {
         final long orderId = orderShippedEvent.getOrderId();
         LOGGER.info("The order with the ID {} of the customer {} was successfully shipped!", orderId, customerId);
 
-        // TODO insert any further magic here
+        // For teaching: Update customer's order history or send notification
+        LOGGER.debug("Customer {} notified that order {} is on the way", customerId, orderId);
+    }
+
+    @Transactional
+    public void handleOrderProcessed(final OrderProcessedEvent orderProcessedEvent) {
+        final long customerId = orderProcessedEvent.getCustomerId();
+        final long orderId = orderProcessedEvent.getOrderId();
+        LOGGER.info("The order {} for customer {} has been processed by the restaurant", orderId, customerId);
+
+        // For teaching: Track order progress in customer's order history
+        LOGGER.debug("Customer {} can see that order {} is being prepared", customerId, orderId);
+    }
+
+    @Transactional
+    public void handleOrderDelivered(final OrderDeliveredEvent orderDeliveredEvent) {
+        final long customerId = orderDeliveredEvent.getCustomerId();
+        final long orderId = orderDeliveredEvent.getOrderId();
+        LOGGER.info("Order {} for customer {} has been successfully delivered!", orderId, customerId);
+
+        // For teaching: Update customer order history, send delivery confirmation
+        LOGGER.debug("Customer {} notified of successful delivery for order {}", customerId, orderId);
     }
 
     private void updateCustomer(long customerId) {

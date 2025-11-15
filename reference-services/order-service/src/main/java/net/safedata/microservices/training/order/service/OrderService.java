@@ -4,10 +4,13 @@ import net.safedata.microservices.training.dto.order.OrderDTO;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
 import net.safedata.microservices.training.message.command.order.ShipOrderCommand;
 import net.safedata.microservices.training.message.command.order.CreateOrderCommand;
+import net.safedata.microservices.training.message.event.customer.CustomerCreatedEvent;
 import net.safedata.microservices.training.message.event.customer.CustomerUpdatedEvent;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
+import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
+import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
 import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import net.safedata.microservices.training.order.domain.model.Order;
 import net.safedata.microservices.training.order.domain.model.OrderItem;
@@ -123,17 +126,29 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         final long orderId = orderChargedEvent.getOrderId();
         LOGGER.info("The order with the ID {} of the customer {} was successfully charged, updating it", orderId, customerId);
 
-        // TODO insert magic here
+        // Update order status to PAYED
+        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        if (order != null) {
+            order.setStatus(OrderStatus.PAYED);
+            persistenceOutboundPort.save(order);
+            LOGGER.info("Order {} status updated to PAYED", orderId);
+        }
 
         messagingOutboundPort.publishShipOrderCommand(new ShipOrderCommand(getNextMessageId(), customerId, orderId));
     }
 
     @Transactional
     public void handleOrderNotCharged(final OrderNotChargedEvent orderNotChargedEvent) {
+        final long orderId = orderNotChargedEvent.getOrderId();
+        final long customerId = orderNotChargedEvent.getCustomerId();
         LOGGER.warn("The order with the ID {} of the customer {} could not be charged - reason: '{}'",
-                orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId(), orderNotChargedEvent.getReason());
+                orderId, customerId, orderNotChargedEvent.getReason());
 
-        // TODO insert magic here
+        // Update order status to PAYMENT_FAILED
+        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        order.setStatus(OrderStatus.PAYMENT_FAILED);
+        persistenceOutboundPort.save(order);
+        LOGGER.warn("Order {} status updated to PAYMENT_FAILED", orderId);
     }
 
     @Transactional
@@ -142,7 +157,49 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         final long orderId = orderShippedEvent.getOrderId();
         LOGGER.info("The order with the ID {} of the customer {} was successfully shipped!", orderId, customerId);
 
-        //TODO update the order status in the database
+        // Update order status to SHIPPED
+        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        order.setStatus(OrderStatus.SHIPPED);
+        persistenceOutboundPort.save(order);
+        LOGGER.info("Order {} status updated to SHIPPED", orderId);
+    }
+
+    @Transactional
+    public void handleOrderProcessed(final OrderProcessedEvent orderProcessedEvent) {
+        final long customerId = orderProcessedEvent.getCustomerId();
+        final long orderId = orderProcessedEvent.getOrderId();
+        LOGGER.info("The order with the ID {} of the customer {} was processed by the restaurant", orderId, customerId);
+
+        // Update order status to PROCESSED
+        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        order.setStatus(OrderStatus.PROCESSED);
+        persistenceOutboundPort.save(order);
+        LOGGER.info("Order {} status updated to PROCESSED", orderId);
+    }
+
+    @Transactional
+    public void handleOrderDelivered(final OrderDeliveredEvent orderDeliveredEvent) {
+        final long customerId = orderDeliveredEvent.getCustomerId();
+        final long orderId = orderDeliveredEvent.getOrderId();
+        LOGGER.info("The order with the ID {} of the customer {} was successfully delivered!", orderId, customerId);
+
+        // Update order status to DELIVERED
+        Order order = persistenceOutboundPort.findByIdOrThrow(orderId);
+        order.setStatus(OrderStatus.DELIVERED);
+        persistenceOutboundPort.save(order);
+        LOGGER.info("Order {} status updated to DELIVERED - order lifecycle complete!", orderId);
+    }
+
+    @Transactional
+    public void handleCustomerCreated(final CustomerCreatedEvent customerCreatedEvent) {
+        final long customerId = customerCreatedEvent.getCustomerId();
+        final String customerEmail = customerCreatedEvent.getCustomerEmail();
+        LOGGER.info("New customer created with ID {} and email '{}' - order service is now aware of this customer",
+                customerId, customerEmail);
+
+        // For teaching purposes: demonstrate event-driven awareness
+        // In a real system, you might cache customer data or perform validation
+        LOGGER.debug("Order service can now accept orders for customer {}", customerId);
     }
 
     private void publishChargeOrder(final long customerId, final long orderId, final double orderTotal) {

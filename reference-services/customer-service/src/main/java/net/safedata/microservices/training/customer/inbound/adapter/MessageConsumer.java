@@ -4,7 +4,9 @@ import net.safedata.microservices.training.customer.inbound.port.CustomerService
 import net.safedata.microservices.training.marker.adapter.InboundAdapter;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
+import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
+import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
 import net.safedata.microservices.training.message.event.order.OrderShippedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,10 +61,30 @@ public class MessageConsumer implements InboundAdapter {
     @Bean
     public Consumer<OrderShippedEvent> orderShipped() {
         return orderShippedEvent -> {
-            LOGGER.warn("Received a '{}' event for the order {} of the customer {}",
+            LOGGER.debug("Received a '{}' event for the order {} of the customer {}",
                     orderShippedEvent.getName(), orderShippedEvent.getOrderId(), orderShippedEvent.getCustomerId());
 
             customerService.handleOrderShipped(orderShippedEvent);
+        };
+    }
+
+    @Bean
+    public Consumer<OrderProcessedEvent> orderProcessed() {
+        return orderProcessedEvent -> {
+            LOGGER.debug("Received a '{}' event for the order {} of the customer {}",
+                    orderProcessedEvent.getName(), orderProcessedEvent.getOrderId(), orderProcessedEvent.getCustomerId());
+
+            customerService.handleOrderProcessed(orderProcessedEvent);
+        };
+    }
+
+    @Bean
+    public Consumer<OrderDeliveredEvent> orderDelivered() {
+        return orderDeliveredEvent -> {
+            LOGGER.debug("Received a '{}' event for the order {} of the customer {}",
+                    orderDeliveredEvent.getName(), orderDeliveredEvent.getOrderId(), orderDeliveredEvent.getCustomerId());
+
+            customerService.handleOrderDelivered(orderDeliveredEvent);
         };
     }
 }

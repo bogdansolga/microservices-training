@@ -29,4 +29,11 @@ public class PersistenceOutboundAdapter implements PersistenceOutboundPort {
         return orderRepository.save(order)
                               .getId();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Order findByIdOrThrow(long orderId) {
+        return orderRepository.findById(orderId)
+                              .orElseThrow(() -> new IllegalArgumentException("The order with ID " + orderId + " doesn't exist"));
+    }
 }

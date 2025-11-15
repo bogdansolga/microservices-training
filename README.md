@@ -46,3 +46,15 @@ See `Microservices interactions.md` for complete message flows and service inter
 - Apache Kafka
 - Java 17
 - H2 Database
+
+## Training Materials
+
+### Documentation
+- **[Microservices Interactions](docs/Microservices%20interactions.md)** - Complete event flows, service responsibilities, and message types across the microservices architecture
+- **[Kafka Setup](docs/Kafka%20setup.md)** - Installation guide and topic creation commands for running Kafka locally
+
+### Hands-On Exercises (4-Day Training)
+- **[Day 1: Service Decomposition & Hexagonal Architecture](docs/Day-1-Hands-On-Exercises-Participant.md)** - Analyze a monolith, identify Bounded Contexts, implement a Hexagonal Architecture
+- **[Day 2: Inter-Process Communication](docs/Day-2-Hands-On-Exercises-Participant.md)** - Build REST APIs (synchronous) and implement Event-Driven messaging with Kafka (asynchronous)
+- **[Day 3: Data Management & Sagas](docs/Day-3-Hands-On-Exercises-Participant.md)** - Design and implement distributed transactions using the Saga pattern and CQRS
+- **[Day 4: Testing & Production Readiness](docs/Day-4-Hands-On-Exercises-Participant.md)** - Add resilience patterns (circuit breaker, retry, rate limiting), implement comprehensive testing, prepare for production

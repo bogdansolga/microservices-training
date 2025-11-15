@@ -21,12 +21,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static net.safedata.spring.training.complete.project.controller.ProductController.API_PREFIX;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    private static final String API_PREFIX = "/api";
 
     @Bean
     public SecurityFilterChain webHttpSecurity(HttpSecurity http) throws Exception {

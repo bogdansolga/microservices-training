@@ -1,4 +1,4 @@
-package net.safedata.spring.training.jpa.model;
+package net.safedata.spring.training.complete.project.model;
 
 import java.io.Serializable;
 

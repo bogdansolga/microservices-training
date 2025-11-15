@@ -19,11 +19,6 @@
         </dependency>
 
         <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
         </dependency>
@@ -63,52 +58,4 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>spring-boot-training-${project.version}</finalName>
-
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-
-                <configuration>
-                    <executable>true</executable>
-                    <mainClass>net.safedata.spring.training.complete.project.EpicEatsApplication</mainClass>
-
-                    <jvmArguments>-server -Xms128m -Xmx128m</jvmArguments>
-
-                    <!-- if one / several profiles need to be used
-                    <profiles>
-                        <profile>dev</profile>
-                    </profiles>
-                    -->
-                </configuration>
-
-                <!-- repackage the jar that is built during the Maven 'package' phase -->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-                <!-- if the app needs to be started in debug mode
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <jvmArguments>
-                        -Djava.rmi.server.hostname=localhost -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
-                    </jvmArguments>
-                </configuration>
-                -->
-            </plugin>
-        </plugins>
-    </build>
 </project>

@@ -4,11 +4,11 @@ Hands-on examples for learning microservices architecture through a food orderin
 
 ## Project Overview
 
-A complete microservices ecosystem demonstrating event-driven architecture (EDA) with CQRS using Spring Cloud Stream and Kafka.
+A complete microservices ecosystem demonstrating event-driven architecture (EDA) with CQRS using [Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream) with the Kafka binder.
 
 **Domain**: Food ordering system spanning order placement through delivery
 **Architecture**: Hexagonal architecture with inbound/outbound adapters per service
-**Messaging**: Kafka-based event streaming with command-event chains
+**Messaging**: Broker-agnostic event streaming using Spring Cloud Stream (currently configured with Kafka)
 
 ## Modules
 
@@ -41,11 +41,24 @@ See `Microservices interactions.md` for complete message flows and service inter
 
 ## Technology Stack
 
-- Spring Boot 3.5.7
-- Spring Cloud Stream 4.3.0
-- Apache Kafka
-- Java 17
-- H2 Database
+- **Spring Boot** 3.5.7
+- **[Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream)** 4.3.0 - Broker-agnostic messaging abstraction
+- **Kafka Binder** - Currently configured (easily switchable to RabbitMQ, Azure Service Bus, AWS Kinesis, etc.)
+- **Apache Kafka** - Message broker (default configuration)
+- **Java** 17
+- **H2 Database** - In-memory database
+
+### Why Spring Cloud Stream?
+
+Spring Cloud Stream provides a **broker-agnostic abstraction** layer over messaging systems. All examples use Spring Cloud Stream, which means:
+
+- **Easy broker switching**: Change from Kafka to RabbitMQ, Azure Service Bus, AWS Kinesis, or Google Pub/Sub by simply changing dependencies and configuration
+- **Consistent programming model**: Same code works across different brokers
+- **Production flexibility**: Start with Kafka in dev, switch to managed services in production without code changes
+
+**Supported binders**: Kafka, RabbitMQ, Azure Service Bus, AWS Kinesis, Google Pub/Sub, Apache RocketMQ, and more.
+
+Learn more: [Spring Cloud Stream Documentation](https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/)
 
 ## Training Materials
 

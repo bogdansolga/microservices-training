@@ -289,3 +289,30 @@ public List<OrderHistoryView> getCustomerOrders(
 - `Microservices interactions.md` - complete saga flows
 - `reference-services/order-service/` - saga implementation
 - `reference-services/customer-service/` - orchestration examples
+
+---
+
+## Learning Path
+
+### Completed Today
+- Saga pattern for distributed transactions
+- CQRS implementation (command and query separation)
+- Event sourcing concepts
+- Compensation logic for rollbacks
+
+### Prepare for Day 4
+**Read before next session:**
+- Research: Testing strategies for microservices
+- Research: Circuit breaker pattern
+- Review all services you've built for testing gaps
+
+### If You Need More Practice
+- Add compensation logic to your Menu Service
+- Implement CQRS for customer queries
+- Create a read model with event sourcing
+- Add timeout handling to saga steps
+
+### Struggling? Review These
+- **Saga patterns:** `docs/Microservices interactions.md` - Study the order creation flow
+- **CQRS basics:** Research Martin Fowler's CQRS article
+- **Event flows:** Trace a complete saga through all services with logging

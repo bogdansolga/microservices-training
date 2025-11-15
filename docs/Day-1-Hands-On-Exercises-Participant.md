@@ -38,6 +38,16 @@ Working in 1-2 groups:
 ### Objective
 Understand hexagonal architecture by comparing monolith vs. microservices structure.
 
+### Recommended Study Path
+**Before starting this exercise:**
+1. Open `architectural-examples/hexagonal-architecture-example/`
+2. Read the README.md (comprehensive explanation with diagrams)
+3. Study the code structure (10 minutes)
+4. Run the example locally and test it
+5. Then proceed to compare with order-service below
+
+This simplified example will help you understand the pattern before analyzing the production code.
+
 ### Part A: Identify Layers (~15 min)
 
 **Monolithic Application:**
@@ -134,3 +144,28 @@ Build a **Menu Service** to manage restaurant menu items.
 - `monolithic-application/` - monolith structure
 - hexagonal architecture examples in `reference-services/`
 - `Microservices interactions.md` - actual implementation
+
+---
+
+## Learning Path
+
+### Completed Today
+- Service decomposition analysis
+- Hexagonal architecture understanding
+- Basic service implementation with ports and adapters
+
+### Prepare for Day 2
+**Read before next session:**
+- `docs/Microservices interactions.md` - Understand message flows
+- `reference-services/order-service/outbound/adapter/MessagingOutboundAdapter.java` - Event publishing
+- `docs/Kafka setup.md` - Kafka basics
+
+### If You Need More Practice
+- Repeat Exercise 3 with a different service (Product Catalog)
+- Study `reference-services/billing-service/` - Simpler than order-service
+- Add validation logic to your Menu Service
+
+### Struggling? Review These
+- **Hexagonal architecture:** `architectural-examples/hexagonal-architecture-example/README.md`
+- **Dependency injection:** Spring documentation
+- **Terminology confusion:** `docs/Terminology-Guide.md`

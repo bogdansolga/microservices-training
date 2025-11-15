@@ -193,3 +193,30 @@ spring.cloud.stream.bindings:
 - `reference-services/order-service/` - hexagonal structure
 - `reference-services/billing-service/` - messaging examples
 - `Microservices interactions.md` - complete event flows
+
+---
+
+## Learning Path
+
+### Completed Today
+- REST API implementation with hexagonal architecture
+- Event-driven communication with Kafka
+- Producer and consumer patterns
+- Asynchronous messaging resilience
+
+### Prepare for Day 3
+**Read before next session:**
+- `docs/Microservices interactions.md` - Focus on saga patterns
+- `reference-services/customer-service/` - Orchestration examples
+- Research: What is the Saga pattern and why is it needed?
+
+### If You Need More Practice
+- Add error handling to your Kafka consumers
+- Implement dead letter queue pattern
+- Add REST endpoints to your Menu Service from Day 1
+- Create a new event type and publish/consume it
+
+### Struggling? Review These
+- **Kafka basics:** `docs/Kafka setup.md`
+- **Event patterns:** Study `MessagingOutboundAdapter.java` in billing-service
+- **REST APIs:** `RestInboundAdapter.java` examples in all services

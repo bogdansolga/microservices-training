@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: 'workshop-hexagonal-architecture'
+
+  jackson:
+    serialization:
+      indent_output: true
+    default-property-inclusion: non_null
+
+# logging settings
+logging:
+  level:
+    root: info
+    com: warn
+    org:
+      apache: warn
+      hibernate: warn
+      springframework: warn
+
+  pattern:
+    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'

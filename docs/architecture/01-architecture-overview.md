@@ -303,7 +303,7 @@ Each service owns a specific business capability:
 
 ## Related Documentation
 
-- **[Microservices Interactions](Microservices%20interactions.md)** - Detailed message flows and service contracts
-- **[Terminology Guide](Terminology-Guide.md)** - Architecture terms explained
-- **[Kafka Setup](Kafka%20setup.md)** - Broker installation and configuration
+- **[Service Communication](03-service-communication.md)** - Detailed message flows and service contracts
+- **[Glossary](04-glossary.md)** - Architecture terms explained
+- **[Kafka Setup](../setup/kafka-setup.md)** - Broker installation and configuration
 - **Service READMEs** - Individual service architecture diagrams (order-service/, billing-service/, etc.)

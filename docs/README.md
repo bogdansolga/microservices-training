@@ -5,30 +5,30 @@ Your guide to navigating the microservices training materials.
 ## Getting Started
 
 **New to the training?** Start here:
-1. Read [Glossary](04-glossary.md) - Understand the vocabulary
-2. Review [Service Communication](03-service-communication.md) - System overview
+1. Read [Glossary](architecture/04-glossary.md) - Understand the vocabulary
+2. Review [Service Communication](architecture/03-service-communication.md) - System overview
 3. Follow the 4-day exercise sequence below
 
 ## Training Exercises (Follow in Order)
 
 Each day builds on the previous:
 
-1. **[Day 1 - Foundations](exercises-day-1.md)**
-   - Service decomposition
-   - Hexagonal architecture
+1. **[Day 1 - Foundations](exercises/day-1.md)**
+   - Services decomposition
+   - Hexagonal Architecture introduction
    - First service implementation
 
-2. **[Day 2 - Communication](exercises-day-2.md)**
+2. **[Day 2 - Communication](exercises/day-2.md)**
    - REST APIs
    - Event-driven messaging
    - Kafka integration
 
-3. **[Day 3 - Advanced Patterns](exercises-day-3.md)**
+3. **[Day 3 - Advanced Patterns](exercises/day-3.md)**
    - Saga orchestration
    - CQRS implementation
    - Distributed transactions
 
-4. **[Day 4 - Production Readiness](exercises-day-4.md)**
+4. **[Day 4 - Production Readiness](exercises/day-4.md)**
    - Testing strategies
    - Resilience patterns
    - Deployment considerations
@@ -39,11 +39,11 @@ Each day builds on the previous:
 1. **[Hexagonal Architecture Example](../architectural-examples/hexagonal-architecture-example/)**
    - Simplified reference implementation
    - Perfect for learning the pattern
-   - Start here before diving into production code
+   - Start here before diving into more complex examples
 
 2. **[Monolithic Application](../monolithic-application/)**
-   - Shows problems microservices solve
-   - Used for decomposition exercise
+   - A simple example for the problems that the microservices architecture solves
+   - Used for the services decomposition exercise
 
 ### Production Examples
 Study these during training (each has detailed README):
@@ -59,7 +59,7 @@ Study these during training (each has detailed README):
 ## Study Path by Training Day
 
 ### Day 1 Preparation
-- Read: [Glossary](04-glossary.md)
+- Read: [Glossary](architecture/04-glossary.md)
 - Study: `hexagonal-architecture-example/`
 - Review: `monolithic-application/`
 
@@ -85,21 +85,21 @@ Study these during training (each has detailed README):
 
 ## Documentation
 
-| Document | What It Covers |
-|----------|----------------|
-| [01 - Architecture Overview](01-architecture-overview.md) | **Visual diagrams**: System context, hexagonal pattern, message flows, deployment view |
-| [02 - Infrastructure Abstraction](02-infrastructure-abstraction.md) | **How we stay vendor-independent**: JPA for databases, Spring Cloud Stream for messaging |
-| [03 - Service Communication](03-service-communication.md) | System architecture, message flows, event details |
-| [04 - Glossary](04-glossary.md) | Common terms and their meanings |
-| [Setup: Kafka](setup-kafka.md) | Environment configuration |
+| Document | What It Covers                                                                              |
+|----------|---------------------------------------------------------------------------------------------|
+| [01 - Architecture Overview](architecture/01-architecture-overview.md) | **Visual diagrams**: System context, hexagonal architecture, message flows, deployment view |
+| [02 - Infrastructure Abstraction](architecture/02-infrastructure-abstraction.md) | **How we stay vendor-independent**: JPA for databases, Spring Cloud Stream for messaging    |
+| [03 - Service Communication](architecture/03-service-communication.md) | System architecture, message flows, event details                                           |
+| [04 - Glossary](architecture/04-glossary.md) | Common terms and their meanings                                                             |
+| [Setup: Kafka](setup/kafka-setup.md) | Environment configuration                                                                   |
 
 ## Troubleshooting
 
 **Can't find example code?**
-→ Check the [Glossary](04-glossary.md) for naming conventions
+→ Check the [Glossary](architecture/04-glossary.md) for naming conventions
 
 **Kafka won't start?**
-→ See [Kafka Setup](setup-kafka.md) for detailed instructions
+→ See [Kafka Setup](setup/kafka-setup.md) for detailed instructions
 
 **Lost in the code?**
 → Each service has a README.md - start there
@@ -108,7 +108,7 @@ Study these during training (each has detailed README):
 → Study `hexagonal-architecture-example/` before production services
 
 **Confused about dependencies?**
-→ Review [Glossary](04-glossary.md) - Inbound vs Outbound section
+→ Review [Glossary](architecture/04-glossary.md) - Inbound vs Outbound section
 
 ## Quick Reference
 

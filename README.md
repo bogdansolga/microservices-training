@@ -63,14 +63,14 @@ Learn more: [Spring Cloud Stream Documentation](https://docs.spring.io/spring-cl
 ## Training Materials
 
 ### Documentation
-- **[Architecture Overview](docs/01-architecture-overview.md)** - Visual diagrams: system context, hexagonal pattern, message flows, deployment architecture
-- **[Infrastructure Abstraction](docs/02-infrastructure-abstraction.md)** - How we achieve vendor independence with JPA and Spring Cloud Stream (for beginners)
-- **[Service Communication](docs/03-service-communication.md)** - Complete event flows, service responsibilities, and message types across the microservices architecture
-- **[Glossary](docs/04-glossary.md)** - Architecture terms and naming conventions explained
-- **[Kafka Setup](docs/setup-kafka.md)** - Installation guide and topic creation commands for running Kafka locally
+- **[Architecture Overview](docs/architecture/01-architecture-overview.md)** - Visual diagrams: system context, hexagonal pattern, message flows, deployment architecture
+- **[Infrastructure Abstraction](docs/architecture/02-infrastructure-abstraction.md)** - How we achieve vendor independence with JPA and Spring Cloud Stream (for beginners)
+- **[Service Communication](docs/architecture/03-service-communication.md)** - Complete event flows, service responsibilities, and message types across the microservices architecture
+- **[Glossary](docs/architecture/04-glossary.md)** - Architecture terms and naming conventions explained
+- **[Kafka Setup](docs/setup/kafka-setup.md)** - Installation guide and topic creation commands for running Kafka locally
 
 ### Hands-On Exercises (4-Day Training)
-- **[Day 1: Service Decomposition & Hexagonal Architecture](docs/exercises-day-1.md)** - Analyze a monolith, identify Bounded Contexts, implement a Hexagonal Architecture
-- **[Day 2: Inter-Process Communication](docs/exercises-day-2.md)** - Build REST APIs (synchronous) and implement Event-Driven messaging with Kafka (asynchronous)
-- **[Day 3: Data Management & Sagas](docs/exercises-day-3.md)** - Design and implement distributed transactions using the Saga pattern and CQRS
-- **[Day 4: Testing & Production Readiness](docs/exercises-day-4.md)** - Add resilience patterns (circuit breaker, retry, rate limiting), implement comprehensive testing, prepare for production
+- **[Day 1: Service Decomposition & Hexagonal Architecture](docs/exercises/day-1.md)** - Analyze a monolith, identify Bounded Contexts, implement a Hexagonal Architecture
+- **[Day 2: Inter-Process Communication](docs/exercises/day-2.md)** - Build REST APIs (synchronous) and implement Event-Driven messaging with Kafka (asynchronous)
+- **[Day 3: Data Management & Sagas](docs/exercises/day-3.md)** - Design and implement distributed transactions using the Saga pattern and CQRS
+- **[Day 4: Testing & Production Readiness](docs/exercises/day-4.md)** - Add resilience patterns (circuit breaker, retry, rate limiting), implement comprehensive testing, prepare for production

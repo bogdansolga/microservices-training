@@ -5,30 +5,30 @@ Your guide to navigating the microservices training materials.
 ## Getting Started
 
 **New to the training?** Start here:
-1. Read [Terminology Guide](Terminology-Guide.md) - Understand the vocabulary
-2. Review [Microservices Interactions](Microservices%20interactions.md) - System overview
+1. Read [Glossary](04-glossary.md) - Understand the vocabulary
+2. Review [Service Communication](03-service-communication.md) - System overview
 3. Follow the 4-day exercise sequence below
 
 ## Training Exercises (Follow in Order)
 
 Each day builds on the previous:
 
-1. **[Day 1 - Foundations](Day-1-Hands-On-Exercises-Participant.md)**
+1. **[Day 1 - Foundations](exercises-day-1.md)**
    - Service decomposition
    - Hexagonal architecture
    - First service implementation
 
-2. **[Day 2 - Communication](Day-2-Hands-On-Exercises-Participant.md)**
+2. **[Day 2 - Communication](exercises-day-2.md)**
    - REST APIs
    - Event-driven messaging
    - Kafka integration
 
-3. **[Day 3 - Advanced Patterns](Day-3-Hands-On-Exercises-Participant.md)**
+3. **[Day 3 - Advanced Patterns](exercises-day-3.md)**
    - Saga orchestration
    - CQRS implementation
    - Distributed transactions
 
-4. **[Day 4 - Production Readiness](Day-4-Hands-On-Exercises-Participant.md)**
+4. **[Day 4 - Production Readiness](exercises-day-4.md)**
    - Testing strategies
    - Resilience patterns
    - Deployment considerations
@@ -59,7 +59,7 @@ Study these during training (each has detailed README):
 ## Study Path by Training Day
 
 ### Day 1 Preparation
-- Read: [Terminology Guide](Terminology-Guide.md)
+- Read: [Glossary](04-glossary.md)
 - Study: `hexagonal-architecture-example/`
 - Review: `monolithic-application/`
 
@@ -87,19 +87,19 @@ Study these during training (each has detailed README):
 
 | Document | What It Covers |
 |----------|----------------|
-| [Architecture Overview](Architecture-Overview.md) | **Visual diagrams**: System context, hexagonal pattern, message flows, deployment view |
-| [Infrastructure Abstraction Pattern](Infrastructure-Abstraction-Pattern.md) | **How we stay vendor-independent**: JPA for databases, Spring Cloud Stream for messaging |
-| [Microservices Interactions](Microservices%20interactions.md) | System architecture, message flows, event details |
-| [Kafka Setup](Kafka%20setup.md) | Environment configuration |
-| [Terminology Guide](Terminology-Guide.md) | Common terms and their meanings |
+| [01 - Architecture Overview](01-architecture-overview.md) | **Visual diagrams**: System context, hexagonal pattern, message flows, deployment view |
+| [02 - Infrastructure Abstraction](02-infrastructure-abstraction.md) | **How we stay vendor-independent**: JPA for databases, Spring Cloud Stream for messaging |
+| [03 - Service Communication](03-service-communication.md) | System architecture, message flows, event details |
+| [04 - Glossary](04-glossary.md) | Common terms and their meanings |
+| [Setup: Kafka](setup-kafka.md) | Environment configuration |
 
 ## Troubleshooting
 
 **Can't find example code?**
-→ Check the [Terminology Guide](Terminology-Guide.md) for naming conventions
+→ Check the [Glossary](04-glossary.md) for naming conventions
 
 **Kafka won't start?**
-→ See [Kafka Setup](Kafka%20setup.md) for detailed instructions
+→ See [Kafka Setup](setup-kafka.md) for detailed instructions
 
 **Lost in the code?**
 → Each service has a README.md - start there
@@ -108,7 +108,7 @@ Study these during training (each has detailed README):
 → Study `hexagonal-architecture-example/` before production services
 
 **Confused about dependencies?**
-→ Review [Terminology Guide](Terminology-Guide.md) - Inbound vs Outbound section
+→ Review [Glossary](04-glossary.md) - Inbound vs Outbound section
 
 ## Quick Reference
 

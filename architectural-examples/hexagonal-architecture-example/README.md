@@ -257,7 +257,7 @@ After understanding this example:
 ## Related Training Materials
 - **Day 1 Exercise 2:** Uses this as primary reference for understanding hexagonal architecture
 - **Day 1 Exercise 3:** Template for implementing Menu Service
-- **docs/Microservices interactions.md:** System-level architecture overview
+- **docs/03-service-communication.md:** System-level architecture overview
 
 ## Key Takeaways
 

@@ -66,4 +66,4 @@ Access: http://localhost:8080
 
 ## Related Training Materials
 - **Day 1 Exercise 1:** Service decomposition analysis
-- **docs/Microservices interactions.md:** Comparing monolith vs microservices
+- **docs/03-service-communication.md:** Comparing monolith vs microservices

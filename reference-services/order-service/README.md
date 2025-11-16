@@ -104,4 +104,4 @@ Access: http://localhost:8081
 - **Day 1 Exercise 2:** Analyzing hexagonal architecture layers
 - **Day 2 Exercise 1:** REST API implementation
 - **Day 3 Exercise 1:** Saga orchestration patterns
-- **docs/Microservices interactions.md:** System-wide message flows
+- **docs/03-service-communication.md:** System-wide message flows

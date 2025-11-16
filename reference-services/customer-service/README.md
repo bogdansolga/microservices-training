@@ -74,4 +74,4 @@ Access: http://localhost:8083
 
 ## Related Training Materials
 - **Day 3 Exercise 1:** Saga orchestration implementation
-- **docs/Microservices interactions.md:** Service choreography patterns
+- **docs/03-service-communication.md:** Service choreography patterns

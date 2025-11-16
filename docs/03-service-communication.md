@@ -42,7 +42,7 @@ Learn more: [Spring Cloud Stream Documentation](https://docs.spring.io/spring-cl
    ├─→ Order Service: Updates status to PAYED
    └─→ Customer Service: Publishes ProcessOrderCommand → process_order
 
-4. RESTAURANT SERVICE (8085) ← ProcessOrderCommand
+4. RESTAURANT SERVICE (8084) ← ProcessOrderCommand
    ├─→ Publishes: OrderProcessedEvent → order_processed
    └─→ Publishes: DeliverOrderCommand → deliver_order
 
@@ -50,7 +50,7 @@ Learn more: [Spring Cloud Stream Documentation](https://docs.spring.io/spring-cl
    ├─→ Order Service: Updates status to PROCESSED
    └─→ Customer Service: Tracks preparation progress
 
-6. DELIVERY SERVICE (8086) ← DeliverOrderCommand
+6. DELIVERY SERVICE (8085) ← DeliverOrderCommand
    └─→ Publishes: OrderDeliveredEvent → order_delivered
 
 7. ORDER SERVICE + CUSTOMER SERVICE ← OrderDeliveredEvent

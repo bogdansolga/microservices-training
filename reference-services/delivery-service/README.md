@@ -74,4 +74,4 @@ Access: http://localhost:8085
 
 ## Related Training Materials
 - **Day 3:** Saga compensation patterns
-- **docs/Microservices interactions.md:** Event choreography
+- **docs/03-service-communication.md:** Event choreography

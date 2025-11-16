@@ -4,32 +4,34 @@ Hands-on examples for learning microservices architecture through a food orderin
 
 ## Project Overview
 
-A complete microservices ecosystem demonstrating event-driven architecture (EDA) with CQRS using [Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream) with the Kafka binder.
+A microservices architecture example, using an Event-Driven Architecture (EDA) and CQRS. The async communication uses [Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream) with the Kafka binder.
 
-**Domain**: Food ordering system spanning order placement through delivery
-**Architecture**: Hexagonal architecture with inbound/outbound adapters per service
-**Messaging**: Broker-agnostic event streaming using Spring Cloud Stream (currently configured with Kafka)
+**Domain**: Food ordering, from order placement to delivery
+**Architecture**: Hexagonal Architecture with inbound/outbound adapters and ports in each service
+**Messaging**: Broker-agnostic event streaming, using Spring Cloud Stream (currently configured with Kafka)
 
 ## Modules
 
 ### Reference Services
-Complete, working implementations demonstrating best practices:
-- **common-support**: Shared message definitions and parent classes
-- **order-service** (8081): Order lifecycle orchestrator and state tracker
-- **billing-service** (8082): Payment processing
-- **customer-service** (8083): Customer data aggregation and restaurant orchestration
-- **restaurant-service** (8084): Food preparation and delivery initiation
-- **delivery-service** (8085): Delivery execution
+A Microservices Architecture example, containing working implementations and a few best practices:
+- **common-support**: Shared message definitions and parent classes for all services
+- **[order-service](reference-services/order-service/)** (8081): Order lifecycle orchestrator and state tracker
+- **[billing-service](reference-services/billing-service/)** (8082): Payments processing
+- **[customer-service](reference-services/customer-service/)** (8083): Customer data aggregation
+- **[restaurant-service](reference-services/restaurant-service/)** (8084): Restaurant orchestration, food preparation and delivery initiation
+- **[delivery-service](reference-services/delivery-service/)** (8085): Delivery execution
 
 ### Workshop Services
 Starting templates for hands-on exercises:
-- **workshop-order-service**: Order service implementation exercise
-- **workshop-billing-service**: Billing service implementation exercise
-- **workshop-restaurant-service**: Restaurant service implementation exercise
+- **[workshop-order-service](workshop-services/workshop-order-service/)**: Order service implementation exercise
+- **[workshop-billing-service](workshop-services/workshop-billing-service/)**: Billing service implementation exercise
+- **[workshop-restaurant-service](workshop-services/workshop-restaurant-service/)**: Restaurant service implementation exercise
 
 ### Additional Modules
-- **monolithic-application**: Comparison monolith implementation
-- **architectural-examples**: Architecture pattern demonstrations
+- **[monolithic-application](monolithic-application/)**: Comparison monolith implementation
+- **[architectural-examples](architectural-examples/)**: Architecture pattern demonstrations
+  - **[hexagonal-architecture-example](architectural-examples/hexagonal-architecture-example/)**: Simplified hexagonal architecture reference
+  - **[graphql-example](architectural-examples/graphql-example/)**: GraphQL API implementation example
 
 ## Key Patterns
 

@@ -7,25 +7,27 @@ Quick reference for understanding terms used in training materials vs. code impl
 | Term in Training | Term in Code | Explanation |
 |-----------------|--------------|-------------|
 | REST Adapter | `RestInboundAdapter` | HTTP API entry point (driving side) |
-| Messaging Adapter (publisher) | `MessagingOutboundAdapter` | Kafka message publisher (driven side) |
-| Messaging Adapter (consumer) | `MessagingInboundAdapter` | Kafka message consumer (driving side) |
+| Messaging Adapter (publisher) | `MessagingOutboundAdapter` | Message publisher - sends events to broker (driven side) |
+| Messaging Adapter (consumer) | `MessagingInboundAdapter` | Message consumer - receives events from broker (driving side) |
 | Database Adapter | `PersistenceOutboundAdapter` | Database access layer (driven side) |
 | Business Logic | `OrderService`, `BillingService` | Core domain logic |
 | Port | `RestInboundPort`, `MessagingOutboundPort` | Interface defining contracts |
+
+**Note:** Messaging adapters are broker-agnostic. We use **Kafka** via Spring Cloud Stream (see main README.md), but the adapters work with any supported broker (RabbitMQ, Azure Service Bus, AWS Kinesis, etc.).
 
 ## Inbound vs Outbound
 
 ### Inbound (Driving Side)
 External requests coming **INTO** your service:
 - REST API calls
-- Kafka message consumption
+- Message consumption from broker (Kafka in our examples)
 - CLI commands
 - Scheduled jobs
 
 ### Outbound (Driven Side)
 Your service calling **OUT** to external dependencies:
 - Database operations
-- Kafka message publishing
+- Message publishing to broker (Kafka in our examples)
 - External API calls
 - File system access
 
@@ -47,23 +49,30 @@ Your service calling **OUT** to external dependencies:
 | Saga | Distributed transaction management | Order creation workflow |
 | CQRS | Separate read/write operations | Advanced patterns (Day 3) |
 
-## Kafka Terms
+## Messaging Terms
+
+**Current Broker:** Kafka (via Spring Cloud Stream - easily switchable to other brokers)
 
 | Term | Explanation |
 |------|-------------|
-| Topic | Stream of related events (e.g., "orders", "payments") |
-| Producer | Service that publishes events to topics |
-| Consumer | Service that subscribes to and processes events |
-| Event | Message representing something that happened |
+| Broker | Message middleware (Kafka, RabbitMQ, Azure Service Bus, etc.) |
+| Topic/Queue | Stream of related events (e.g., "orders", "payments") |
+| Producer/Publisher | Service that publishes events to topics |
+| Consumer/Subscriber | Service that subscribes to and processes events |
+| Event/Message | Message representing something that happened |
+
+**See also:** Main README.md for Spring Cloud Stream broker flexibility
 
 ## Quick Lookup
 
 **Looking for REST endpoints?** → Check `RestInboundAdapter.java`
 
-**Looking for Kafka publishers?** → Check `MessagingOutboundAdapter.java`
+**Looking for message publishers?** → Check `MessagingOutboundAdapter.java` (publishes to broker)
 
-**Looking for Kafka consumers?** → Check `MessagingInboundAdapter.java`
+**Looking for message consumers?** → Check `MessagingInboundAdapter.java` (consumes from broker)
 
 **Looking for business logic?** → Check service classes (e.g., `OrderService.java`)
 
 **Looking for database code?** → Check `PersistenceOutboundAdapter.java` or repository classes
+
+**Note:** All messaging uses Spring Cloud Stream, currently configured with Kafka binder. See main README.md for broker switching details.

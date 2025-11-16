@@ -64,6 +64,7 @@ Learn more: [Spring Cloud Stream Documentation](https://docs.spring.io/spring-cl
 
 ### Documentation
 - **[Architecture Overview](docs/Architecture-Overview.md)** - Visual diagrams: system context, hexagonal pattern, message flows, deployment architecture
+- **[Infrastructure Abstraction Pattern](docs/Infrastructure-Abstraction-Pattern.md)** - How we achieve vendor independence with JPA and Spring Cloud Stream (for beginners)
 - **[Microservices Interactions](docs/Microservices%20interactions.md)** - Complete event flows, service responsibilities, and message types across the microservices architecture
 - **[Kafka Setup](docs/Kafka%20setup.md)** - Installation guide and topic creation commands for running Kafka locally
 - **[Terminology Guide](docs/Terminology-Guide.md)** - Architecture terms and naming conventions explained

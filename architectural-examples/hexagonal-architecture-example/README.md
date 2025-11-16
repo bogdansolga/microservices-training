@@ -169,7 +169,7 @@ HTTP GET /hexagonal/test
 ### Step 2: Trace a Request (5 minutes)
 1. Start at `RestAdapter.java` line 27
 2. Follow the method call chain
-3. Notice: business logic never knows about HTTP or Kafka
+3. Notice: business logic never knows about HTTP or messaging frameworks
 
 ### Step 3: Compare with Monolith (10 minutes)
 1. Open `monolithic-application/OrderService.java`
@@ -217,7 +217,7 @@ To keep focus on architecture, this example:
 - **No database** - Keeps focus on architecture, not data access
 - **No complex business logic** - Focus on structure, not domain
 - **No authentication** - One concept at a time
-- **Simplified messaging** - Console output instead of real Kafka
+- **Simplified messaging** - Console output instead of real message broker (Kafka in production examples)
 
 ## Common Questions
 
@@ -251,7 +251,7 @@ After understanding this example:
    - Practice separating concerns
 
 3. **Explore messaging (Day 2):**
-   - See how Kafka integration works in `order-service`
+   - See how message broker integration works in `order-service` (uses Kafka via Spring Cloud Stream)
    - Understand event-driven communication
 
 ## Related Training Materials
@@ -262,6 +262,6 @@ After understanding this example:
 ## Key Takeaways
 
 1. **Dependency Rule:** Dependencies point inward toward business logic
-2. **Testability:** Business logic can be tested without Spring, HTTP, or Kafka
-3. **Flexibility:** Adapters can be swapped without changing business logic
+2. **Testability:** Business logic can be tested without Spring, HTTP, or messaging frameworks
+3. **Flexibility:** Adapters can be swapped without changing business logic (e.g., switch message brokers)
 4. **Separation of Concerns:** Each layer has a single, clear responsibility

@@ -67,7 +67,7 @@ Generic pattern used by all services:
 graph TB
     subgraph "Inbound Side (Driving)"
         REST_A[REST Adapter<br/>HTTP Endpoints]
-        MSG_A[Messaging Adapter<br/>Kafka Consumer]
+        MSG_A[Messaging Adapter<br/>Message Consumer]
     end
 
     subgraph "Ports (Interfaces)"
@@ -81,7 +81,7 @@ graph TB
 
     subgraph "Outbound Side (Driven)"
         DB_A[Persistence Adapter<br/>Database Access]
-        KAFKA_A[Messaging Adapter<br/>Kafka Producer]
+        MSG_OUT_A[Messaging Adapter<br/>Message Publisher]
     end
 
     REST_A -->|implements| REST_P
@@ -89,13 +89,13 @@ graph TB
     REST_P --> CORE
     CORE --> MSG_P
     MSG_P <-->|implements| DB_A
-    MSG_P <-->|implements| KAFKA_A
+    MSG_P <-->|implements| MSG_OUT_A
 
     style CORE fill:#e1f5ff
     style REST_A fill:#ffe1e1
     style MSG_A fill:#ffe1e1
     style DB_A fill:#e1ffe1
-    style KAFKA_A fill:#e1ffe1
+    style MSG_OUT_A fill:#e1ffe1
 ```
 
 **Benefits:**

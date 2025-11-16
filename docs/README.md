@@ -88,6 +88,7 @@ Study these during training (each has detailed README):
 | Document | What It Covers |
 |----------|----------------|
 | [Architecture Overview](Architecture-Overview.md) | **Visual diagrams**: System context, hexagonal pattern, message flows, deployment view |
+| [Infrastructure Abstraction Pattern](Infrastructure-Abstraction-Pattern.md) | **How we stay vendor-independent**: JPA for databases, Spring Cloud Stream for messaging |
 | [Microservices Interactions](Microservices%20interactions.md) | System architecture, message flows, event details |
 | [Kafka Setup](Kafka%20setup.md) | Environment configuration |
 | [Terminology Guide](Terminology-Guide.md) | Common terms and their meanings |

@@ -4,7 +4,7 @@ Comprehensive visual guide to the Epic Eats microservices architecture.
 
 ## System Context Diagram
 
-High-level view of all services and their interactions:
+High-level view of all the services and their interactions:
 
 ```mermaid
 graph TB
@@ -23,6 +23,7 @@ graph TB
 
     subgraph "Persistence"
         DB_ORDER[(Order DB)]
+        DB_BILLING[(Billing DB)]
         DB_CUSTOMER[(Customer DB)]
         DB_RESTAURANT[(Restaurant DB)]
         DB_DELIVERY[(Delivery DB)]
@@ -41,6 +42,7 @@ graph TB
     DELIVERY <-->|Events| KAFKA
 
     ORDER --> DB_ORDER
+    BILLING --> DB_BILLING
     CUSTOMER --> DB_CUSTOMER
     RESTAURANT --> DB_RESTAURANT
     DELIVERY --> DB_DELIVERY
@@ -54,9 +56,9 @@ graph TB
 ```
 
 **Key Characteristics:**
-- **Independent deployment**: Each service runs on its own port
+- **Independent deployment**: Each service runs on its own port (locally, not needed for production)
 - **Separate databases**: Database per service pattern (no shared DB)
-- **Event-driven communication**: Services communicate via Kafka using Spring Cloud Stream
+- **Event-driven communication**: Services communicate via Kafka, using Spring Cloud Stream
 - **REST APIs**: Synchronous HTTP endpoints for external clients
 
 ## Hexagonal Architecture Pattern
@@ -209,12 +211,14 @@ Each service owns its data:
 graph TB
     subgraph "Service Boundaries"
         ORDER[Order Service] --> DB1[(Order Database<br/>Orders, OrderItems)]
+        BILLING[Billing Service] --> DB2[(Billing Database<br/>Payments)]
         CUSTOMER[Customer Service] --> DB2[(Customer Database<br/>Customers)]
         RESTAURANT[Restaurant Service] --> DB3[(Restaurant Database<br/>Restaurants, Menus)]
         DELIVERY[Delivery Service] --> DB4[(Delivery Database<br/>Deliveries, Drivers)]
     end
 
     style ORDER fill:#e1f5ff
+    style BILLING fill:#e1f5ff
     style CUSTOMER fill:#e1f5ff
     style RESTAURANT fill:#e1f5ff
     style DELIVERY fill:#e1f5ff
@@ -238,7 +242,7 @@ graph TB
 
     subgraph "Application Services"
         ORDER_SVC[order-service.jar<br/>Port: 8081<br/>DB: H2 in-memory]
-        BILLING_SVC[billing-service.jar<br/>Port: 8082<br/>DB: None]
+        BILLING_SVC[billing-service.jar<br/>Port: 8082<br/>DB: H2 in-memory]
         CUSTOMER_SVC[customer-service.jar<br/>Port: 8083<br/>DB: H2 in-memory]
         RESTAURANT_SVC[restaurant-service.jar<br/>Port: 8084<br/>DB: H2 in-memory]
         DELIVERY_SVC[delivery-service.jar<br/>Port: 8085<br/>DB: H2 in-memory]
@@ -270,7 +274,7 @@ Each service owns a specific business capability:
 
 ### 2. Event-Driven Architecture
 - **Commands**: Request actions (ChargeOrderCommand)
-- **Events**: Announce facts (OrderCreatedEvent)
+- **Events**: Announce important business events (OrderCreatedEvent)
 - **Choreography**: Services react to events independently
 
 ### 3. Hexagonal Architecture
@@ -286,11 +290,11 @@ Each service owns a specific business capability:
 ## Training Path Through Architecture
 
 **Day 1**: Focus on single service (hexagonal pattern)
-- Study: `hexagonal-architecture-example/`
+- Study: [Hexagonal Architecture Example](../../architectural-examples/hexagonal-architecture-example/)
 - Practice: Implement Menu Service
 
 **Day 2**: Add communication (REST + Events)
-- Study: `order-service/` ↔ `billing-service/` interaction
+- Study: [order-service](../../reference-services/order-service/README.md) ↔ [billing-service](../../reference-services/billing-service/README.md) interaction
 - Practice: Event publishing and consuming
 
 **Day 3**: Multi-service workflows (Sagas)
@@ -303,7 +307,7 @@ Each service owns a specific business capability:
 
 ## Related Documentation
 
-- **[Service Communication](03-service-communication.md)** - Detailed message flows and service contracts
+- **[Services Communication](03-services-communication.md)** - Detailed message flows and service contracts
 - **[Glossary](04-glossary.md)** - Architecture terms explained
 - **[Kafka Setup](../setup/kafka-setup.md)** - Broker installation and configuration
 - **Service READMEs** - Individual service architecture diagrams (order-service/, billing-service/, etc.)

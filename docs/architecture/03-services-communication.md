@@ -1,4 +1,4 @@
-# Microservices Messaging Architecture Report
+# Microservices Communication Overview
 
 ## **Technology Stack**
 - **Messaging Framework**: [Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream) - Broker-agnostic messaging abstraction

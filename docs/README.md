@@ -6,7 +6,7 @@ Your guide to navigating the microservices training materials.
 
 **New to the training?** Start here:
 1. Read [Glossary](architecture/04-glossary.md) - Understand the vocabulary
-2. Review [Service Communication](architecture/03-service-communication.md) - System overview
+2. Review [Service Communication](architecture/03-services-communication.md) - Services communication overview
 3. Follow the 4-day exercise sequence below
 
 ## Training Exercises (Follow in Order)
@@ -85,13 +85,13 @@ Study these during training (each has detailed README):
 
 ## Documentation
 
-| Document | What It Covers                                                                              |
-|----------|---------------------------------------------------------------------------------------------|
-| [01 - Architecture Overview](architecture/01-architecture-overview.md) | **Visual diagrams**: System context, hexagonal architecture, message flows, deployment view |
+| Document                                                                         | What It Covers                                                                              |
+|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| [01 - Architecture Overview](architecture/01-overview.md)                        | **Visual diagrams**: System context, hexagonal architecture, message flows, deployment view |
 | [02 - Infrastructure Abstraction](architecture/02-infrastructure-abstraction.md) | **How we stay vendor-independent**: JPA for databases, Spring Cloud Stream for messaging    |
-| [03 - Service Communication](architecture/03-service-communication.md) | System architecture, message flows, event details                                           |
-| [04 - Glossary](architecture/04-glossary.md) | Common terms and their meanings                                                             |
-| [Setup: Kafka](setup/kafka-setup.md) | Environment configuration                                                                   |
+| [03 - Services Communication](architecture/03-services-communication.md)         | System architecture, message flows, event details                                           |
+| [04 - Glossary](architecture/04-glossary.md)                                     | Common terms and their meanings                                                             |
+| [Setup: Kafka](setup/kafka-setup.md)                                             | Environment configuration                                                                   |
 
 ## Troubleshooting
 

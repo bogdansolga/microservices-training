@@ -14,8 +14,8 @@
 	<artifactId>microservices.training</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>'Microservices' training hands-on examples</name>
-	<description>The hands-on examples for the 'Microservices' training</description>
+	<name>'Microservices training' hands-on examples</name>
+	<description>The hands-on examples for the 'Microservices training' course</description>
 	<packaging>pom</packaging>
 
 	<modules>

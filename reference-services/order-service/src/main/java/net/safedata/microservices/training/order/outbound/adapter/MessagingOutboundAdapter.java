@@ -5,7 +5,6 @@ import net.safedata.microservices.training.marker.adapter.OutboundAdapter;
 import net.safedata.microservices.training.message.OutputBindings;
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
-import net.safedata.microservices.training.message.command.order.ShipOrderCommand;
 import net.safedata.microservices.training.order.outbound.port.MessagingOutboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +35,5 @@ public class MessagingOutboundAdapter implements MessagingOutboundPort, Outbound
         //TODO find a way to directly use the chargeOrderProducer
         messagePublisher.sendMessage(OutputBindings.CHARGE_ORDER, chargeOrderCommand);
         LOGGER.info("The ChargeOrderCommand '{}' was published", chargeOrderCommand);
-    }
-
-    @Override
-    public void publishShipOrderCommand(final ShipOrderCommand shipOrderCommand) {
-        //TODO to be implemented
     }
 }

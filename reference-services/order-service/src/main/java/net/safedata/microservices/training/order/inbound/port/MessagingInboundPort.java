@@ -1,6 +1,5 @@
 package net.safedata.microservices.training.order.inbound.port;
 
-import net.safedata.microservices.training.dto.order.OrderDTO;
 import net.safedata.microservices.training.marker.port.InboundPort;
 import net.safedata.microservices.training.message.command.order.CreateOrderCommand;
 import net.safedata.microservices.training.message.event.customer.CustomerCreatedEvent;

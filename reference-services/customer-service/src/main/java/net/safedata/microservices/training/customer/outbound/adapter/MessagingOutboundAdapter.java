@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageProducer implements MessagingOutboundPort, OutboundAdapter {
+public class MessagingOutboundAdapter implements MessagingOutboundPort, OutboundAdapter {
 
     private final MessagePublisher messagePublisher;
 
     @Autowired
-    public MessageProducer(MessagePublisher messagePublisher) {
+    public MessagingOutboundAdapter(MessagePublisher messagePublisher) {
         this.messagePublisher = messagePublisher;
     }
 

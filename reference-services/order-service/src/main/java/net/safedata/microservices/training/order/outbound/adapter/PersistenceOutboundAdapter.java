@@ -1,5 +1,6 @@
 package net.safedata.microservices.training.order.outbound.adapter;
 
+import net.safedata.microservices.training.marker.adapter.OutboundAdapter;
 import net.safedata.microservices.training.order.domain.model.Order;
 import net.safedata.microservices.training.order.domain.repository.OrderRepository;
 import net.safedata.microservices.training.order.outbound.port.PersistenceOutboundPort;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class PersistenceOutboundAdapter implements PersistenceOutboundPort {
+public class PersistenceOutboundAdapter implements PersistenceOutboundPort, OutboundAdapter {
 
     private final OrderRepository orderRepository;
 

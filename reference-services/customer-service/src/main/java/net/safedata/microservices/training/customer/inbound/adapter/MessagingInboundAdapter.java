@@ -16,14 +16,14 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 @Component
-public class MessageConsumer implements InboundAdapter {
+public class MessagingInboundAdapter implements InboundAdapter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagingInboundAdapter.class);
 
     private final CustomerService customerService;
 
     @Autowired
-    public MessageConsumer(final CustomerService customerService) {
+    public MessagingInboundAdapter(final CustomerService customerService) {
         this.customerService = customerService;
     }
 

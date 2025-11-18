@@ -66,6 +66,8 @@ Learn more: [Spring Cloud Stream Documentation](https://docs.spring.io/spring-cl
 
 ### Documentation
 - **[Architecture Overview](docs/architecture/01-overview.md)** - Visual diagrams: system context, hexagonal architecture, message flows, deployment architecture
+- **[Hexagonal Architecture Implementation](docs/architecture/HEXAGONAL_ARCHITECTURE.md)** - Complete guide to hexagonal architecture implementation across all services
+- **[Migration Guide](docs/MIGRATION_GUIDE.md)** - Step-by-step guide for migrating services to hexagonal architecture
 - **[Infrastructure Abstraction](docs/architecture/02-infrastructure-abstraction.md)** - Implementation independence design, using JPA and Spring Cloud Stream
 - **[Services Communication](docs/architecture/03-services-communication.md)** - Detailed services responsibilities and messages exchanges, across the microservices architecture example
 - **[Glossary](docs/architecture/04-glossary.md)** - Architecture terms and naming conventions explained

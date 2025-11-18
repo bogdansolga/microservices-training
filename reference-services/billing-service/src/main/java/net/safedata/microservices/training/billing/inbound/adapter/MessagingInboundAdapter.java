@@ -1,5 +1,6 @@
-package net.safedata.microservices.training.billing.inbound.port;
+package net.safedata.microservices.training.billing.inbound.adapter;
 
+import net.safedata.microservices.training.billing.inbound.port.MessagingInboundPort;
 import net.safedata.microservices.training.marker.adapter.InboundAdapter;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
 import org.slf4j.Logger;
@@ -11,15 +12,15 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 @Component
-public class MessageConsumer implements InboundAdapter {
+public class MessagingInboundAdapter implements InboundAdapter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagingInboundAdapter.class);
 
-    private final BillingService billingService;
+    private final MessagingInboundPort messagingInboundPort;
 
     @Autowired
-    public MessageConsumer(final BillingService billingService) {
-        this.billingService = billingService;
+    public MessagingInboundAdapter(final MessagingInboundPort messagingInboundPort) {
+        this.messagingInboundPort = messagingInboundPort;
     }
 
     @Bean
@@ -28,7 +29,7 @@ public class MessageConsumer implements InboundAdapter {
             LOGGER.debug("Received a '{}' command for the order with the ID {} of the customer with the ID {}",
                     chargeOrderCommand.getName(), chargeOrderCommand.getOrderId(), chargeOrderCommand.getCustomerId());
 
-            billingService.chargeOrder(chargeOrderCommand);
+            messagingInboundPort.chargeOrder(chargeOrderCommand);
         };
     }
 }

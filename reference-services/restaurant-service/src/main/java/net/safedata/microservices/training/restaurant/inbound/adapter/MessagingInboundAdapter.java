@@ -1,7 +1,7 @@
 package net.safedata.microservices.training.restaurant.inbound.adapter;
 
 import net.safedata.microservices.training.marker.adapter.InboundAdapter;
-import net.safedata.microservices.training.restaurant.inbound.port.InboundMessagingPort;
+import net.safedata.microservices.training.restaurant.inbound.port.MessagingInboundPort;
 import net.safedata.microservices.training.message.command.order.ProcessOrderCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 @Component
-public class InboundMessagingAdapter implements InboundAdapter {
+public class MessagingInboundAdapter implements InboundAdapter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(InboundMessagingAdapter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagingInboundAdapter.class);
 
-    private final InboundMessagingPort inboundMessagingPort;
+    private final MessagingInboundPort messagingInboundPort;
 
     @Autowired
-    public InboundMessagingAdapter(InboundMessagingPort inboundMessagingPort) {
-        this.inboundMessagingPort = inboundMessagingPort;
+    public MessagingInboundAdapter(MessagingInboundPort messagingInboundPort) {
+        this.messagingInboundPort = messagingInboundPort;
     }
 
     @Bean
@@ -30,7 +30,7 @@ public class InboundMessagingAdapter implements InboundAdapter {
             LOGGER.debug("Received a '{}' command, the ordered item is '{}', the customer ID is {}",
                     processOrderCommand.getName(), processOrderCommand.getProductName(), processOrderCommand.getCustomerId());
 
-            inboundMessagingPort.processOrder(processOrderCommand);
+            messagingInboundPort.processOrder(processOrderCommand);
         };
     }
 }

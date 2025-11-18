@@ -1,6 +1,7 @@
 package net.safedata.microservices.training.delivery.inbound.adapter;
 
-import net.safedata.microservices.training.delivery.inbound.port.InboundMessagingPort;
+import net.safedata.microservices.training.delivery.inbound.port.MessagingInboundPort;
+import net.safedata.microservices.training.marker.adapter.InboundAdapter;
 import net.safedata.microservices.training.message.command.order.DeliverOrderCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,25 +12,25 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 @Component
-public class InboundMessagingAdapter {
+public class MessagingInboundAdapter implements InboundAdapter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(InboundMessagingAdapter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagingInboundAdapter.class);
 
-    private final InboundMessagingPort inboundMessagingPort;
+    private final MessagingInboundPort messagingInboundPort;
 
     @Autowired
-    public InboundMessagingAdapter(InboundMessagingPort inboundMessagingPort) {
-        this.inboundMessagingPort = inboundMessagingPort;
+    public MessagingInboundAdapter(MessagingInboundPort messagingInboundPort) {
+        this.messagingInboundPort = messagingInboundPort;
     }
 
     @Bean
     public Consumer<DeliverOrderCommand> deliverOrder() {
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
         return deliverOrderCommand -> {
-            System.out.println("--------------------------------------------------------------------------------------------------------------");
             LOGGER.debug("Received a '{}' command, the ordered item is '{}', the customer ID is {}",
                     deliverOrderCommand.getName(), deliverOrderCommand.getProductName(), deliverOrderCommand.getCustomerId());
 
-            inboundMessagingPort.deliverOrder(deliverOrderCommand);
+            messagingInboundPort.deliverOrder(deliverOrderCommand);
         };
     }
 }

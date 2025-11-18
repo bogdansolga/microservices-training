@@ -1,13 +1,15 @@
-package net.safedata.microservices.training.billing.inbound.port;
+package net.safedata.microservices.training.billing.service;
 
-import net.safedata.microservices.training.billing.service.PaymentService;
+import net.safedata.microservices.training.billing.inbound.port.RestInboundPort;
+import net.safedata.microservices.training.billing.inbound.port.MessagingInboundPort;
+import net.safedata.microservices.training.billing.outbound.port.PersistenceOutboundPort;
+import net.safedata.microservices.training.billing.outbound.port.MessagingOutboundPort;
+import net.safedata.microservices.training.billing.outbound.port.PaymentGatewayOutboundPort;
 import net.safedata.microservices.training.dto.order.OrderChargingStatusDTO;
 import net.safedata.microservices.training.dto.order.PaymentDTO;
 import net.safedata.microservices.training.message.command.order.ChargeOrderCommand;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
-import net.safedata.microservices.training.billing.outbound.port.MessagingOutboundPort;
-import net.safedata.microservices.training.marker.port.InboundPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class BillingService implements InboundPort {
+public class BillingService implements RestInboundPort, MessagingInboundPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BillingService.class);
 
@@ -28,13 +30,17 @@ public class BillingService implements InboundPort {
     private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(3000);
     private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(7000);
 
-    private final MessagingOutboundPort messagingOutboundPort;
-    private final PaymentService paymentService;
+    private final PersistenceOutboundPort persistencePort;
+    private final MessagingOutboundPort messagingPort;
+    private final PaymentGatewayOutboundPort paymentGatewayPort;
 
     @Autowired
-    public BillingService(final MessagingOutboundPort messagingOutboundPort, final PaymentService paymentService) {
-        this.messagingOutboundPort = messagingOutboundPort;
-        this.paymentService = paymentService;
+    public BillingService(final PersistenceOutboundPort persistencePort,
+                         final MessagingOutboundPort messagingPort,
+                         final PaymentGatewayOutboundPort paymentGatewayPort) {
+        this.persistencePort = persistencePort;
+        this.messagingPort = messagingPort;
+        this.paymentGatewayPort = paymentGatewayPort;
     }
 
     @Transactional
@@ -47,20 +53,20 @@ public class BillingService implements InboundPort {
                 orderTotal, chargeOrderCommand.getCurrency());
 
         final int usedPaymentMethod = getPaymentMethod();
-        final OrderChargingStatusDTO orderChargingStatus = paymentService.charge(usedPaymentMethod, orderTotal);
+        final OrderChargingStatusDTO orderChargingStatus = paymentGatewayPort.charge(usedPaymentMethod, orderTotal);
 
         // TODO insert magic here
         sleepALittle();
 
         if (orderChargingStatus.isSuccessful()) {
             LOGGER.info("The customer {} was successfully charged for the order {}", customerId, orderId);
-            messagingOutboundPort.publishOrderChargedEvent(
+            messagingPort.publishOrderChargedEvent(
                     new OrderChargedEvent(getNextMessageId(), getNextEventId(), customerId, orderId));
         } else {
             final String failureReason = orderChargingStatus.getFailureReason()
                                                             .orElse("Cannot charge the card");
             LOGGER.warn("The customer {} could not be charged for the order {} - '{}'", customerId, orderId, failureReason);
-            messagingOutboundPort.publishOrderNotChargedEvent(
+            messagingPort.publishOrderNotChargedEvent(
                     new OrderNotChargedEvent(getNextMessageId(), getNextEventId(), customerId, orderId,
                             failureReason)
             );

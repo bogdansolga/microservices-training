@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 public class OrdersClient {
 
     private static final AtomicLong CUSTOMER_ID_GENERATOR = new AtomicLong(243);
-
     private static final AtomicLong ORDER_AMOUNT_GENERATOR = new AtomicLong(200);
+    private static final AtomicLong MESSAGE_ID_GENERATOR = new AtomicLong(100);
 
     private final StreamBridge streamBridge;
 
@@ -26,8 +26,9 @@ public class OrdersClient {
     public Supplier<CreateOrderCommand> orderProducer() {
         final long nextCustomerId = CUSTOMER_ID_GENERATOR.addAndGet(5);
         final long nextOrderAmount = ORDER_AMOUNT_GENERATOR.addAndGet(125);
+        final long messageId = MESSAGE_ID_GENERATOR.incrementAndGet();
 
-        return () -> new CreateOrderCommand(nextCustomerId, 8234L, "An useful tablet", nextOrderAmount);
+        return () -> new CreateOrderCommand(nextCustomerId, messageId, "Great Pizza #" + messageId, nextOrderAmount);
     }
 
     @Scheduled(fixedDelay = 20000)

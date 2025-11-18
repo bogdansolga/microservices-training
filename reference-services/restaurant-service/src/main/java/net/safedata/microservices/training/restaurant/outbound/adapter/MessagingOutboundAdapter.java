@@ -27,12 +27,12 @@ public class MessagingOutboundAdapter implements MessagingOutboundPort, Outbound
     @Override
     public void publishOrderProcessedEvent(OrderProcessedEvent orderProcessedEvent) {
         messagePublisher.sendMessage(OutputBindings.ORDER_PROCESSED, orderProcessedEvent);
-        LOGGER.info("The OrderProcessedEvent '{}' was published", orderProcessedEvent);
+        LOGGER.info("Published OrderProcessedEvent for order {}", orderProcessedEvent.getOrderId());
     }
 
     @Override
     public void publishDeliverOrderCommand(DeliverOrderCommand deliverOrderCommand) {
         messagePublisher.sendMessage(OutputBindings.DELIVER_ORDER, deliverOrderCommand);
-        LOGGER.info("The DeliverOrderCommand '{}' was published", deliverOrderCommand);
+        LOGGER.info("Published DeliverOrderCommand for customer {}", deliverOrderCommand.getCustomerId());
     }
 }

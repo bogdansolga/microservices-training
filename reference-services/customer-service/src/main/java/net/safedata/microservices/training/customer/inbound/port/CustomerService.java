@@ -57,19 +57,19 @@ public class CustomerService implements InboundPort {
     }
 
     public void handleOrderCharged(OrderChargedEvent event) {
-        LOGGER.info("Handling OrderChargedEvent: {}", event);
+        LOGGER.info("Order {} charged for customer {}", event.getOrderId(), event.getCustomerId());
     }
 
     public void handleOrderNotCharged(OrderNotChargedEvent event) {
-        LOGGER.info("Handling OrderNotChargedEvent: {}", event);
+        LOGGER.info("Order {} not charged for customer {}", event.getOrderId(), event.getCustomerId());
     }
 
     public void handleOrderProcessed(OrderProcessedEvent event) {
-        LOGGER.info("Handling OrderProcessedEvent: {}", event);
+        LOGGER.info("Order {} processed", event.getOrderId());
     }
 
     public void handleOrderDelivered(OrderDeliveredEvent event) {
-        LOGGER.info("Handling OrderDeliveredEvent: {}", event);
+        LOGGER.info("Order {} delivered", event.getOrderId());
     }
 
     private long getNextMessageId() {

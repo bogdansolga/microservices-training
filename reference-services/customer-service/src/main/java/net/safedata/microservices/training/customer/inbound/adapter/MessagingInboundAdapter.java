@@ -1,6 +1,6 @@
 package net.safedata.microservices.training.customer.inbound.adapter;
 
-import net.safedata.microservices.training.customer.inbound.port.CustomerService;
+import net.safedata.microservices.training.customer.service.CustomerService;
 import net.safedata.microservices.training.marker.adapter.InboundAdapter;
 import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
 import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;

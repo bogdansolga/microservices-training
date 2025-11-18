@@ -1,4 +1,4 @@
-package net.safedata.microservices.training.customer.inbound.port;
+package net.safedata.microservices.training.customer.service;
 
 import net.safedata.microservices.training.customer.domain.model.Customer;
 import net.safedata.microservices.training.customer.outbound.port.MessagingOutboundPort;

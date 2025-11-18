@@ -1,35 +1,52 @@
+# Server configuration
 server:
   port: 8082
 
+# Application identity
 spring:
   application:
-    name: 'billing-service'
+    name: billing-service
 
+  # Spring Cloud Function definitions
   cloud:
     function:
-      definition: chargeOrder;orderChargedProducer
+      definition: chargeOrder;orderChargedProducer;orderNotChargedProducer
     stream:
       bindings:
+        # Inbound bindings
         chargeOrder-in-0:
           destination: charge_order
+        # Outbound bindings
         orderChargedProducer-out-0:
           destination: order_charged
+        orderNotChargedProducer-out-0:
+          destination: order_not_charged
+      kafka:
+        binder:
+          auto-create-topics: true
+          brokers: localhost:9092
 
-  jackson:
-    serialization:
-      indent_output: true
-    default-property-inclusion: non_null
+  # Datasource configuration
+  datasource:
+    url: jdbc:h2:~/billing;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: aVeryComplexPassword
+    driver-class-name: org.h2.Driver
 
-# logging settings
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+# Logging
 logging:
   level:
     root: info
     com: warn
-    org:
-      apache: warn
-      hibernate: warn
-      springframework: warn
-
-  pattern:
-    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
-    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    org.apache: warn
+    org.hibernate: warn
+    org.springframework: warn

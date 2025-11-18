@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PersistenceOutboundPort extends OutboundPort {
 
-    Delivery save(Delivery delivery);
+    long save(Delivery delivery);
 
     Optional<Delivery> findById(Long id);
 }

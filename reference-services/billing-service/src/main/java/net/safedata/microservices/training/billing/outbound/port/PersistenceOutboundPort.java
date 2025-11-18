@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PersistenceOutboundPort extends OutboundPort {
 
-    Payment save(Payment payment);
+    long save(Payment payment);
 
     Optional<Payment> findById(Long id);
 }

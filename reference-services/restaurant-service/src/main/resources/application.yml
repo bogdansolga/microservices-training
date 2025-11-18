@@ -1,52 +1,57 @@
+# Server configuration
 server:
   port: 8084
 
+# Application identity
 spring:
   application:
-    name: 'restaurant-service'
+    name: restaurant-service
 
+  # Spring Cloud Function definitions
   cloud:
     function:
-      definition: processOrder;deliverOrder;orderProcessed
+      definition: processOrder;deliverOrderProducer;orderProcessedProducer
     stream:
       bindings:
-        processOrder-in-0: # handling a command - ProcessOrderCommand
+        # Inbound bindings
+        processOrder-in-0:
           destination: process_order
-        deliverOrder-out-0: # publishing a DeliverOrderCommand
+        # Outbound bindings
+        deliverOrderProducer-out-0:
           destination: deliver_order
-        orderProcessed-out-0: # publishing an event - OrderProcessedEvent
+        orderProcessedProducer-out-0:
           destination: order_processed
       kafka:
         binder:
           auto-create-topics: true
           brokers: localhost:9092
 
+  # Datasource configuration (CQRS: dual databases)
   datasource:
     driver-class-name: org.h2.Driver
     command:
       url: jdbc:h2:mem:command
       username: sa
-      password: something
+      password: commandPassword
     query:
       url: jdbc:h2:mem:query
       username: sa
-      password: something_else
+      password: queryPassword
 
-  jackson:
-    serialization:
-      indent_output: true
-    default-property-inclusion: non_null
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
 
-# logging settings
+# Logging
 logging:
   level:
     root: info
     com: warn
-    org:
-      apache: warn
-      hibernate: warn
-      springframework: warn
-
-  pattern:
-    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
-    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    org.apache: warn
+    org.hibernate: warn
+    org.springframework: warn

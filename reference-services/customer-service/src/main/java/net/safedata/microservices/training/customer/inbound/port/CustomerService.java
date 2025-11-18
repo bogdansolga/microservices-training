@@ -1,23 +1,17 @@
 package net.safedata.microservices.training.customer.inbound.port;
 
+import net.safedata.microservices.training.customer.domain.model.Customer;
 import net.safedata.microservices.training.customer.outbound.port.MessagingOutboundPort;
+import net.safedata.microservices.training.customer.outbound.port.PersistenceOutboundPort;
 import net.safedata.microservices.training.dto.customer.CustomerDTO;
 import net.safedata.microservices.training.marker.port.InboundPort;
 import net.safedata.microservices.training.message.command.order.ProcessOrderCommand;
 import net.safedata.microservices.training.message.event.customer.CustomerCreatedEvent;
-import net.safedata.microservices.training.message.event.customer.CustomerUpdatedEvent;
-import net.safedata.microservices.training.message.event.order.OrderChargedEvent;
-import net.safedata.microservices.training.message.event.order.OrderCreatedEvent;
-import net.safedata.microservices.training.message.event.order.OrderDeliveredEvent;
-import net.safedata.microservices.training.message.event.order.OrderNotChargedEvent;
-import net.safedata.microservices.training.message.event.order.OrderProcessedEvent;
+import net.safedata.microservices.training.message.event.order.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -26,90 +20,56 @@ public class CustomerService implements InboundPort {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     // Sequential ID generators for realistic ID generation
-    private static final AtomicLong CUSTOMER_ID_COUNTER = new AtomicLong(100);
     private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(2000);
     private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(6000);
 
     private final MessagingOutboundPort messagingOutboundPort;
+    private final PersistenceOutboundPort persistenceOutboundPort;
 
-    @Autowired
-    public CustomerService(final MessagingOutboundPort messagingOutboundPort) {
+    public CustomerService(MessagingOutboundPort messagingOutboundPort,
+                          PersistenceOutboundPort persistenceOutboundPort) {
         this.messagingOutboundPort = messagingOutboundPort;
+        this.persistenceOutboundPort = persistenceOutboundPort;
     }
 
-    @Transactional
-    public void createCustomer(final CustomerDTO customerDTO) {
-        LOGGER.info("Creating the customer '{}' [{}]...", customerDTO.getName(), customerDTO.getEmail());
+    public void createCustomer(CustomerDTO customerDTO) {
+        LOGGER.info("Creating customer: {}", customerDTO.getName());
 
-        final long customerId = saveCustomerInTheDatabase(customerDTO);
+        // Create and persist customer entity
+        Customer customer = new Customer(
+            customerDTO.getName(),
+            customerDTO.getEmail(),
+            null  // address not in DTO
+        );
+        long customerId = persistenceOutboundPort.save(customer);
 
-        // insert magic here
+        LOGGER.info("Customer persisted with id: {}", customerId);
+
+        // Publish customer created event
         messagingOutboundPort.publishCustomerCreatedEvent(
-                new CustomerCreatedEvent(getNextMessageId(), getNextEventId(), customerId, customerDTO.getEmail()));
+            new CustomerCreatedEvent(getNextMessageId(), getNextEventId(), customerId, customerDTO.getEmail()));
     }
 
-    private long saveCustomerInTheDatabase(final CustomerDTO customerDTO) {
-        // TODO insert magic here
-        sleepALittle();
-
-        return CUSTOMER_ID_COUNTER.incrementAndGet();
-    }
-
-    @Transactional
-    public void handleOrderCreated(final OrderCreatedEvent orderCreatedMessage) {
-        final long customerId = orderCreatedMessage.getCustomerId();
-
-        LOGGER.info("Updating the customer with the ID {}...", customerId);
-        updateCustomer(customerId);
-
-        //TODO insert magic here
-
-        messagingOutboundPort.publishCustomerUpdatedEvent(
-                new CustomerUpdatedEvent(getNextMessageId(), getNextEventId(), customerId));
-    }
-
-    @Transactional
-    public void handleOrderCharged(final OrderChargedEvent orderChargedEvent) {
-        LOGGER.info("The order with the ID {} of the customer {} was successfully charged, updating it",
-                orderChargedEvent.getOrderId(), orderChargedEvent.getCustomerId());
-
-        // TODO insert magic here
-
+    public void handleOrderCreated(OrderCreatedEvent event) {
+        LOGGER.info("Handling OrderCreatedEvent for customer: {}", event.getCustomerId());
         messagingOutboundPort.publishProcessOrderCommand(
-                new ProcessOrderCommand(getNextMessageId(), getNextEventId(), "something", 220));
+            new ProcessOrderCommand(event.getCustomerId(), getNextMessageId(), "order", 100.0));
     }
 
-    @Transactional
-    public void handleOrderNotCharged(final OrderNotChargedEvent orderNotChargedEvent) {
-        LOGGER.warn("The order with the ID {} of the customer {} could not be charged - reason: '{}'",
-                orderNotChargedEvent.getOrderId(), orderNotChargedEvent.getCustomerId(), orderNotChargedEvent.getReason());
-
-        // TODO insert magic here
+    public void handleOrderCharged(OrderChargedEvent event) {
+        LOGGER.info("Handling OrderChargedEvent: {}", event);
     }
 
-    @Transactional
-    public void handleOrderProcessed(final OrderProcessedEvent orderProcessedEvent) {
-        final long customerId = orderProcessedEvent.getCustomerId();
-        final long orderId = orderProcessedEvent.getOrderId();
-        LOGGER.info("The order {} for customer {} has been processed by the restaurant", orderId, customerId);
-
-        // track order progress in customer's order history
-        LOGGER.debug("Customer {} can see that order {} is being prepared", customerId, orderId);
+    public void handleOrderNotCharged(OrderNotChargedEvent event) {
+        LOGGER.info("Handling OrderNotChargedEvent: {}", event);
     }
 
-    @Transactional
-    public void handleOrderDelivered(final OrderDeliveredEvent orderDeliveredEvent) {
-        final long customerId = orderDeliveredEvent.getCustomerId();
-        final long orderId = orderDeliveredEvent.getOrderId();
-        LOGGER.info("Order {} for customer {} has been successfully delivered!", orderId, customerId);
-
-        // update customer order history, send delivery confirmation
-        LOGGER.debug("Customer {} notified of successful delivery for order {}", customerId, orderId);
+    public void handleOrderProcessed(OrderProcessedEvent event) {
+        LOGGER.info("Handling OrderProcessedEvent: {}", event);
     }
 
-    private void updateCustomer(long customerId) {
-        // TODO insert magic here
-        sleepALittle();
+    public void handleOrderDelivered(OrderDeliveredEvent event) {
+        LOGGER.info("Handling OrderDeliveredEvent: {}", event);
     }
 
     private long getNextMessageId() {
@@ -117,17 +77,6 @@ public class CustomerService implements InboundPort {
     }
 
     private long getNextEventId() {
-        // returned from the saved database event, before sending it (using transactional messaging)
         return EVENT_ID_COUNTER.incrementAndGet();
-    }
-
-    // simulate a long running operation
-
-    private void sleepALittle() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

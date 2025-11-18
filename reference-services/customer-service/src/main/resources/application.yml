@@ -1,15 +1,19 @@
+# Server configuration
 server:
   port: 8083
 
+# Application identity
 spring:
   application:
-    name: 'customer-service'
+    name: customer-service
 
+  # Spring Cloud Function definitions
   cloud:
     function:
       definition: orderCreated;orderCharged;orderNotCharged;orderProcessed;orderDelivered;customerCreatedProducer;customerUpdatedProducer;processOrderProducer
     stream:
       bindings:
+        # Inbound bindings
         orderCreated-in-0:
           destination: order_created
         orderCharged-in-0:
@@ -20,6 +24,7 @@ spring:
           destination: order_processed
         orderDelivered-in-0:
           destination: order_delivered
+        # Outbound bindings
         customerCreatedProducer-out-0:
           destination: customer_created
         customerUpdatedProducer-out-0:
@@ -31,21 +36,27 @@ spring:
           auto-create-topics: true
           brokers: localhost:9092
 
-  jackson:
-    serialization:
-      indent_output: true
-    default-property-inclusion: non_null
+  # Datasource configuration
+  datasource:
+    url: jdbc:h2:~/customers;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: aVeryComplexPassword
+    driver-class-name: org.h2.Driver
 
-# logging settings
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+# Logging
 logging:
   level:
     root: info
     com: warn
-    org:
-      apache: warn
-      hibernate: warn
-      springframework: warn
-
-  pattern:
-    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
-    console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    org.apache: warn
+    org.hibernate: warn
+    org.springframework: warn

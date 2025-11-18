@@ -5,6 +5,7 @@ import net.safedata.microservices.training.marker.message.Channels;
 public enum OutputBindings {
     ORDER_CREATED("orderCreatedProducer-out-0", Channels.Events.ORDER_CREATED),
     ORDER_CHARGED("orderChargedProducer-out-0", Channels.Events.ORDER_CHARGED),
+    ORDER_NOT_CHARGED("orderNotChargedProducer-out-0", Channels.Events.ORDER_NOT_CHARGED),
     CHARGE_ORDER("chargeOrderProducer-out-0", Channels.Commands.CHARGE_ORDER),
 
     PROCESS_ORDER("processOrderProducer-out-0", Channels.Commands.PROCESS_ORDER),

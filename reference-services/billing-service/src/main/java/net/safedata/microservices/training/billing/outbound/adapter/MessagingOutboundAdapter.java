@@ -26,5 +26,6 @@ public class MessagingOutboundAdapter implements MessagingOutboundPort, Outbound
 
     @Override
     public void publishOrderNotChargedEvent(final OrderNotChargedEvent orderNotChargedEvent) {
+        messagePublisher.sendMessage(OutputBindings.ORDER_NOT_CHARGED, orderNotChargedEvent);
     }
 }

@@ -10,16 +10,16 @@ spring:
   # Spring Cloud Function definitions
   cloud:
     function:
-      definition: processOrder;deliverOrderProducer;orderProcessedProducer
+      definition: processOrder;deliverOrder;orderProcessed
     stream:
       bindings:
         # Inbound bindings
         processOrder-in-0:
           destination: process_order
         # Outbound bindings
-        deliverOrderProducer-out-0:
+        deliverOrder-out-0:
           destination: deliver_order
-        orderProcessedProducer-out-0:
+        orderProcessed-out-0:
           destination: order_processed
       kafka:
         binder:

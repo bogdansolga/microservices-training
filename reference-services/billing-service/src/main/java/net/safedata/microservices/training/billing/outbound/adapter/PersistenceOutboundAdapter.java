@@ -33,4 +33,10 @@ public class PersistenceOutboundAdapter implements PersistenceOutboundPort, Outb
     public Optional<Payment> findById(Long id) {
         return paymentRepository.findById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public java.util.List<Payment> findByCustomerId(Long customerId) {
+        return paymentRepository.findByCustomerId(customerId);
+    }
 }

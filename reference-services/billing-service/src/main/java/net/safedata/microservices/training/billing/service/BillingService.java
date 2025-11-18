@@ -1,5 +1,6 @@
 package net.safedata.microservices.training.billing.service;
 
+import net.safedata.microservices.training.billing.domain.model.Payment;
 import net.safedata.microservices.training.billing.inbound.port.RestInboundPort;
 import net.safedata.microservices.training.billing.inbound.port.MessagingInboundPort;
 import net.safedata.microservices.training.billing.outbound.port.PersistenceOutboundPort;
@@ -16,10 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Service
 public class BillingService implements RestInboundPort, MessagingInboundPort {
@@ -27,19 +29,20 @@ public class BillingService implements RestInboundPort, MessagingInboundPort {
     private static final Logger LOGGER = LoggerFactory.getLogger(BillingService.class);
 
     // Sequential ID generators for realistic ID generation
-    private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(3000);
-    private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(7000);
+    private static final AtomicInteger PAYMENT_ID_COUNTER = new AtomicInteger(1);
+    private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(300);
+    private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(700);
 
-    private final PersistenceOutboundPort persistencePort;
-    private final MessagingOutboundPort messagingPort;
+    private final MessagingOutboundPort messagingOutboundPort;
+    private final PersistenceOutboundPort persistenceOutboundPort;
     private final PaymentGatewayOutboundPort paymentGatewayPort;
 
     @Autowired
-    public BillingService(final PersistenceOutboundPort persistencePort,
-                         final MessagingOutboundPort messagingPort,
-                         final PaymentGatewayOutboundPort paymentGatewayPort) {
-        this.persistencePort = persistencePort;
-        this.messagingPort = messagingPort;
+    public BillingService(final MessagingOutboundPort messagingOutboundPort,
+                          final PersistenceOutboundPort persistenceOutboundPort,
+                          final PaymentGatewayOutboundPort paymentGatewayPort) {
+        this.messagingOutboundPort = messagingOutboundPort;
+        this.persistenceOutboundPort = persistenceOutboundPort;
         this.paymentGatewayPort = paymentGatewayPort;
     }
 
@@ -55,33 +58,53 @@ public class BillingService implements RestInboundPort, MessagingInboundPort {
         final int usedPaymentMethod = getPaymentMethod();
         final OrderChargingStatusDTO orderChargingStatus = paymentGatewayPort.charge(usedPaymentMethod, orderTotal);
 
-        // TODO insert magic here
         sleepALittle();
 
         if (orderChargingStatus.isSuccessful()) {
             LOGGER.info("The customer {} was successfully charged for the order {}", customerId, orderId);
-            messagingPort.publishOrderChargedEvent(
+
+            // Persist the successful payment
+            Payment payment = new Payment(customerId, orderId,
+                    BigDecimal.valueOf(orderTotal), "CHARGED");
+            persistenceOutboundPort.save(payment);
+
+            messagingOutboundPort.publishOrderChargedEvent(
                     new OrderChargedEvent(getNextMessageId(), getNextEventId(), customerId, orderId));
         } else {
             final String failureReason = orderChargingStatus.getFailureReason()
                                                             .orElse("Cannot charge the card");
             LOGGER.warn("The customer {} could not be charged for the order {} - '{}'", customerId, orderId, failureReason);
-            messagingPort.publishOrderNotChargedEvent(
+
+            // Persist the failed payment
+            Payment payment = new Payment(customerId, orderId,
+                    BigDecimal.valueOf(orderTotal), "FAILED");
+            persistenceOutboundPort.save(payment);
+
+            messagingOutboundPort.publishOrderNotChargedEvent(
                     new OrderNotChargedEvent(getNextMessageId(), getNextEventId(), customerId, orderId,
                             failureReason)
             );
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PaymentDTO> getPaymentsForCustomer(long customerId) {
-        // TODO insert magic here
-        return new ArrayList<>();
+        LOGGER.info("Retrieving payments for customer {}", customerId);
+
+        List<Payment> payments = persistenceOutboundPort.findByCustomerId(customerId);
+        return payments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private PaymentDTO convertToDTO(Payment payment) {
+        return new PaymentDTO(payment.getId(), payment.getCustomerId(), payment.getOrderId(), payment.getAmount(),
+                payment.getStatus(), payment.getTimestamp());
     }
 
     private int getPaymentMethod() {
         // return the user's payment methods
-        return 2;
+        return PAYMENT_ID_COUNTER.incrementAndGet();
     }
 
     private long getNextMessageId() {
@@ -98,7 +121,7 @@ public class BillingService implements RestInboundPort, MessagingInboundPort {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

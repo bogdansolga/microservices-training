@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -45,19 +44,15 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
     private static final AtomicLong MESSAGE_ID_COUNTER = new AtomicLong(1000);
     private static final AtomicLong EVENT_ID_COUNTER = new AtomicLong(5000);
 
-    private final ApplicationEventPublisher applicationEventPublisher;
-
     private final MessagingOutboundPort messagingOutboundPort;
     private final PersistenceOutboundPort persistenceOutboundPort;
 
     private final ThreadPoolTaskExecutor customThreadPool;
 
     @Autowired
-    public OrderService(final ApplicationEventPublisher applicationEventPublisher,
-                        final MessagingOutboundPort messagingOutboundPort,
+    public OrderService(final MessagingOutboundPort messagingOutboundPort,
                         final PersistenceOutboundPort persistenceOutboundPort,
                         final ThreadPoolTaskExecutor customThreadPool) {
-        this.applicationEventPublisher = applicationEventPublisher;
         this.messagingOutboundPort = messagingOutboundPort;
         this.persistenceOutboundPort = persistenceOutboundPort;
         this.customThreadPool = customThreadPool;
@@ -105,12 +100,6 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
 
         final long orderId = saveOrder(convertCommandIntoOrder(createOrderCommand));
         final double orderTotal = createOrderCommand.getOrderTotal();
-
-        // will be published synchronously on the default Spring Boot / Tomcat thread pool
-        publishChargeOrder(customerId, orderId, orderTotal);
-        publishOrderCreatedEvent(customerId, orderId);
-
-        if (true) return;
 
         CompletableFuture.runAsync(() -> publishChargeOrder(customerId, orderId, orderTotal), customThreadPool)
                          .thenRunAsync(() -> publishOrderCreatedEvent(customerId, orderId), customThreadPool)
@@ -225,9 +214,6 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
     }
 
     private void publishOrderCreatedEvent(final long customerId, final long orderId) {
-        // in-process / intra-JVM event
-        applicationEventPublisher.publishEvent(new OrderCreatedEvent(getNextMessageId(), getNextEventId(), customerId, orderId));
-
         messagingOutboundPort.publishOrderCreatedEvent(
                 new OrderCreatedEvent(getNextMessageId(), getNextEventId(), customerId, orderId));
     }
@@ -259,7 +245,7 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

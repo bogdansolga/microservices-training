@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 public class Payment extends AbstractEntity {
 
     @Column(nullable = false)
+    private Long customerId;
+
+    @Column(nullable = false)
     private Long orderId;
 
     @Column(nullable = false)
@@ -23,7 +26,8 @@ public class Payment extends AbstractEntity {
     public Payment() {
     }
 
-    public Payment(Long orderId, BigDecimal amount, String status) {
+    public Payment(Long customerId, Long orderId, BigDecimal amount, String status) {
+        this.customerId = customerId;
         this.orderId = orderId;
         this.amount = amount;
         this.status = status;
@@ -31,6 +35,14 @@ public class Payment extends AbstractEntity {
     }
 
     // Getters and setters
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
     public Long getOrderId() {
         return orderId;
     }

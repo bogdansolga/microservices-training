@@ -78,5 +78,5 @@ logging:
       springframework: warn
 
   pattern:
-    #console: '%clr([%thread] [%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+    # To include thread name (e.g., [container-0-C-1] for Kafka consumers), add %clr([%t]){faint} after the timestamp
     console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'

@@ -1,0 +1,14 @@
+POST localhost:8081/order
+Content-Type: application/json
+
+{
+  "orderId": 10,
+  "customerId": 20,
+  "orderItems": [
+    {
+      "orderItemId": 10,
+      "productName": "Cookies for Maria",
+      "productPrice": 0
+    }
+  ]
+}

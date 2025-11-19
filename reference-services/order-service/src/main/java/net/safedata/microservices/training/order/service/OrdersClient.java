@@ -31,7 +31,7 @@ public class OrdersClient {
         return () -> new CreateOrderCommand(nextCustomerId, messageId, "Great Pizza #" + messageId, nextOrderAmount);
     }
 
-    @Scheduled(fixedDelay = 20000)
+    //@Scheduled(fixedDelay = 20000)
     public void publishOrderCreationMessage() {
         streamBridge.send("orderProducer-out-0", orderProducer().get());
     }

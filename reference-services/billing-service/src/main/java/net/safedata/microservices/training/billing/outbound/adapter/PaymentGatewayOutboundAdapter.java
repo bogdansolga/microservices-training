@@ -35,7 +35,7 @@ public class PaymentGatewayOutboundAdapter implements PaymentGatewayOutboundPort
 
         if (isSuccessful) {
             LOGGER.debug("Payment successful for method {} and amount {}", paymentMethodId, amount);
-            return new OrderChargingStatusDTO();
+            return OrderChargingStatusDTO.success();
         } else {
             LOGGER.debug("Payment failed for method {} and amount {}", paymentMethodId, amount);
             return new OrderChargingStatusDTO(false, "The card has expired");

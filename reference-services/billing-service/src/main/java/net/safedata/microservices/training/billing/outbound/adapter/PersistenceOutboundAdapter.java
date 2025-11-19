@@ -23,7 +23,7 @@ public class PersistenceOutboundAdapter implements PersistenceOutboundPort, Outb
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public long save(Payment payment) {
         return paymentRepository.save(payment).getId();
     }

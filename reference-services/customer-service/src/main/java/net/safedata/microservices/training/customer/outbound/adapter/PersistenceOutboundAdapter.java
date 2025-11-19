@@ -17,12 +17,13 @@ public class PersistenceOutboundAdapter implements PersistenceOutboundPort, Outb
 
     private final CustomerRepository customerRepository;
 
+    @Autowired
     public PersistenceOutboundAdapter(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public long save(Customer customer) {
         return customerRepository.save(customer).getId();
     }

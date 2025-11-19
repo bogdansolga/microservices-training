@@ -19,7 +19,7 @@ public class BillingController implements InboundAdapter {
         this.restInboundPort = restInboundPort;
     }
 
-    @PostMapping("/{customerId}")
+    @GetMapping("/{customerId}")
     public List<PaymentDTO> getPaymentsForCustomer(@PathVariable final long customerId) {
         return restInboundPort.getPaymentsForCustomer(customerId);
     }

@@ -1,44 +1,15 @@
 package net.safedata.microservices.training.dto.order;
 
-import net.safedata.microservices.training.dto.AbstractDTO;
-
-import java.util.Objects;
+import java.io.Serializable;
 import java.util.Optional;
 
-public class OrderChargingStatusDTO extends AbstractDTO {
+public record OrderChargingStatusDTO(boolean successful, String failureReason) implements Serializable {
 
-    private final boolean successful;
-    private final String failureReason;
-
-    public OrderChargingStatusDTO(boolean successful, String failureReason) {
-        this.successful = successful;
-        this.failureReason = failureReason;
-    }
-
-    public OrderChargingStatusDTO() {
-        this.successful = true;
-        this.failureReason = null;
-    }
-
-    public boolean isSuccessful() {
-        return successful;
+    public static OrderChargingStatusDTO success() {
+        return new OrderChargingStatusDTO(true, null);
     }
 
     public Optional<String> getFailureReason() {
         return Optional.ofNullable(failureReason);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderChargingStatusDTO that = (OrderChargingStatusDTO) o;
-        return successful == that.successful &&
-                Objects.equals(failureReason, that.failureReason);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(successful, failureReason);
     }
 }

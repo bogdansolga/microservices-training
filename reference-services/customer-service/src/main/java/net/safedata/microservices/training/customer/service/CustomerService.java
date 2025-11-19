@@ -10,6 +10,7 @@ import net.safedata.microservices.training.message.event.customer.CustomerCreate
 import net.safedata.microservices.training.message.event.order.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -26,6 +27,7 @@ public class CustomerService implements InboundPort {
     private final MessagingOutboundPort messagingOutboundPort;
     private final PersistenceOutboundPort persistenceOutboundPort;
 
+    @Autowired
     public CustomerService(MessagingOutboundPort messagingOutboundPort,
                           PersistenceOutboundPort persistenceOutboundPort) {
         this.messagingOutboundPort = messagingOutboundPort;
@@ -33,12 +35,12 @@ public class CustomerService implements InboundPort {
     }
 
     public void createCustomer(CustomerDTO customerDTO) {
-        LOGGER.info("Creating customer: {}", customerDTO.getName());
+        LOGGER.info("Creating customer: {}", customerDTO.name());
 
         // Create and persist customer entity
         Customer customer = new Customer(
-            customerDTO.getName(),
-            customerDTO.getEmail(),
+            customerDTO.name(),
+            customerDTO.email(),
             null  // address not in DTO
         );
         long customerId = persistenceOutboundPort.save(customer);
@@ -47,7 +49,7 @@ public class CustomerService implements InboundPort {
 
         // Publish customer created event
         messagingOutboundPort.publishCustomerCreatedEvent(
-            new CustomerCreatedEvent(getNextMessageId(), getNextEventId(), customerId, customerDTO.getEmail()));
+            new CustomerCreatedEvent(getNextMessageId(), getNextEventId(), customerId, customerDTO.email()));
     }
 
     public void handleOrderCreated(OrderCreatedEvent event) {

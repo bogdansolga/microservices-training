@@ -80,11 +80,11 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
     // creating an order received from a REST endpoint (UI, testing app etc)
     @Transactional
     public void createOrder(final OrderDTO orderDTO) {
-        final long customerId = orderDTO.getCustomerId();
+        final long customerId = orderDTO.customerId();
         final long orderId = saveOrder(convertDTOIntoOrder(orderDTO));
 
         LOGGER.info("Creating an order for the customer with the ID {}, for {} items...", customerId,
-                orderDTO.getOrderItems().size());
+                orderDTO.orderItems().size());
         final double orderTotal = orderDTO.getOrderTotal();
 
         CompletableFuture.runAsync(() -> publishChargeOrder(customerId, orderId, orderTotal))
@@ -223,7 +223,7 @@ public class OrderService implements RestInboundPort, MessagingInboundPort {
     }
 
     private Order convertDTOIntoOrder(final OrderDTO orderDTO) {
-        return new Order(orderDTO.getCustomerId(), orderDTO.getOrderTotal());
+        return new Order(orderDTO.customerId(), orderDTO.getOrderTotal());
     }
 
     private long saveOrder(final Order order) {

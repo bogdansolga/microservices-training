@@ -26,7 +26,6 @@ public class MessagingInboundAdapter implements InboundAdapter {
     @Bean
     public Consumer<ProcessOrderCommand> processOrder() {
         return processOrderCommand -> {
-            System.out.println("--------------------------------------------------------------------------------------------------------------");
             LOGGER.debug("Received a '{}' command, the ordered item is '{}', the customer ID is {}",
                     processOrderCommand.getName(), processOrderCommand.getProductName(), processOrderCommand.getCustomerId());
 

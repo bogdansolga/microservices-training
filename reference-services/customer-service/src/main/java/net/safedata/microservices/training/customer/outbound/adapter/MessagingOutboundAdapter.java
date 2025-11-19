@@ -27,7 +27,7 @@ public class MessagingOutboundAdapter implements MessagingOutboundPort, Outbound
 
     @Override
     public void publishCustomerUpdatedEvent(final CustomerUpdatedEvent customerUpdatedEvent) {
-        messagePublisher.sendMessage(OutputBindings.CUSTOMER_CREATED, customerUpdatedEvent);
+        messagePublisher.sendMessage(OutputBindings.CUSTOMER_UPDATED, customerUpdatedEvent);
     }
 
     @Override

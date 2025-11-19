@@ -30,13 +30,13 @@ spring:
   datasource:
     driver-class-name: org.h2.Driver
     command:
-      url: jdbc:h2:mem:command
+      url: jdbc:h2:~/restaurant-command;DB_CLOSE_ON_EXIT=FALSE
       username: sa
-      password: commandPassword
+      password: aVeryComplexPassword
     query:
-      url: jdbc:h2:mem:query
+      url: jdbc:h2:~/restaurant-query;DB_CLOSE_ON_EXIT=FALSE
       username: sa
-      password: queryPassword
+      password: aVeryComplexPassword
 
   # JPA configuration
   jpa:

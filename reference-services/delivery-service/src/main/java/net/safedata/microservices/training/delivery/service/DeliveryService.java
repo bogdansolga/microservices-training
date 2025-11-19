@@ -16,14 +16,14 @@ public class DeliveryService implements MessagingInboundPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryService.class);
 
-    private final PersistenceOutboundPort persistencePort;
-    private final MessagingOutboundPort messagingPort;
+    private final PersistenceOutboundPort persistenceOutboundPort;
+    private final MessagingOutboundPort messagingOutboundPort;
 
     @Autowired
-    public DeliveryService(PersistenceOutboundPort persistencePort,
-                          MessagingOutboundPort messagingPort) {
-        this.persistencePort = persistencePort;
-        this.messagingPort = messagingPort;
+    public DeliveryService(PersistenceOutboundPort persistenceOutboundPort,
+                          MessagingOutboundPort messagingOutboundPort) {
+        this.persistenceOutboundPort = persistenceOutboundPort;
+        this.messagingOutboundPort = messagingOutboundPort;
     }
 
     @Override
@@ -37,11 +37,11 @@ public class DeliveryService implements MessagingInboundPort {
                 "Address for customer " + deliverOrderCommand.getCustomerId(),
                 "DELIVERED"
         );
-        persistencePort.save(delivery);
+        persistenceOutboundPort.save(delivery);
 
         OrderDeliveredEvent orderDeliveredEvent = createOrderDeliveredEvent(deliverOrderCommand);
 
-        messagingPort.publishOrderDeliveredEvent(orderDeliveredEvent);
+        messagingOutboundPort.publishOrderDeliveredEvent(orderDeliveredEvent);
     }
 
     private OrderDeliveredEvent createOrderDeliveredEvent(DeliverOrderCommand deliverOrderCommand) {

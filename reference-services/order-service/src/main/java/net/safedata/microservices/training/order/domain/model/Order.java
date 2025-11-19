@@ -10,9 +10,6 @@ import java.util.Set;
 @Table(name = "orders")
 public class Order extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
 
     @Column(name = "customer_id", length = 10)
     private long customerId;
@@ -39,14 +36,6 @@ public class Order extends AbstractEntity {
 
     // required by JPA
     protected Order() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public long getCustomerId() {

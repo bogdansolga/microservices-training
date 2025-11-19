@@ -60,7 +60,7 @@ public class BillingService implements RestInboundPort, MessagingInboundPort {
 
         sleepALittle();
 
-        if (orderChargingStatus.isSuccessful()) {
+        if (orderChargingStatus.successful()) {
             LOGGER.info("The customer {} was successfully charged for the order {}", customerId, orderId);
 
             // Persist the successful payment
